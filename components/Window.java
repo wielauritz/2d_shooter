@@ -1,5 +1,7 @@
 package components;
 
+import entities.Player;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -21,19 +23,6 @@ public class Window {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            //Erstellt den Spieler:
-
-            player = new JLabel(new ImageIcon("textures/player.png"));
-
-            //Positioniert den Spieler mittig im Fenster:
-
-            int playerSize = 50;
-
-            int x = (frame.getWidth() - playerSize - (playerSize / 2)) / 2;
-            int y = (frame.getHeight() - playerSize - (playerSize / 2)) / 2;
-
-            player.setBounds(x, y, playerSize, playerSize);
-
             //Setzt ein Hintergrundbild und setzt den Spieler oben drauf:
 
             JPanel panel = new JPanel() {
@@ -50,7 +39,7 @@ public class Window {
             };
 
             panel.setLayout(null);
-            panel.add(player);
+            panel.add(Player.generate());
 
         frame.setContentPane(panel);
     }
