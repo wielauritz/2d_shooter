@@ -10,8 +10,7 @@ import javax.swing.*;
 
 public class Window {
 
-    private JFrame frame;
-    private JLabel player;
+    public static JFrame frame;
 
     /*
         Erstellt das Programm-Fenster
