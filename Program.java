@@ -1,3 +1,5 @@
+import components.Window;
+
 public class Program {
 
     /*
