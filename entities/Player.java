@@ -17,14 +17,17 @@ public class Player {
         int x = (750 - playerSize - (playerSize / 2)) / 2;
         int y = (750 - playerSize - (playerSize / 2)) / 2;
 
-        System.out.println(x + "-" + y);
-
         player.setBounds(x, y, playerSize, playerSize);
 
         return player;
     }
 
     public static void move(int x, int y) {
-        player.setBounds(player.getX()+x, player.getY()+y, playerSize, playerSize);
+        System.out.println(player.getX() + "-" + player.getY());
+        if ((player.getX() > 0 && player.getX() < 750) && (player.getY() > 0 && player.getY() < 750)) {
+            player.setBounds(player.getX() + x, player.getY() + y, playerSize, playerSize);
+        } else {
+            //Zurücksetzen des Spielers, sodass er sich wieder bewegen kann
+        }
     }
 }

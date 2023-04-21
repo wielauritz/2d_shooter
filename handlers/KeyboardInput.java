@@ -12,21 +12,21 @@ public class KeyboardInput extends Window {
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_UP) {
-                    Player.move(0,-2);
-                    System.out.println("Up Arrrow-Key is pressed!");
+                if (keyCode == KeyEvent.VK_W) {
+                    Player.move(0,-20);
+                    System.out.println("up");
                 }
-                else if (keyCode == KeyEvent.VK_DOWN) {
-                    Player.move(0,2);
-                    System.out.println("Down Arrrow-Key is pressed!");
+                else if (keyCode == KeyEvent.VK_S) {
+                    Player.move(0,20);
+                    System.out.println("down");
                 }
-                else if (keyCode == KeyEvent.VK_LEFT) {
-                    Player.move(-2,0);
-                    System.out.println("Left Arrrow-Key is pressed!");
+                else if (keyCode == KeyEvent.VK_A) {
+                    Player.move(-20,0);
+                    System.out.println("left");
                 }
-                else if (keyCode == KeyEvent.VK_RIGHT) {
-                    Player.move(2,0);
-                    System.out.println("Right Arrrow-Key is pressed!");
+                else if (keyCode == KeyEvent.VK_D) {
+                    Player.move(20,0);
+                    System.out.println("right");
                 }
             }
         });
