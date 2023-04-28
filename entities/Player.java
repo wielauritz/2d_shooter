@@ -6,13 +6,18 @@ public class Player {
 
     public static JLabel player;
     public static int playerSize = 50;
+
+    /*
+        Generiert den Spieler
+     */
+
     public static JLabel generate() {
 
-    //Erstellt den Spieler:
+        //Erzeugt den Spieler:
 
         player = new JLabel(new ImageIcon("textures/player.png"));
 
-        //Positioniert den Spieler mittig im Fenster
+        //Positioniert den Spieler mittig im Fenster:
 
         int x = (750 - playerSize - (playerSize / 2)) / 2;
         int y = (750 - playerSize - (playerSize / 2)) / 2;
@@ -21,6 +26,10 @@ public class Player {
 
         return player;
     }
+
+    /*
+        Überprüft, ob der Spieler sich am Rand befindet
+     */
 
     public static void move(int x, int y) {
         System.out.println(player.getX() + "-" + player.getY());
