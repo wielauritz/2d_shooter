@@ -36,11 +36,17 @@ public class Player {
      */
 
     public static void move(int x, int y) {
-        System.out.println("[Player.java] Spieler bewegt: " + player.getX() + "-" + player.getY());
-        if ((player.getX() > 0 && player.getX() < 750) && (player.getY() > 0 && player.getY() < 750)) {
-            player.setBounds(player.getX() + x, player.getY() + y, playerSize, playerSize);
-        } else {
-            //Zurücksetzen des Spielers, sodass er sich wieder bewegen kann
+        System.out.println("[Player.java] Spieler bewegt: x=" + player.getX() + " und y=" + player.getY());
+
+        int newX = player.getX() + x;
+        int newY = player.getY() + y;
+
+        if (newX >= 0 && newX + playerSize <= 750) {
+            player.setLocation(newX, player.getY());
+        }
+
+        if (newY >= 0 && newY + playerSize <= 750) {
+            player.setLocation(player.getX(), newY);
         }
     }
 
