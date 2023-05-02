@@ -22,7 +22,7 @@ public class Window {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            //Setzt ein Hintergrundbild und setzt den Spieler oben drauf:
+            //Setzt ein Hintergrundbild und setzt den Spieler obendrauf:
 
             JPanel panel = new JPanel() {
                 @Override
@@ -39,6 +39,8 @@ public class Window {
 
             panel.setLayout(null);
             panel.add(Player.generate());
+
+            System.out.println("[Window.java] Fenster erfolgreich erstellt.");
 
         frame.setContentPane(panel);
     }

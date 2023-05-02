@@ -25,5 +25,9 @@ public class Program {
 
         MouseInput.MouseMove();
 
+        //Mausklick erkennen:
+
+        MouseInput.MouseClick();
+
     }
 }

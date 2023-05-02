@@ -1,5 +1,7 @@
 package entities;
 
+import components.Window;
+
 import javax.swing.*;
 
 public class Player {
@@ -24,6 +26,8 @@ public class Player {
 
         player.setBounds(x, y, playerSize, playerSize);
 
+        System.out.println("[Player.java] Spieler erfolgreich erstellt.");
+
         return player;
     }
 
@@ -32,11 +36,14 @@ public class Player {
      */
 
     public static void move(int x, int y) {
-        System.out.println(player.getX() + "-" + player.getY());
+        System.out.println("[Player.java] Spieler bewegt: " + player.getX() + "-" + player.getY());
         if ((player.getX() > 0 && player.getX() < 750) && (player.getY() > 0 && player.getY() < 750)) {
             player.setBounds(player.getX() + x, player.getY() + y, playerSize, playerSize);
         } else {
             //Zurücksetzen des Spielers, sodass er sich wieder bewegen kann
         }
     }
+
+
+
 }
