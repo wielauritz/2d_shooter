@@ -24,7 +24,7 @@ public class Player {
         int x = (750 - playerSize - (playerSize / 2)) / 2;
         int y = (750 - playerSize - (playerSize / 2)) / 2;
 
-        player.setBounds(x, y, playerSize, playerSize);
+        player.setBounds(x+12, y, playerSize, playerSize);
 
         System.out.println("[Player.java] Spieler erfolgreich erstellt.");
 

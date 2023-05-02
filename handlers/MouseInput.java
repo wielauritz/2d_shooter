@@ -45,7 +45,7 @@ public class MouseInput {
 
                 //Bewegung in die Konsole schreiben:
 
-                //System.out.printf("[MouseInput.java] Maus bewegt: %d,%d -> %d,%d (%s)\n", lastPosition.x, lastPosition.y, currentPosition.x, currentPosition.y, getDirection(directionX, directionY));
+                System.out.println("[MouseInput.java] Maus bewegt: " + currentPosition.x + " und y=" + currentPosition.y + " (" + getDirection(directionX, directionY) + ")");
 
                 //Hier andere Aktionen einfügen
 
