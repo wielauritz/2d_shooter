@@ -45,7 +45,7 @@ public class Player {
             player.setLocation(newX, player.getY());
         }
 
-        if (newY >= 0 && newY + playerSize <= 750) {
+        if (newY >= 0 && newY + playerSize <= 720) {
             player.setLocation(player.getX(), newY);
         }
     }
