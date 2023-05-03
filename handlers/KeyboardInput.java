@@ -54,7 +54,7 @@ public class KeyboardInput extends Window {
                 int directionY = 0;
                 int speed = 5;
 
-                //Gedrücke Tasten überprüfen und Spielerbewegung berechnen:
+                //Gedrückte Tasten überprüfen und Spielerbewegung berechnen:
 
                 for (Integer keyCode : pressedKeys) {
                     if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {

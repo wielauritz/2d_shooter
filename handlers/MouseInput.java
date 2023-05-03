@@ -127,12 +127,15 @@ public class MouseInput {
         }
 
     public static double getPlayerToMouseAngle(Point playerPosition) {
-        // Mausposition relativ zum Fenster berechnen
+
+        // Mausposition relativ zum Fenster berechnen:
+
         Point mousePositionOnScreen = MouseInfo.getPointerInfo().getLocation();
         SwingUtilities.convertPointFromScreen(mousePositionOnScreen, components.Window.frame.getContentPane());
         Point mousePosition = mousePositionOnScreen;
 
-        // Winkel berechnen
+        // Winkel berechnen:
+
         double angle = Math.atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x);
 
         System.out.println("[MouseInput.java] Projektilwinkel: " + angle);
