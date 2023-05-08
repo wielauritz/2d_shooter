@@ -121,11 +121,41 @@ public class KeyboardInput extends Window {
 
                 double newX = projectile.getX() + speedX;
                 double newY = projectile.getY() + speedY;
-                projectile.setLocation((int) newX, (int) newY);
+
+                //Überprüfen, ob das Projektil ein Hindernis berührt:
+
+                boolean collided = false;
+                for (Component obstacle : Player.obstacles) {
+                    projectile.setLocation((int) newX, (int) newY);
+                    if (Player.isCollidingWithObstacle(projectile, obstacle)) {
+                        collided = true;
+                        break;
+                    }
+                }
+
+                if (collided) {
+                    projectile.setLocation((int) (projectile.getX() - speedX), (int) (projectile.getY() - speedY));
+                } else {
+                    projectile.setLocation((int) newX, (int) newY);
+                }
+
+                //Projektil entfernen, wenn es ein Hindernis berührt:
+
+                if (newX < 0 || newX > 750 || newY < 0 || newY > 750 || collided) {
+
+                    System.out.println("[KeyboardInput.java] Projektil bei x=" + projectile.getX() + " und y=" + projectile.getY() + " entfernt.");
+
+                    projectile.setVisible(false);
+                    ((Timer) e.getSource()).stop();
+                    frame.getContentPane().remove(projectile);
+                }
 
                 //Projektil entfernen, wenn es außerhalb des Fensters ist:
 
                 if (newX < 0 || newX > 750 || newY < 0 || newY > 750) {
+
+                    System.out.println("[KeyboardInput.java] Projektil bei x=" + projectile.getX() + " und y=" + projectile.getY() + " entfernt.");
+
                     projectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
                     frame.getContentPane().remove(projectile);

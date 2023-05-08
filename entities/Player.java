@@ -3,11 +3,13 @@ package entities;
 import components.Window;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Player {
 
     public static JLabel player;
     public static int playerSize = 50;
+    public static java.util.List<Component> obstacles;
 
     /*
         Generiert den Spieler
@@ -32,6 +34,24 @@ public class Player {
     }
 
     /*
+        Speichert die Hindernispositionen
+     */
+
+    public static void setObstacles(java.util.List<Component> obstaclesList) {
+        obstacles = obstaclesList;
+    }
+
+    /*
+        Überprüft, ob der Spieler mit einem Hindernis in Berührung kommt
+    */
+
+    public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
+        Rectangle playerBounds = player.getBounds();
+        Rectangle obstacleBounds = obstacle.getBounds();
+        return playerBounds.intersects(obstacleBounds);
+    }
+
+    /*
         Überprüft, ob der Spieler sich am Rand befindet
      */
 
@@ -41,15 +61,23 @@ public class Player {
         int newX = player.getX() + x;
         int newY = player.getY() + y;
 
-        if (newX >= 0 && newX + playerSize <= 750) {
+        //Verhindert, dass sich der Spieler aus dem Feld bewegt:
+
+        if (newX >= 0 && newX + playerSize <= 733) {
             player.setLocation(newX, player.getY());
         }
 
-        if (newY >= 0 && newY + playerSize <= 720) {
+        if (newY >= 0 && newY + playerSize <= 711) {
             player.setLocation(player.getX(), newY);
         }
+
+        //Verhindert, dass sich der Spieler durch Hindernisse bewegt:
+
+        for (Component obstacle : obstacles) {
+            if (isCollidingWithObstacle(player, obstacle)) {
+                player.setLocation(player.getX() - x, player.getY() - y);
+                break;
+            }
+        }
     }
-
-
-
 }
