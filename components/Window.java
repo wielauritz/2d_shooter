@@ -1,10 +1,13 @@
 package components;
 
+import entities.Obstacles;
 import entities.Player;
+import utils.RandomNumber;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -37,8 +40,16 @@ public class Window {
                 }
             };
 
+
+
             panel.setLayout(null);
             panel.add(Player.generate());
+            panel.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+            panel.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+            panel.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+            panel.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+            panel.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+
 
             System.out.println("[Window.java] Fenster erfolgreich erstellt.");
 
