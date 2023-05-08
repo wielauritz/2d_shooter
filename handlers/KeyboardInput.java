@@ -82,6 +82,10 @@ public class KeyboardInput extends Window {
         playerMoveTimer.start();
     }
 
+    /*
+        Schießt das Projektil
+    */
+
     private static void shootProjectile() {
 
         //Mehr als ein Projectile pro Leertasten-Klick verhindern:

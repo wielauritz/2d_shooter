@@ -44,6 +44,8 @@ public class Window {
             panel.setLayout(null);
             panel.add(Player.generate());
 
+            //Generiert und speichert die Hindernisse:
+
             ArrayList<Component> obstaclesList = new ArrayList<>();
 
             obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
