@@ -33,7 +33,7 @@ public class Window {
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     try {
-                        Image image = ImageIO.read(new File("textures/floor_v3.png"));
+                        Image image = ImageIO.read(new File("textures/floor.png"));
                         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
                     } catch (IOException ex) {
                         ex.printStackTrace();

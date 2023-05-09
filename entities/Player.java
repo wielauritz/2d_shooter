@@ -4,6 +4,7 @@ import components.Window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Player {
 
@@ -48,7 +49,8 @@ public class Player {
     public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
         Rectangle playerBounds = player.getBounds();
         Rectangle obstacleBounds = obstacle.getBounds();
-        return playerBounds.intersects(obstacleBounds);
+        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x+10, obstacleBounds.y+10, obstacleBounds.width-20, obstacleBounds.height-20);
+        return playerBounds.intersects(optimizedBounds);
     }
 
     /*
