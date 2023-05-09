@@ -1,7 +1,6 @@
 package entities;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Projectile {
 
