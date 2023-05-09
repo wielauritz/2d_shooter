@@ -8,7 +8,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -48,11 +47,11 @@ public class Window {
 
             ArrayList<Component> obstaclesList = new ArrayList<>();
 
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,700),RandomNumber.generate(1,650)));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
 
             Player.setObstacles(obstaclesList);
 
