@@ -45,7 +45,7 @@ public class MouseInput {
 
                 //Bewegung in die Konsole schreiben:
 
-                System.out.println("[MouseInput.java] Maus bewegt: " + currentPosition.x + " und y=" + currentPosition.y + " (" + getDirection(directionX, directionY) + ")");
+                /*System.out.println("[MouseInput.java] Maus bewegt: " + currentPosition.x + " und y=" + currentPosition.y + " (" + getDirection(directionX, directionY) + ")");*/
 
                 //Hier andere Aktionen einfügen
 
@@ -59,7 +59,9 @@ public class MouseInput {
     public static void MouseClick() {
         components.Window.frame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                System.out.println("BOGUS");
                 if (e.getButton() == MouseEvent.BUTTON1) {
+                    System.out.println("BENIS");
                     //Spielerposition abrufen:
                     Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
                             Player.player.getY() + Player.playerSize / 2);

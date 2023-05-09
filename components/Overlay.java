@@ -1,5 +1,7 @@
 package components;
 
+import entities.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -31,7 +33,7 @@ public class Overlay {
 
         if (healthPoints <= 0) {
             health.setText("Du bist gestorben!");
-            health.setBounds(200, 350, 500, 25);
+            health.setBounds(180, 325, 500, 25);
         } else {
             health.setText(healthPoints + "/100 HP");
             health.repaint();

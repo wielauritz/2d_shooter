@@ -47,11 +47,11 @@ public class Window {
 
             ArrayList<Component> obstaclesList = new ArrayList<>();
 
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,60)*10,RandomNumber.generate(1,55)*10));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
 
             Player.setObstacles(obstaclesList);
 
@@ -65,7 +65,7 @@ public class Window {
             panel.add(c);
             panel.setComponentZOrder(c, 0);
 
-            Overlay.updateHealthHUD(0);
+            Overlay.updateHealthHUD(100);
 
             System.out.println("[Window.java] Fenster erfolgreich erstellt.");
 

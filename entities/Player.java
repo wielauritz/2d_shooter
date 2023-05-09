@@ -58,7 +58,7 @@ public class Player {
     */
 
     public static void move(int x, int y) {
-        System.out.println("[Player.java] Spieler bewegt: x=" + player.getX() + " und y=" + player.getY());
+        /*System.out.println("[Player.java] Spieler bewegt: x=" + player.getX() + " und y=" + player.getY());*/
 
         int newX = player.getX() + x;
         int newY = player.getY() + y;
