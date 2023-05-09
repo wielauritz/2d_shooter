@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Projectile {
+
+    /*
+        Erstellt ein Projektil im Spiel
+    */
+
     public static int projectileSize = 20;
 
     public static JLabel createProjectile(int x, int y) {

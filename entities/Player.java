@@ -55,7 +55,7 @@ public class Player {
 
     /*
         Überprüft, ob der Spieler sich am Rand befindet
-     */
+    */
 
     public static void move(int x, int y) {
         System.out.println("[Player.java] Spieler bewegt: x=" + player.getX() + " und y=" + player.getY());

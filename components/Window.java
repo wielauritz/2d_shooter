@@ -60,13 +60,13 @@ public class Window {
                 panel.add(obstacle);
             }
 
+            //Bindet das Overlay ein:
+
             Container c = Overlay.createHealthHUD();
             panel.add(c);
             panel.setComponentZOrder(c, 0);
 
-
-
-            Overlay.updateHealthHUD(100);
+            Overlay.updateHealthHUD(0);
 
             System.out.println("[Window.java] Fenster erfolgreich erstellt.");
 

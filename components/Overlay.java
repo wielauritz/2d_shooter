@@ -41,7 +41,7 @@ public class Overlay {
 
     /*
         Setzt einen Schatten hinter die Lebensanzeige
-     */
+    */
 
     private static class OutlinedLabel extends JLabel {
         private static final long serialVersionUID = 1L;

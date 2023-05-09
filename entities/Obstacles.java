@@ -5,6 +5,10 @@ import java.awt.*;
 
 public class Obstacles {
 
+    /*
+        Erstellt ein Hindernis im Spiel
+    */
+
     public static JLabel createObstacle(int x, int y) {
         ImageIcon icon = new ImageIcon("textures/tree.png");
         Image img = icon.getImage();
