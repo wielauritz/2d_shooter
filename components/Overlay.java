@@ -1,6 +1,7 @@
 package components;
 
 import entities.Player;
+import handlers.KeyboardInput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class Overlay {
     public static JLabel createHealthHUD() {
         health = new OutlinedLabel(healthPoints + "/100 HP");
         health.setForeground(Color.WHITE);
-        health.setFont(Program.gameFont.deriveFont(24f)); // Increase font size
+        health.setFont(Program.gameFont.deriveFont(24f));
         health.setBounds(0, 0, 200, 25);
 
         return health;
@@ -32,8 +33,20 @@ public class Overlay {
         healthPoints = healthPoints - difference;
 
         if (healthPoints <= 0) {
-            health.setText("Du bist gestorben!");
+
+            Window.panel.removeAll();
+            Window.panel.setBackground(Color.RED);
+
+            health = new OutlinedLabel("Du bist gestorben!");
+            health.setForeground(Color.WHITE);
+            health.setFont(Program.gameFont.deriveFont(24f));
             health.setBounds(180, 325, 500, 25);
+
+            Window.panel.add(health);
+            Window.panel.repaint();
+
+            KeyboardInput.enabled = false;
+
         } else {
             health.setText(healthPoints + "/100 HP");
             health.repaint();

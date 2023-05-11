@@ -14,6 +14,7 @@ import javax.swing.*;
 public class Window {
 
     public static JFrame frame;
+    public static JPanel panel;
 
     /*
         Erstellt das Programm-Fenster
@@ -27,7 +28,7 @@ public class Window {
 
             //Setzt ein Hintergrundbild und setzt den Spieler obendrauf:
 
-            JPanel panel = new JPanel() {
+            panel = new JPanel() {
                 @Override
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
@@ -47,11 +48,11 @@ public class Window {
 
             ArrayList<Component> obstaclesList = new ArrayList<>();
 
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
-            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*100,RandomNumber.generate(1,6)*100));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*90,RandomNumber.generate(1,6)*90));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*90,RandomNumber.generate(1,6)*90));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*90,RandomNumber.generate(1,6)*90));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*90,RandomNumber.generate(1,6)*90));
+            obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1,6)*90,RandomNumber.generate(1,6)*90));
 
             Player.setObstacles(obstaclesList);
 
@@ -65,7 +66,7 @@ public class Window {
             panel.add(c);
             panel.setComponentZOrder(c, 0);
 
-            Overlay.updateHealthHUD(0);
+            Overlay.updateHealthHUD(100);
 
             System.out.println("[Window.java] Fenster erfolgreich erstellt.");
 

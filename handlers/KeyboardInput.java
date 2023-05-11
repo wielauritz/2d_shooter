@@ -20,6 +20,8 @@ public class KeyboardInput extends Window {
 
     private static boolean spacePressed = false;
 
+    public static boolean enabled = true;
+
     /*
         Tastendruck registrieren
     */
@@ -49,38 +51,41 @@ public class KeyboardInput extends Window {
             Timer mit 16 Millisekunden für ca. 60fps zum flüssigen Bewegen des Spielers
         */
 
-        Timer playerMoveTimer = new Timer(16, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int directionX = 0;
-                int directionY = 0;
-                int speed = 5;
+        if (enabled) {
 
-                //Gedrückte Tasten überprüfen und Spielerbewegung berechnen:
+            Timer playerMoveTimer = new Timer(16, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int directionX = 0;
+                    int directionY = 0;
+                    int speed = 5;
 
-                for (Integer keyCode : pressedKeys) {
-                    if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-                        directionY -= speed;
-                    } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-                        directionY += speed;
-                    } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-                        directionX -= speed;
-                    } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-                        directionX += speed;
+                    //Gedrückte Tasten überprüfen und Spielerbewegung berechnen:
+
+                    for (Integer keyCode : pressedKeys) {
+                        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+                            directionY -= speed;
+                        } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+                            directionY += speed;
+                        } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+                            directionX -= speed;
+                        } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+                            directionX += speed;
+                        }
+                    }
+
+                    //Spieler bewegen:
+
+                    if (directionX != 0 || directionY != 0) {
+                        Player.move(directionX, directionY);
+                    }
+
+                    if (spacePressed) {
+                        shootProjectile();
                     }
                 }
-
-                //Spieler bewegen:
-
-                if (directionX != 0 || directionY != 0) {
-                    Player.move(directionX, directionY);
-                }
-
-                if (spacePressed) {
-                    shootProjectile();
-                }
-            }
-        });
-        playerMoveTimer.start();
+            });
+            playerMoveTimer.start();
+        }
     }
 
     /*
