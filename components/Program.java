@@ -1,7 +1,5 @@
 package components;
 
-import components.Window;
-import handlers.KeyboardInput;
 import handlers.MouseInput;
 
 import java.awt.*;

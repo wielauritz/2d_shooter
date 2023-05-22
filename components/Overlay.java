@@ -1,6 +1,5 @@
 package components;
 
-import entities.Player;
 import handlers.KeyboardInput;
 
 import javax.swing.*;

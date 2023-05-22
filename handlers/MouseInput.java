@@ -21,9 +21,7 @@ public class MouseInput {
 
     private static boolean started = false;
 
-    public static Timer timer;
-
-    public static boolean run = true;
+    public static boolean running = true;
 
     /*
         Letzte Position der Maus speichern:
@@ -41,7 +39,7 @@ public class MouseInput {
 
         //Alle 100ms Bewegungs-Check ausführen:
 
-        while (run) {
+        while (running) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -102,7 +100,7 @@ public class MouseInput {
                 if (playerMoveTimer != null) {
                     playerMoveTimer.stop();
                 }
-                run = false;
+                running = false;
             }
         });
 
@@ -190,27 +188,27 @@ public class MouseInput {
             Bewegungsrichtung der Maus feststellen
         */
 
-        private static String getDirection(int directionX, int directionY) {
-            if (directionX > 0 && directionY > 0) {
-                return "rechts & runter";
-            } else if (directionX > 0 && directionY == 0) {
-                return "rechts";
-            } else if (directionX > 0 && directionY < 0) {
-                return "rechts & hoch";
-            } else if (directionX == 0 && directionY > 0) {
-                return "runter";
-            } else if (directionX == 0 && directionY < 0) {
-                return "hoch";
-            } else if (directionX < 0 && directionY > 0) {
-                return "links & runter";
-            } else if (directionX < 0 && directionY == 0) {
-                return "links";
-            } else if (directionX < 0 && directionY < 0) {
-                return "links & hoch";
-            } else {
-                return "unbekannt";
-            }
+    private static String getDirection(int directionX, int directionY) {
+        if (directionX > 0 && directionY > 0) {
+            return "rechts & runter";
+        } else if (directionX > 0 && directionY == 0) {
+            return "rechts";
+        } else if (directionX > 0 && directionY < 0) {
+            return "rechts & hoch";
+        } else if (directionX == 0 && directionY > 0) {
+            return "runter";
+        } else if (directionX == 0 && directionY < 0) {
+            return "hoch";
+        } else if (directionX < 0 && directionY > 0) {
+            return "links & runter";
+        } else if (directionX < 0 && directionY == 0) {
+            return "links";
+        } else if (directionX < 0 && directionY < 0) {
+            return "links & hoch";
+        } else {
+            return "unbekannt";
         }
+    }
 
     public static double getPlayerToMouseAngle(Point playerPosition) {
 

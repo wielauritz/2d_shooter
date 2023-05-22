@@ -11,7 +11,8 @@ public class Projectile {
     public static int projectileSize = 20;
 
     public static JLabel createProjectile(int x, int y) {
-        JLabel projectile = new JLabel(new ImageIcon("textures/projectile.png"));;
+        JLabel projectile = new JLabel(new ImageIcon("textures/projectile.png"));
+
         projectile.setBounds(x, y, projectileSize, projectileSize);
 
         return projectile;

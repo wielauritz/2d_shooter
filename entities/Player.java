@@ -1,10 +1,7 @@
 package entities;
 
-import components.Window;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public class Player {
 
@@ -27,7 +24,7 @@ public class Player {
         int x = (750 - playerSize - (playerSize / 2)) / 2;
         int y = (750 - playerSize - (playerSize / 2)) / 2;
 
-        player.setBounds(x+12, y, playerSize, playerSize);
+        player.setBounds(x + 12, y, playerSize, playerSize);
 
         System.out.println("[Player.java] Spieler erfolgreich erstellt.");
 
@@ -49,7 +46,7 @@ public class Player {
     public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
         Rectangle playerBounds = player.getBounds();
         Rectangle obstacleBounds = obstacle.getBounds();
-        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x+10, obstacleBounds.y+10, obstacleBounds.width-20, obstacleBounds.height-20);
+        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 10, obstacleBounds.y + 10, obstacleBounds.width - 20, obstacleBounds.height - 20);
         return playerBounds.intersects(optimizedBounds);
     }
 
