@@ -21,6 +21,8 @@ public class Overlay {
         health.setFont(Program.gameFont.deriveFont(24f));
         health.setBounds(0, 0, 200, 25);
 
+        System.out.println("[Overlay.java] Overlay erfolgreich erstellt.");
+
         return health;
     }
 
@@ -51,7 +53,10 @@ public class Overlay {
             health.setText(healthPoints + "/100 HP");
             health.repaint();
         }
-            return health;
+
+        System.out.println("[Overlay.java] Overlay erfolgreich aktualisiert.");
+
+        return health;
     }
 
     /*

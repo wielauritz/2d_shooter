@@ -14,8 +14,6 @@ public class Projectile {
         JLabel projectile = new JLabel(new ImageIcon("textures/projectile.png"));;
         projectile.setBounds(x, y, projectileSize, projectileSize);
 
-        System.out.println("[Projectile.java] Projektil erfolgreich erstellt.");
-
         return projectile;
     }
 }

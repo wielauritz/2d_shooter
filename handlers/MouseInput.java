@@ -1,5 +1,7 @@
 package handlers;
 
+import components.Game;
+import components.Window;
 import entities.Player;
 import entities.Projectile;
 
@@ -10,7 +12,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static components.Menu.closeButton;
+import static components.Menu.playButton;
+import static components.Window.frame;
+import static handlers.KeyboardInput.playerMoveTimer;
+
 public class MouseInput {
+
+    private static boolean started = false;
+
+    public static Timer timer;
+
+    public static boolean run = true;
 
     /*
         Letzte Position der Maus speichern:
@@ -22,11 +35,13 @@ public class MouseInput {
         Mausbewegung erkennen
     */
 
-    public static String MouseMove() {
+    public static void MouseMove() {
+
+        System.out.println("[MouseInput.java] Mausbewegungs-Listener aktiviert.");
 
         //Alle 100ms Bewegungs-Check ausführen:
 
-        while (true) {
+        while (run) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -43,11 +58,7 @@ public class MouseInput {
                 int directionX = currentPosition.x - lastPosition.x;
                 int directionY = currentPosition.y - lastPosition.y;
 
-                //Bewegung in die Konsole schreiben:
-
-                /*System.out.println("[MouseInput.java] Maus bewegt: " + currentPosition.x + " und y=" + currentPosition.y + " (" + getDirection(directionX, directionY) + ")");*/
-
-                //Hier andere Aktionen einfügen
+                // - - - Hier andere Aktionen einfügen - - - \\
 
                 //Letzte Position aktualisieren:
 
@@ -57,46 +68,119 @@ public class MouseInput {
     }
 
     public static void MouseClick() {
-        components.Window.frame.addMouseListener(new MouseAdapter() {
+
+        System.out.println("[MouseInput.java] Mausklick-Listener aktiviert.");
+
+        playButton.addMouseListener(new MouseAdapter() {
+
+            @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("BOGUS");
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("BENIS");
-                    //Spielerposition abrufen:
-                    Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
-                            Player.player.getY() + Player.playerSize / 2);
+                System.out.println("[MouseInput.java] Spielfeld wird erstellt, bitte warten...");
 
-                    //Winkel zwischen Spieler und Mauszeiger berechnen:
-                    double angle = getPlayerToMouseAngle(playerPosition);
+                //Spielfeld dem Fenster übergeben:
 
-                    //Geschwindigkeiten für das Projektil berechnen:
-                    int projectileSpeed = 30;
-                    int speedX = (int) Math.round(Math.cos(angle) * projectileSpeed);
-                    int speedY = (int) Math.round(Math.sin(angle) * projectileSpeed);
+                Window.frame.setContentPane(Game.create());
+                started = true;
 
-                    //Projektil erstellen und dem Panel hinzufügen:
-                    JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
-                    components.Window.frame.getContentPane().add(projectile);
-                    System.out.println("[MouseInput.java] Projektil bei x=" + playerPosition.x + " und y=" + playerPosition.y + " eingefügt.");
+                //Tastendruck simulieren, um das Fenster zu aktualisieren:
 
-                    //Timer zum Bewegen des Projektils erstellen:
-                    Timer timer = new Timer(1, new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            //Position des Projektils aktualisieren:
-                            int newX = projectile.getX() + speedX;
-                            int newY = projectile.getY() + speedY;
-                            projectile.setLocation(newX, newY);
+                KeyboardInput.spacePressed = true;
 
-                            //Projektil entfernen, wenn es außerhalb des Fensters ist:
-                            if (newX < 0 || newX > components.Window.frame.getWidth() || newY < 0 || newY > components.Window.frame.getHeight()) {
-                                projectile.setVisible(false);
-                                ((Timer) e.getSource()).stop();
-                                components.Window.frame.getContentPane().remove(projectile);
+                System.out.println("[MouseInput.java] Spielfeld erfolgreich geladen.");
+
+            }
+        });
+
+        closeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("[MouseInput.java] Spiel wird beendet, bitte warten...");
+
+                //Fenster schließen und Timer stoppen, damit das Spiel beendet werden kann:
+
+                Window.frame.dispose();
+                if (playerMoveTimer != null) {
+                    playerMoveTimer.stop();
+                }
+                run = false;
+            }
+        });
+
+        components.Window.frame.addMouseListener(new MouseAdapter() {
+
+            public void mouseClicked(MouseEvent e) {
+                if (started) {
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+
+                        //Spielerposition abrufen:
+
+                        Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
+                                Player.player.getY() + Player.playerSize / 2);
+
+                        //Winkel zwischen Spieler und Mauszeiger berechnen:
+
+                        double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
+
+                        //Geschwindigkeiten für das Projektil berechnen:
+
+                        int projectileSpeed = 30;
+                        double speedX = Math.cos(angle) * projectileSpeed;
+                        double speedY = Math.sin(angle) * projectileSpeed;
+
+                        //Projektil erstellen und anzeigen:
+
+                        JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
+                        frame.getContentPane().add(projectile);
+
+                        //Timer zum Bewegen des Projektils erstellen:
+
+                        Timer timer = new Timer(1, new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                                // Position des Projektils aktualisieren:
+
+                                double newX = projectile.getX() + speedX;
+                                double newY = projectile.getY() + speedY;
+
+                                //Überprüfen, ob das Projektil ein Hindernis berührt:
+
+                                boolean collided = false;
+                                for (Component obstacle : Player.obstacles) {
+                                    projectile.setLocation((int) newX, (int) newY);
+                                    if (Player.isCollidingWithObstacle(projectile, obstacle)) {
+                                        collided = true;
+                                        break;
+                                    }
+                                }
+
+                                if (collided) {
+                                    projectile.setLocation((int) (projectile.getX() - speedX), (int) (projectile.getY() - speedY));
+                                } else {
+                                    projectile.setLocation((int) newX, (int) newY);
+                                }
+
+                                //Projektil entfernen, wenn es ein Hindernis berührt:
+
+                                if (newX < 0 || newX > 750 || newY < 0 || newY > 750 || collided) {
+
+                                    projectile.setVisible(false);
+                                    ((Timer) e.getSource()).stop();
+                                    frame.getContentPane().remove(projectile);
+                                }
+
+                                //Projektil entfernen, wenn es außerhalb des Fensters ist:
+
+                                if (newX < 0 || newX > 750 || newY < 0 || newY > 750) {
+
+                                    projectile.setVisible(false);
+                                    ((Timer) e.getSource()).stop();
+                                    frame.getContentPane().remove(projectile);
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    timer.start();
+                        timer.start();
+                    }
                 }
             }
         });
@@ -139,8 +223,6 @@ public class MouseInput {
         // Winkel berechnen:
 
         double angle = Math.atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x);
-
-        System.out.println("[MouseInput.java] Projektilwinkel: " + angle);
 
         return angle;
     }

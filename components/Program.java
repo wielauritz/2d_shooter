@@ -16,36 +16,36 @@ public class Program {
 
     public static Font gameFont;
 
+    public static Window window;
+
     public static void main(String[] args) {
 
         //Schriftart laden:
+
+        System.out.println("[Program.java] Spiel wird gestartet, bitte warten...");
 
         try {
             gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("textures/font.otf")).deriveFont(24f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(gameFont);
-        } catch (IOException e) {
+            System.out.println("[Program.java] Spielschrift erfolgreich geladen.");
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
-        } catch(FontFormatException e) {
-            e.printStackTrace();
+            System.out.println("[Program.java] Spielschrift konnte nicht geladen werden.");
         }
 
         //Fenster erstellen:
 
-        Window window = new Window();
+        window = new Window();
         window.open();
-
-        //Tastendruck erkennen:
-
-        KeyboardInput.KeyPress();
-
-        //Mausbewegung erkennen:
-
-        MouseInput.MouseMove();
 
         //Mausklick erkennen:
 
         MouseInput.MouseClick();
+
+        //Mausbewegung erkennen:
+
+        MouseInput.MouseMove();
 
     }
 }

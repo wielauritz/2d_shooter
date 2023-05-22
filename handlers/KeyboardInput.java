@@ -18,15 +18,20 @@ public class KeyboardInput extends Window {
 
     private static Set<Integer> pressedKeys = new HashSet<>();
 
-    private static boolean spacePressed = false;
+    public static boolean spacePressed = false;
 
     public static boolean enabled = true;
+
+    public static Timer playerMoveTimer;
 
     /*
         Tastendruck registrieren
     */
 
     public static void KeyPress() {
+
+        System.out.println("[KeyboardInput.java] Tastatur-Listener aktiviert.");
+
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -53,7 +58,7 @@ public class KeyboardInput extends Window {
 
         if (enabled) {
 
-            Timer playerMoveTimer = new Timer(16, new ActionListener() {
+            playerMoveTimer = new Timer(16, new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     int directionX = 0;
                     int directionY = 0;
@@ -94,7 +99,7 @@ public class KeyboardInput extends Window {
 
     private static void shootProjectile() {
 
-        //Mehr als ein Projectile pro Leertasten-Klick verhindern:
+        //Mehr als ein Projektil pro Leertasten-Klick verhindern:
 
         if (!spacePressed) {
             return;
@@ -120,7 +125,6 @@ public class KeyboardInput extends Window {
 
         JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
         frame.getContentPane().add(projectile);
-        System.out.println("[KeyboardInput.java] Projektil bei x=" + playerPosition.x + " und y=" + playerPosition.y + " eingefügt.");
 
         //Timer zum Bewegen des Projektils erstellen:
 
@@ -153,8 +157,6 @@ public class KeyboardInput extends Window {
 
                 if (newX < 0 || newX > 750 || newY < 0 || newY > 750 || collided) {
 
-                    System.out.println("[KeyboardInput.java] Projektil bei x=" + projectile.getX() + " und y=" + projectile.getY() + " entfernt.");
-
                     projectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
                     frame.getContentPane().remove(projectile);
@@ -163,8 +165,6 @@ public class KeyboardInput extends Window {
                 //Projektil entfernen, wenn es außerhalb des Fensters ist:
 
                 if (newX < 0 || newX > 750 || newY < 0 || newY > 750) {
-
-                    System.out.println("[KeyboardInput.java] Projektil bei x=" + projectile.getX() + " und y=" + projectile.getY() + " entfernt.");
 
                     projectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
