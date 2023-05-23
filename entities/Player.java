@@ -44,10 +44,14 @@ public class Player {
     */
 
     public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
-        Rectangle playerBounds = player.getBounds();
-        Rectangle obstacleBounds = obstacle.getBounds();
-        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 10, obstacleBounds.y + 10, obstacleBounds.width - 20, obstacleBounds.height - 20);
-        return playerBounds.intersects(optimizedBounds);
+        System.out.println(obstacle.getWidth());
+        if (obstacle.getWidth() < 159) {
+            Rectangle playerBounds = player.getBounds();
+            Rectangle obstacleBounds = obstacle.getBounds();
+            Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
+            return playerBounds.intersects(optimizedBounds);
+        }
+        return false;
     }
 
     /*
@@ -66,7 +70,7 @@ public class Player {
             player.setLocation(newX, player.getY());
         }
 
-        if (newY >= 0 && newY + playerSize <= 711) {
+        if (newY >= 0 && newY + playerSize <= 731) {
             player.setLocation(player.getX(), newY);
         }
 

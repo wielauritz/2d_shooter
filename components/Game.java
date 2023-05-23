@@ -23,7 +23,7 @@ public class Game {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    Image image = ImageIO.read(new File("textures/floor.png"));
+                    Image image = ImageIO.read(new File("textures/floor_path.png"));
                     g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -39,10 +39,25 @@ public class Game {
 
         ArrayList<Component> obstaclesList = new ArrayList<>();
 
-        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(1, 5) * 90, RandomNumber.generate(1, 5) * 90));
-        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(2, 5) * 90, RandomNumber.generate(2, 5) * 90));
-        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(2, 4) * 90, RandomNumber.generate(2, 4) * 90));
-        obstaclesList.add(Obstacles.generateWater(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
+        obstaclesList.add(Obstacles.generateTree(165, 482));
+        obstaclesList.add(Obstacles.generateTree(648, 316));
+        obstaclesList.add(Obstacles.generateTree(217, 570));
+        obstaclesList.add(Obstacles.generateTree(212, 24));
+        obstaclesList.add(Obstacles.generateTree(71, 625));
+        obstaclesList.add(Obstacles.generateTree(528, 197));
+        obstaclesList.add(Obstacles.generateTree(73, 413));
+        obstaclesList.add(Obstacles.generateTree(447, 149));
+        obstaclesList.add(Obstacles.generateTree(381, 150));
+        obstaclesList.add(Obstacles.generateTree(629, 440));
+        obstaclesList.add(Obstacles.generateTree(6, 567));
+        obstaclesList.add(Obstacles.generateTree(547, 387));
+        obstaclesList.add(Obstacles.generateTree(21, 81));
+        obstaclesList.add(Obstacles.generateTree(70, 222));
+        obstaclesList.add(Obstacles.generateTree(193, 396));
+        obstaclesList.add(Obstacles.generateTree(599, 8));
+
+
+        obstaclesList.add(Obstacles.generateWater(400, 250));
 
         Player.setObstacles(obstaclesList);
 

@@ -26,11 +26,11 @@ public class Obstacles {
     public static JLabel generateWater(int x, int y) {
         ImageIcon icon = new ImageIcon("textures/water.png");
         Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(150, -1, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(175, -1, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
 
         JLabel water = new JLabel(scaledIcon);
-        water.setBounds(x, y, 140, 140);
+        water.setBounds(x, y, 160, 160);
 
         System.out.println("[Obstacles.java] Wasser erfolgreich erstellt." + x + " " + y);
 
