@@ -39,11 +39,10 @@ public class Game {
 
         ArrayList<Component> obstaclesList = new ArrayList<>();
 
-        obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
-        obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
-        obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
-        obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
-        obstaclesList.add(Obstacles.createObstacle(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
+        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(1, 5) * 90, RandomNumber.generate(1, 5) * 90));
+        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(2, 5) * 90, RandomNumber.generate(2, 5) * 90));
+        obstaclesList.add(Obstacles.generateTree(RandomNumber.generate(2, 4) * 90, RandomNumber.generate(2, 4) * 90));
+        obstaclesList.add(Obstacles.generateWater(RandomNumber.generate(1, 6) * 90, RandomNumber.generate(1, 6) * 90));
 
         Player.setObstacles(obstaclesList);
 

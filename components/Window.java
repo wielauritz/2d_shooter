@@ -30,6 +30,6 @@ public class Window {
 
     public void open() {
         frame.setVisible(true);
-        System.out.println("[Window.java] Fenster erfolgreich geöffnet.");
+        System.out.println("[Window.java] Fenster erfolgreich geöffnet.\n[Window.java] Spiel erfolgreich gestartet.");
     }
 }
