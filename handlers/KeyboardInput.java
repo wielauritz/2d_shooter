@@ -1,5 +1,6 @@
 package handlers;
 
+import components.Overlay;
 import components.Window;
 import entities.Player;
 import entities.Projectile;
@@ -124,6 +125,8 @@ public class KeyboardInput extends Window {
 
         JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
         frame.getContentPane().add(projectile);
+
+        Overlay.updateAmmoHUD(1);
 
         //Timer zum Bewegen des Projektils erstellen:
 
