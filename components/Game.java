@@ -56,7 +56,6 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(193, 396));
         obstaclesList.add(Obstacles.generateTree(599, 8));
 
-
         obstaclesList.add(Obstacles.generateWater(400, 250));
 
         Player.setObstacles(obstaclesList);
@@ -70,6 +69,10 @@ public class Game {
         Container c = Overlay.createHealthHUD();
         panel.add(c);
         panel.setComponentZOrder(c, 0);
+
+        Container c2 = Overlay.createAmmoHUD();
+        panel.add(c2);
+        panel.setComponentZOrder(c2, 1);
 
         Overlay.updateHealthHUD(0);
 

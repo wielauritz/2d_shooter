@@ -44,7 +44,7 @@ public class Player {
     */
 
     public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
-        System.out.println(obstacle.getWidth());
+
         if (obstacle.getWidth() < 159) {
             Rectangle playerBounds = player.getBounds();
             Rectangle obstacleBounds = obstacle.getBounds();
