@@ -3,20 +3,17 @@ package components;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import static handlers.KeyboardInput.playerMoveTimer;
 
 public class DeathScreen {
 
     public static JLabel playButton;
-    public static JLabel settingsButton;
+    public static JLabel backButton;
     public static JLabel closeButton;
 
 
@@ -25,7 +22,18 @@ public class DeathScreen {
      */
     public static JPanel create() {
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel() {
+
+            //Setzt das Hintergrundbild und den Titel für das Hauptmenü:
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon gifIcon = new ImageIcon("textures/DeathScreen/deathscreen.gif");
+                Image gifImage = gifIcon.getImage();
+                g.drawImage(gifImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
 
         panel.setLayout(null);
         panel.setBackground(Color.RED);
@@ -40,78 +48,120 @@ public class DeathScreen {
 
         //Erstellt den Spielen-Button:
 
-        playButton = new JLabel("Neustarten", SwingConstants.CENTER);
-        playButton.setBounds(170, 300, 400, 50);
+        playButton = new JLabel("Neu starten", SwingConstants.CENTER);
+        playButton.setBounds(170, 270, 400, 50);
         playButton.setFont(Program.gameFont.deriveFont(24f));
         playButton.setOpaque(true);
         playButton.setFocusable(false);
         panel.add(playButton);
 
-
         //Erstellt den Einstellungen-Button:
 
-        settingsButton = new JLabel("Einstellungen", SwingConstants.CENTER);
-        settingsButton.setBounds(170, 370, 400, 50);
-        settingsButton.setFont(Program.gameFont.deriveFont(24f));
-        settingsButton.setOpaque(true);
-        settingsButton.setFocusable(false);
-        panel.add(settingsButton);
+        backButton = new JLabel("Hauptmenü", SwingConstants.CENTER);
+        backButton.setBounds(170, 340, 400, 50);
+        backButton.setFont(Program.gameFont.deriveFont(24f));
+        backButton.setOpaque(true);
+        backButton.setFocusable(false);
+        panel.add(backButton);
 
         //Erstellt den Beenden-Button:
 
         closeButton = new JLabel("Beenden", SwingConstants.CENTER);
-        closeButton.setBounds(170, 440, 400, 50);
+        closeButton.setBounds(170, 410, 400, 50);
         closeButton.setFont(Program.gameFont.deriveFont(24f));
         closeButton.setOpaque(true);
         closeButton.setFocusable(false);
         panel.add(closeButton);
-
 
          /*
             Mausklick im Death-Screen-Menü registrieren:
         */
 
         playButton.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("[MouseInput.java] Spielfeld wird erstellt, bitte warten...");
+                System.out.println("[DeathScreen.java] Spielfeld wird erstellt, bitte warten...");
 
-                //Spielfeld dem Fenster übergeben:
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
 
-                Window.frame.removeAll();
-                Window.frame.add(Game.create());
-                Window.frame.revalidate();
-                Window.frame.repaint();
+                        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
 
+                        if (playerMoveTimer != null) {
+                            playerMoveTimer.stop();
+                        }
+                        MouseInput.timerRunning = false;
 
-                KeyboardInput.spacePressed = true;
+                        //Anzeigen zurücksetzen:
 
-                MouseInput.started = true;
+                        Overlay.resetHealthHUD();
+                        Overlay.resetAmmoHUD();
 
-                //Tastendruck simulieren, um das Fenster zu aktualisieren:
+                        //Spielfeld dem Fenster übergeben:
 
+                        JPanel gamePanel = Game.create();
+                        Window.frame.setContentPane(gamePanel);
+                        Window.frame.repaint();
+                        Window.frame.revalidate();
 
-                System.out.println("[MouseInput.java] Spielfeld erfolgreich geladen.");
+                        //Eingaben sperren:
 
+                        KeyboardInput.enabled = true;
+
+                        MouseInput.enabled = true;
+                    }
+                });
+
+                System.out.println("[DeathScreen.java] Spielfeld erfolgreich geladen.");
+            }
+        });
+
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                        //Anzeigen zurücksetzen:
+
+                        Overlay.resetHealthHUD();
+                        Overlay.resetAmmoHUD();
+
+                        //Hauptmenü dem Fenster übergeben:
+
+                        JPanel menuPanel = TitleScreen.create();
+                        Window.frame.setContentPane(menuPanel);
+                        Window.frame.repaint();
+                        Window.frame.revalidate();
+
+                        //Eingaben sperren:
+
+                        KeyboardInput.enabled = false;
+
+                        MouseInput.enabled = false;
+                    }
+                });
             }
         });
 
         closeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("[MouseInput.java] Spiel wird beendet, bitte warten...");
+                System.out.println("[DeathScreen.java] Spiel wird beendet, bitte warten...");
 
-                //Fenster schließen und Timer stoppen, damit das Spiel beendet werden kann:
+                //Fenster schließen:
 
                 Window.frame.dispose();
+
+                //Timer stoppen, damit das Spiel beendet werden kann:
+
                 if (playerMoveTimer != null) {
                     playerMoveTimer.stop();
                 }
-                MouseInput.running = false;
+                MouseInput.timerRunning = false;
             }
         });
-
 
         System.out.println("[DeathScreen.java] Death-Screen erfolgreich erstellt.");
 

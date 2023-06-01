@@ -1,9 +1,6 @@
 package handlers;
 
-import components.DeathScreen;
-import components.Game;
 import components.Overlay;
-import components.Window;
 import entities.Player;
 import entities.Projectile;
 
@@ -14,16 +11,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static components.Menu.closeButton;
-import static components.Menu.playButton;
 import static components.Window.frame;
-import static handlers.KeyboardInput.playerMoveTimer;
 
 public class MouseInput {
 
-    public static boolean started = false;
+    public static boolean enabled = false;
 
-    public static boolean running = true;
+    public static boolean timerRunning = true;
 
     /*
         Letzte Position der Maus speichern:
@@ -41,7 +35,7 @@ public class MouseInput {
 
         //Alle 100ms Bewegungs-Check ausführen:
 
-        while (running) {
+        while (timerRunning) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -71,49 +65,10 @@ public class MouseInput {
 
         System.out.println("[MouseInput.java] Mausklick-Listener aktiviert.");
 
-        /*
-            Mausklick im Hauptmenü registrieren:
-        */
-
-        playButton.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("[MouseInput.java] Spielfeld wird erstellt, bitte warten...");
-
-                //Spielfeld dem Fenster übergeben:
-
-                Window.frame.setContentPane(Game.create());
-                started = true;
-
-                //Tastendruck simulieren, um das Fenster zu aktualisieren:
-
-                KeyboardInput.spacePressed = true;
-
-                System.out.println("[MouseInput.java] Spielfeld erfolgreich geladen.");
-
-            }
-        });
-
-        closeButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("[MouseInput.java] Spiel wird beendet, bitte warten...");
-
-                //Fenster schließen und Timer stoppen, damit das Spiel beendet werden kann:
-
-                Window.frame.dispose();
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                running = false;
-            }
-        });
-
         components.Window.frame.addMouseListener(new MouseAdapter() {
 
             public void mouseClicked(MouseEvent e) {
-                if (started) {
+                if (enabled) {
                     if (e.getButton() == MouseEvent.BUTTON1) {
 
                         //Spielerposition abrufen:

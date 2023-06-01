@@ -17,7 +17,7 @@ public class Player {
 
         //Erzeugt den Spieler:
 
-        player = new JLabel(new ImageIcon("textures/player.png"));
+        player = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
 
         //Positioniert den Spieler mittig im Fenster:
 
@@ -58,7 +58,8 @@ public class Player {
     */
 
     public static void move(int x, int y) {
-        /*System.out.println("[Player.java] Spieler bewegt: x=" + player.getX() + " und y=" + player.getY());*/
+
+        //Neue Position des Spielers berechnen:
 
         int newX = player.getX() + x;
         int newY = player.getY() + y;

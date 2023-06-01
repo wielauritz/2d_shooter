@@ -1,7 +1,6 @@
 package entities;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Grid extends JFrame {
     private static final int GRID_SIZE = 750;

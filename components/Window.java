@@ -17,9 +17,9 @@ public class Window {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Menü dem Fenster übergeben:
+        //Hauptmenü dem Fenster übergeben:
 
-        frame.setContentPane(Menu.create());
+        frame.setContentPane(TitleScreen.create());
 
         System.out.println("[Window.java] Fenster erfolgreich erstellt.");
     }

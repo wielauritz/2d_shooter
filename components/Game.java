@@ -3,7 +3,6 @@ package components;
 import entities.Obstacles;
 import entities.Player;
 import handlers.KeyboardInput;
-import utils.RandomNumber;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class Game {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    Image image = ImageIO.read(new File("textures/floor_path.png"));
+                    Image image = ImageIO.read(new File("textures/components/Game/floor.png"));
                     g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -81,8 +80,6 @@ public class Game {
         KeyboardInput.KeyPress();
 
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
-
-        System.out.println("a" + panel.getComponentCount());
 
         return panel;
     }

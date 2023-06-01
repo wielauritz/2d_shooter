@@ -101,84 +101,84 @@ public class KeyboardInput extends Window {
     public static void shootProjectile() {
 
 
-            //Mehr als ein Projektil pro Leertasten-Klick verhindern:
+        //Mehr als ein Projektil pro Leertasten-Klick verhindern:
 
-            if (!spacePressed) {
-                return;
-            }
-            spacePressed = false;
+        if (!spacePressed) {
+            return;
+        }
+        spacePressed = false;
 
-            //Spielerposition abrufen:
+        //Spielerposition abrufen:
 
-            Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
-                    Player.player.getY() + Player.playerSize / 2);
+        Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
+                Player.player.getY() + Player.playerSize / 2);
 
-            //Winkel zwischen Spieler und Mauszeiger berechnen:
+        //Winkel zwischen Spieler und Mauszeiger berechnen:
 
-            double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
+        double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
 
-            //Geschwindigkeiten für das Projektil berechnen:
+        //Geschwindigkeiten für das Projektil berechnen:
 
-            int projectileSpeed = 30;
-            double speedX = Math.cos(angle) * projectileSpeed;
-            double speedY = Math.sin(angle) * projectileSpeed;
+        int projectileSpeed = 30;
+        double speedX = Math.cos(angle) * projectileSpeed;
+        double speedY = Math.sin(angle) * projectileSpeed;
 
-            //Projektil erstellen und anzeigen:
+        //Projektil erstellen und anzeigen:
 
-            JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
-            frame.getContentPane().add(projectile);
-            frame.getContentPane().setComponentZOrder(projectile, 0);
+        JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
+        frame.getContentPane().add(projectile);
+        frame.getContentPane().setComponentZOrder(projectile, 0);
 
-            Overlay.updateAmmoHUD(1);
+        Overlay.updateAmmoHUD(1);
 
-            //Timer zum Bewegen des Projektils erstellen:
-
-
-            Timer timer = new Timer(1, new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+        //Timer zum Bewegen des Projektils erstellen:
 
 
-                    // Position des Projektils aktualisieren:
+        Timer timer = new Timer(1, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-                    double newX = projectile.getX() + speedX;
-                    double newY = projectile.getY() + speedY;
 
-                    //Überprüfen, ob das Projektil ein Hindernis berührt:
+                // Position des Projektils aktualisieren:
 
-                    boolean collided = false;
-                    for (Component obstacle : Player.obstacles) {
-                        projectile.setLocation((int) newX, (int) newY);
-                        if (Player.isCollidingWithObstacle(projectile, obstacle)) {
-                            collided = true;
-                            break;
-                        }
-                    }
+                double newX = projectile.getX() + speedX;
+                double newY = projectile.getY() + speedY;
 
-                    if (collided) {
-                        projectile.setLocation((int) (projectile.getX() - speedX), (int) (projectile.getY() - speedY));
-                    } else {
-                        projectile.setLocation((int) newX, (int) newY);
-                    }
+                //Überprüfen, ob das Projektil ein Hindernis berührt:
 
-                    //Projektil entfernen, wenn es ein Hindernis berührt:
-
-                    if (newX < 0 || newX > 750 || newY < 0 || newY > 750 || collided) {
-
-                        projectile.setVisible(false);
-                        ((Timer) e.getSource()).stop();
-                        frame.getContentPane().remove(projectile);
-                    }
-
-                    //Projektil entfernen, wenn es außerhalb des Fensters ist:
-
-                    if (newX < 0 || newX > 750 || newY < 0 || newY > 750) {
-
-                        projectile.setVisible(false);
-                        ((Timer) e.getSource()).stop();
-                        frame.getContentPane().remove(projectile);
+                boolean collided = false;
+                for (Component obstacle : Player.obstacles) {
+                    projectile.setLocation((int) newX, (int) newY);
+                    if (Player.isCollidingWithObstacle(projectile, obstacle)) {
+                        collided = true;
+                        break;
                     }
                 }
-            });
-            timer.start();
+
+                if (collided) {
+                    projectile.setLocation((int) (projectile.getX() - speedX), (int) (projectile.getY() - speedY));
+                } else {
+                    projectile.setLocation((int) newX, (int) newY);
+                }
+
+                //Projektil entfernen, wenn es ein Hindernis berührt:
+
+                if (newX < 0 || newX > 750 || newY < 0 || newY > 750 || collided) {
+
+                    projectile.setVisible(false);
+                    ((Timer) e.getSource()).stop();
+                    frame.getContentPane().remove(projectile);
+                }
+
+                //Projektil entfernen, wenn es außerhalb des Fensters ist:
+
+                if (newX < 0 || newX > 750 || newY < 0 || newY > 750) {
+
+                    projectile.setVisible(false);
+                    ((Timer) e.getSource()).stop();
+                    frame.getContentPane().remove(projectile);
+                }
+            }
+        });
+        timer.start();
     }
 }

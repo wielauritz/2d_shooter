@@ -11,7 +11,7 @@ public class Overlay {
     private static int healthPoints = 100;
     public static JLabel health;
 
-    private static int ammoAmount = 51;
+    private static int ammoAmount = 50;
     public static JLabel ammo;
 
     /*
@@ -37,7 +37,8 @@ public class Overlay {
         ammo = new OutlinedLabel(ammoAmount + "/50 AM");
         ammo.setForeground(Color.WHITE);
         ammo.setFont(Program.gameFont.deriveFont(24f));
-        ammo.setBounds(573, 0, 200, 25);
+        ammo.setBounds(545, 0, 200, 25);
+        ammo.setHorizontalAlignment(SwingConstants.RIGHT);
 
         System.out.println("[Overlay.java] Ammo-Overlay erfolgreich erstellt.");
 
@@ -54,12 +55,17 @@ public class Overlay {
 
         if (healthPoints <= 0) {
 
-            Window.frame.setContentPane(DeathScreen.create());
+            //Death-Screen-Menü dem Fenster übergeben:
 
+            Window.frame.setContentPane(DeathScreen.create());
+            Window.frame.revalidate();
             Window.frame.repaint();
 
-            MouseInput.started = false;
-            KeyboardInput.enabled = false;
+            //Eingaben sperren:
+
+            KeyboardInput.enabled = true;
+
+            MouseInput.enabled = true;
 
         } else {
             health.setText(healthPoints + "/100 HP");
@@ -79,18 +85,19 @@ public class Overlay {
 
         ammoAmount = ammoAmount - difference;
 
-        System.out.println(KeyboardInput.spacePressed);
-
         if (ammoAmount <= 0) {
 
-            MouseInput.started = false;
-            KeyboardInput.enabled = false;
+            //Death-Screen-Menü dem Fenster übergeben:
 
             Window.frame.setContentPane(DeathScreen.create());
-
+            Window.frame.revalidate();
             Window.frame.repaint();
 
-            System.out.println(Window.frame.getContentPane().getComponentCount());
+            //Eingaben sperren:
+
+            KeyboardInput.enabled = true;
+
+            MouseInput.enabled = true;
 
         } else {
             ammo.setText(ammoAmount + "/50 AM");
@@ -100,6 +107,26 @@ public class Overlay {
         System.out.println("[Overlay.java] Ammo-Overlay erfolgreich aktualisiert.");
 
         return ammo;
+    }
+
+    /*
+        Setzt die Lebensanzeige zurück
+    */
+
+    public static void resetHealthHUD() {
+
+        healthPoints = 100;
+
+    }
+
+    /*
+        Setzt die Lebensanzeige zurück
+    */
+
+    public static void resetAmmoHUD() {
+
+        ammoAmount = 50;
+
     }
 
     /*
@@ -119,15 +146,32 @@ public class Overlay {
 
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            //Zeichnet den Schatten:
+            //Setzt den Stil des Schattens:
 
             g2d.setStroke(new BasicStroke(2));
             g2d.setColor(Color.BLACK);
-            g2d.drawGlyphVector(getFont().createGlyphVector(g2d.getFontRenderContext(), getText()), 0, getFont().getSize());
+
+            //Ruft die Textbreite ab:
+
+            int textWidth = g2d.getFontMetrics().stringWidth(getText());
+            int textX = 0;
+
+            //Berechnet die Schattenposition mit der Textbreite:
+
+            if (getHorizontalAlignment() == SwingConstants.CENTER) {
+                textX = (getWidth() - textWidth) / 2;
+            } else if (getHorizontalAlignment() == SwingConstants.RIGHT) {
+                textX = getWidth() - textWidth;
+            }
+
+            //Zeichnet den Schatten mit definiertem Stil:
+
+            g2d.drawGlyphVector(getFont().createGlyphVector(g2d.getFontRenderContext(), getText()), textX, getFont().getSize());
 
             super.paintComponent(g2d);
 
             g2d.dispose();
         }
+
     }
 }

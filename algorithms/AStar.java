@@ -1,4 +1,4 @@
-package entities;
+package algorithms;
 
 import java.util.*;
 import java.util.stream.Collectors;
