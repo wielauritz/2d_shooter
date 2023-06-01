@@ -1,4 +1,6 @@
-package entities;
+package environment;
+
+import entities.Obstacles;
 
 import javax.swing.*;
 
