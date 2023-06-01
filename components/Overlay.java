@@ -1,6 +1,7 @@
 package components;
 
 import handlers.KeyboardInput;
+import handlers.MouseInput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,17 +54,11 @@ public class Overlay {
 
         if (healthPoints <= 0) {
 
-            Window.frame.setContentPane(Blank.panel());
-            //Window.panel.setBackground(Color.RED);
+            Window.frame.setContentPane(DeathScreen.create());
 
-            health = new OutlinedLabel("Du bist gestorben!");
-            health.setForeground(Color.WHITE);
-            health.setFont(Program.gameFont.deriveFont(24f));
-            health.setBounds(180, 325, 500, 25);
+            Window.frame.repaint();
 
-            Window.panel.add(health);
-            Window.panel.repaint();
-
+            MouseInput.started = false;
             KeyboardInput.enabled = false;
 
         } else {
@@ -84,20 +79,18 @@ public class Overlay {
 
         ammoAmount = ammoAmount - difference;
 
+        System.out.println(KeyboardInput.spacePressed);
+
         if (ammoAmount <= 0) {
 
-            Window.frame.setContentPane(Blank.panel());
-            //Window.panel.setBackground(Color.RED);
-
-            ammo = new OutlinedLabel("Keine Munition mehr!");
-            ammo.setForeground(Color.WHITE);
-            ammo.setFont(Program.gameFont.deriveFont(24f));
-            ammo.setBounds(180, 325, 500, 25);
-
-            Window.panel.add(ammo);
-            Window.panel.repaint();
-
+            MouseInput.started = false;
             KeyboardInput.enabled = false;
+
+            Window.frame.setContentPane(DeathScreen.create());
+
+            Window.frame.repaint();
+
+            System.out.println(Window.frame.getContentPane().getComponentCount());
 
         } else {
             ammo.setText(ammoAmount + "/50 AM");

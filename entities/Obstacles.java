@@ -18,6 +18,8 @@ public class Obstacles {
         JLabel tree = new JLabel(scaledIcon);
         tree.setBounds(x, y, 100, 100);
 
+        System.out.println("[Obstacles.java] Baum erfolgreich erstellt.");
+
         return tree;
     }
 
@@ -29,6 +31,8 @@ public class Obstacles {
 
         JLabel water = new JLabel(scaledIcon);
         water.setBounds(x, y, 160, 160);
+
+        System.out.println("[Obstacles.java] Wasser erfolgreich erstellt.");
 
         return water;
     }

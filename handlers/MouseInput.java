@@ -1,5 +1,6 @@
 package handlers;
 
+import components.DeathScreen;
 import components.Game;
 import components.Overlay;
 import components.Window;
@@ -20,7 +21,7 @@ import static handlers.KeyboardInput.playerMoveTimer;
 
 public class MouseInput {
 
-    private static boolean started = false;
+    public static boolean started = false;
 
     public static boolean running = true;
 
@@ -69,6 +70,10 @@ public class MouseInput {
     public static void MouseClick() {
 
         System.out.println("[MouseInput.java] Mausklick-Listener aktiviert.");
+
+        /*
+            Mausklick im Hauptmenü registrieren:
+        */
 
         playButton.addMouseListener(new MouseAdapter() {
 
@@ -130,6 +135,7 @@ public class MouseInput {
 
                         JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
                         frame.getContentPane().add(projectile);
+                        frame.getContentPane().setComponentZOrder(projectile, 0);
 
                         Overlay.updateAmmoHUD(1);
 

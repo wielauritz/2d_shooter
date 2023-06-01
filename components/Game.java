@@ -39,6 +39,8 @@ public class Game {
 
         ArrayList<Component> obstaclesList = new ArrayList<>();
 
+        obstaclesList.add(Obstacles.generateWater(400, 250));
+
         obstaclesList.add(Obstacles.generateTree(165, 482));
         obstaclesList.add(Obstacles.generateTree(648, 316));
         obstaclesList.add(Obstacles.generateTree(217, 570));
@@ -56,8 +58,6 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(193, 396));
         obstaclesList.add(Obstacles.generateTree(599, 8));
 
-        obstaclesList.add(Obstacles.generateWater(400, 250));
-
         Player.setObstacles(obstaclesList);
 
         for (Component obstacle : obstaclesList) {
@@ -72,7 +72,7 @@ public class Game {
 
         Container c2 = Overlay.createAmmoHUD();
         panel.add(c2);
-        panel.setComponentZOrder(c2, 1);
+        panel.setComponentZOrder(c2, 0);
 
         Overlay.updateHealthHUD(0);
 
@@ -81,6 +81,8 @@ public class Game {
         KeyboardInput.KeyPress();
 
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
+
+        System.out.println("a" + panel.getComponentCount());
 
         return panel;
     }

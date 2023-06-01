@@ -12,8 +12,11 @@ public class AStar {
 
     /* IDN für Date Nodes */
     public class Graph<T extends GraphNode> {
-        private final Set<T> nodes;
-        private final Map<String, Set<String>> connections;
+        private Set<T> nodes;
+        private Map<String, Set<String>> connections;
+
+        public Graph() {
+        }
 
         public T getNode(String id) {
             return nodes.stream()
