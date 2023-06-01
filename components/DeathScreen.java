@@ -29,7 +29,7 @@ public class DeathScreen {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon gifIcon = new ImageIcon("textures/DeathScreen/deathscreen.gif");
+                ImageIcon gifIcon = new ImageIcon("textures/components/DeathScreen/deathscreen.gif");
                 Image gifImage = gifIcon.getImage();
                 g.drawImage(gifImage, 0, 0, getWidth(), getHeight(), this);
             }

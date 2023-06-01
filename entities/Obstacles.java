@@ -10,7 +10,7 @@ public class Obstacles {
     */
 
     public static JLabel generateTree(int x, int y) {
-        ImageIcon icon = new ImageIcon("textures/Obstacles/tree.png");
+        ImageIcon icon = new ImageIcon("textures/entities/Obstacles/tree.png");
         Image img = icon.getImage();
         Image scaledImg = img.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
@@ -24,7 +24,7 @@ public class Obstacles {
     }
 
     public static JLabel generateWater(int x, int y) {
-        ImageIcon icon = new ImageIcon("textures/Obstacles/water.png");
+        ImageIcon icon = new ImageIcon("textures/entities/Obstacles/water.png");
         Image img = icon.getImage();
         Image scaledImg = img.getScaledInstance(175, -1, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);

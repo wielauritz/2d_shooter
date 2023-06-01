@@ -33,9 +33,9 @@ public class TitleScreen {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    ImageIcon gifIcon = new ImageIcon("textures/TitleScreen/titlescreen.gif");
+                    ImageIcon gifIcon = new ImageIcon("textures/components/TitleScreen/titlescreen.gif");
                     Image gifImage = gifIcon.getImage();
-                    Image title = ImageIO.read(new File("textures/TitleScreen/title.png"));
+                    Image title = ImageIO.read(new File("textures/components/TitleScreen/title.png"));
                     g.drawImage(gifImage, -200, 0, getWidth() + 400, getHeight(), this);
                     g.drawImage(title, 100, 63, 544, 75, this);
                 } catch (IOException ex) {
