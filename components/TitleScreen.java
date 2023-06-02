@@ -1,5 +1,6 @@
 package components;
 
+import algorithms.GameLoop;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -11,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-import static handlers.KeyboardInput.playerMoveTimer;
+import static algorithms.GameLoop.playerMoveTimer;
 
 public class TitleScreen {
 
@@ -96,7 +97,7 @@ public class TitleScreen {
                 if (playerMoveTimer != null) {
                     playerMoveTimer.stop();
                 }
-                MouseInput.timerRunning = false;
+                GameLoop.timerRunning = false;
 
                 //Spielfeld dem Fenster übergeben:
 
@@ -128,7 +129,7 @@ public class TitleScreen {
                 if (playerMoveTimer != null) {
                     playerMoveTimer.stop();
                 }
-                MouseInput.timerRunning = false;
+                GameLoop.timerRunning = false;
             }
         });
 

@@ -1,5 +1,6 @@
 package components;
 
+import algorithms.GameLoop;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static handlers.KeyboardInput.playerMoveTimer;
+import static algorithms.GameLoop.playerMoveTimer;
 
 public class DeathScreen {
 
@@ -90,7 +91,7 @@ public class DeathScreen {
                         if (playerMoveTimer != null) {
                             playerMoveTimer.stop();
                         }
-                        MouseInput.timerRunning = false;
+                        GameLoop.timerRunning = false;
 
                         //Anzeigen zurücksetzen:
 
@@ -159,7 +160,7 @@ public class DeathScreen {
                 if (playerMoveTimer != null) {
                     playerMoveTimer.stop();
                 }
-                MouseInput.timerRunning = false;
+                GameLoop.timerRunning = false;
             }
         });
 

@@ -1,5 +1,6 @@
 package components;
 
+import algorithms.GameLoop;
 import entities.Obstacles;
 import entities.Player;
 import handlers.KeyboardInput;
@@ -75,9 +76,7 @@ public class Game {
 
         Overlay.updateHealthHUD(0);
 
-        //Tastendruck erkennen:
-
-        KeyboardInput.KeyPress();
+        new GameLoop();
 
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
 
