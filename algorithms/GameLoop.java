@@ -27,6 +27,8 @@ public class GameLoop implements KeyListener {
         frame.addKeyListener(this);
         frame.requestFocusInWindow();
 
+        //Timer für Spielerbewegung:
+        
         playerMoveTimer = new Timer(16, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!KeyboardInput.enabled) return;
@@ -35,6 +37,8 @@ public class GameLoop implements KeyListener {
                 int directionY = 0;
                 int speed = 5;
 
+                //Tastenabfragen für Richtung der Spielerbewegung:
+                
                 for (Integer keyCode : pressedKeys) {
                     if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
                         directionY -= speed;
@@ -47,10 +51,14 @@ public class GameLoop implements KeyListener {
                     }
                 }
 
+                //Spielerbewegung basierend auf den abgefragten Tasten:
+                
                 if (directionX != 0 || directionY != 0) {
                     Player.move(directionX, directionY);
                 }
 
+                //Schießen des Projektils, wenn Leertaste gedrückt wurde:
+                
                 if (spacePressed) {
                     spacePressed = false;
                     Projectile.shootProjectile();
@@ -61,6 +69,8 @@ public class GameLoop implements KeyListener {
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
 
+    //Mausbewegungs-Listener:
+    
     public static void MouseMove() {
         System.out.println("[GameLoop.java] Mausbewegungs-Listener aktiviert.");
 
@@ -71,44 +81,61 @@ public class GameLoop implements KeyListener {
                 e.printStackTrace();
             }
 
+            //Aktuelle Mausposition abrufen:
+            
             Point currentPosition = MouseInfo.getPointerInfo().getLocation();
 
             if (!currentPosition.equals(lastPosition)) {
+                
+                //Berechnung der Änderung der Mausposition:
+                
                 int directionX = currentPosition.x - lastPosition.x;
                 int directionY = currentPosition.y - lastPosition.y;
-
-                // - - - Hier andere Aktionen einfügen - - - \\
-
+                
                 lastPosition = currentPosition;
             }
         }
     }
 
+    //Mausklick-Listener:
+    
     public static void MouseClick() {
         System.out.println("[GameLoop.java] Mausklick-Listener aktiviert.");
 
         frame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (MouseInput.enabled && e.getButton() == MouseEvent.BUTTON1) {
+                    
+                    //Position des Spielers abrufen:
+                    
                     Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
                             Player.player.getY() + Player.playerSize / 2);
 
+                    //Winkel zwischen Spieler und Mausposition berechnen:
+                    
                     double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
 
                     int projectileSpeed = 30;
                     double speedX = Math.cos(angle) * projectileSpeed;
                     double speedY = Math.sin(angle) * projectileSpeed;
 
+                    //Projektil erstellen und zur Anzeige hinzufügen:
+                    
                     JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
                     frame.getContentPane().add(projectile);
                     frame.getContentPane().setComponentZOrder(projectile, 0);
 
+                    //Timer für Projektilbewegung:
+                    
                     Timer timer = new Timer(1, new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             double newX = projectile.getX() + speedX;
                             double newY = projectile.getY() + speedY;
 
                             boolean collided = false;
+                            
+                            //Kollision mit Hindernissen überprüfen:
+                            
                             for (Component obstacle : Player.obstacles) {
                                 projectile.setLocation((int) newX, (int) newY);
                                 if (Player.isCollidingWithObstacle(projectile, obstacle)) {
@@ -117,6 +144,8 @@ public class GameLoop implements KeyListener {
                                 }
                             }
 
+                            //Wenn Kollision oder Projektil außerhalb des Fensters, stoppen und ausblenden:
+                            
                             if (collided || newX < 0 || newX >= frame.getWidth() - Player.playerSize ||
                                     newY < 0 || newY >= frame.getHeight() - Player.playerSize) {
                                 projectile.setLocation(-100, -100);
@@ -140,16 +169,21 @@ public class GameLoop implements KeyListener {
             pressedKeys.add(e.getKeyCode());
         }
 
+        //Leertaste gedrückt:
+        
         if (KeyboardInput.enabled && e.getKeyCode() == KeyEvent.VK_SPACE) {
             spacePressed = true;
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         if (KeyboardInput.enabled) {
             pressedKeys.remove(e.getKeyCode());
         }
 
+        //Leertaste losgelassen:
+        
         if (KeyboardInput.enabled && e.getKeyCode() == KeyEvent.VK_SPACE) {
             spacePressed = false;
         }
@@ -157,6 +191,8 @@ public class GameLoop implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        
+        //Nicht benötigt
+        
     }
-
 }
