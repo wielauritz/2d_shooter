@@ -22,7 +22,7 @@ SOLL:
 
 - Trefferanimation
 - Lebenssystem
-- (Unterschiedliche Levels/Maps)
+- ~~Unterschiedliche Levels/Maps~~
 - Texturepack
 - Spielmenü
 
@@ -33,7 +33,7 @@ KANN:
 - Verschiedene Ziele (Singleplayer)
 - bewegliche Ziele (Singleplayer)
 - Bots als Ziel (Singleplayer)
-- (Multiplayer) 
+- ~~Multiplayer~~
 - Sounds (müssen deaktivierbar sein)
 - Nameneditor
 - Scoreboard
