@@ -70,14 +70,19 @@ public class Player {
         Rectangle obstacleBounds = obstacle.getBounds();
         Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
 
-        if (obstacle.getWidth() == 160) { // It's water
+        //Wenn der Spieler mit Wasser in Berührung kommt Schaden hinzufügen:
+
+        if (obstacle.getWidth() == 160 && isPlayer) {
             if (playerBounds.intersects(optimizedBounds)) {
                 Overlay.updateHealthHUD(1);
-                return false; // The player can move over the water but take damage
+                return false;
             }
-        } else if (obstacle.getWidth() == 100) { // It's a tree
+
+        //Spieler nicht durch Bäume laufen lassen:
+
+        } else if (obstacle.getWidth() == 100) {
             if (playerBounds.intersects(optimizedBounds)) {
-                return true; // The player cannot move over a tree
+                return true;
             }
         }
         return false;
