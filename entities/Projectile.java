@@ -63,7 +63,7 @@ public class Projectile {
                 // Check for collision with obstacles
                 boolean collided = false;
                 for (Component obstacle : Player.obstacles) {
-                    if (Player.isCollidingWithObstacle(projectile, obstacle)) {
+                    if (Player.isCollidingWithObstacle(projectile, obstacle, false)) {
                         collided = true;
                         break;
                     }

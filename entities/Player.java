@@ -65,7 +65,7 @@ public class Player {
         Überprüft, ob der Spieler mit einem Hindernis in Berührung kommt
     */
 
-    public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
+    public static boolean isCollidingWithObstacle(Component player, Component obstacle, boolean isPlayer) {
         Rectangle playerBounds = player.getBounds();
         Rectangle obstacleBounds = obstacle.getBounds();
         Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
@@ -107,7 +107,7 @@ public class Player {
         //Verhindert, dass sich der Spieler durch Hindernisse bewegt:
 
         for (Component obstacle : obstacles) {
-            if (isCollidingWithObstacle(player, obstacle)) {
+            if (isCollidingWithObstacle(player, obstacle, true)) {
                 player.setLocation(player.getX() - x, player.getY() - y);
                 break;
             }

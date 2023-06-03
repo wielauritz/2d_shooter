@@ -138,7 +138,7 @@ public class GameLoop implements KeyListener {
                             
                             for (Component obstacle : Player.obstacles) {
                                 projectile.setLocation((int) newX, (int) newY);
-                                if (Player.isCollidingWithObstacle(projectile, obstacle)) {
+                                if (Player.isCollidingWithObstacle(projectile, obstacle, false)) {
                                     collided = true;
                                     break;
                                 }
