@@ -1,13 +1,19 @@
 package entities;
 
+import components.Overlay;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Player {
 
     public static JLabel player;
     public static int playerSize = 50;
     public static java.util.List<Component> obstacles;
+    private static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     /*
         Generiert den Spieler
@@ -28,6 +34,22 @@ public class Player {
 
         System.out.println("[Player.java] Spieler erfolgreich erstellt.");
 
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdown();
+        }
+        // Create a new executor
+        executorService = Executors.newSingleThreadScheduledExecutor();
+
+        executorService.scheduleAtFixedRate(() -> {
+            SwingUtilities.invokeLater(() -> {
+                for (Component obstacle : obstacles) {
+                    if (obstacle.getBounds().width == 160 && player.getBounds().intersects(obstacle.getBounds())) {
+                        Overlay.updateHealthHUD(1);
+                    }
+                }
+            });
+        }, 0, 100, TimeUnit.MILLISECONDS);
+
         return player;
     }
 
@@ -44,11 +66,19 @@ public class Player {
     */
 
     public static boolean isCollidingWithObstacle(Component player, Component obstacle) {
-        if (obstacle.getWidth() < 159) {
-            Rectangle playerBounds = player.getBounds();
-            Rectangle obstacleBounds = obstacle.getBounds();
-            Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
-            return playerBounds.intersects(optimizedBounds);
+        Rectangle playerBounds = player.getBounds();
+        Rectangle obstacleBounds = obstacle.getBounds();
+        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
+
+        if (obstacle.getWidth() == 160) { // It's water
+            if (playerBounds.intersects(optimizedBounds)) {
+                Overlay.updateHealthHUD(1);
+                return false; // The player can move over the water but take damage
+            }
+        } else if (obstacle.getWidth() == 100) { // It's a tree
+            if (playerBounds.intersects(optimizedBounds)) {
+                return true; // The player cannot move over a tree
+            }
         }
         return false;
     }
@@ -82,5 +112,12 @@ public class Player {
                 break;
             }
         }
+    }
+
+    public static void shutdownExecutorService() {
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+        System.out.println("stop");
     }
 }

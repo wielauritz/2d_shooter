@@ -57,15 +57,18 @@ public class Projectile {
                 double newX = projectile.getX() + speedX;
                 double newY = projectile.getY() + speedY;
 
+                // Update projectile position
+                projectile.setLocation((int) newX, (int) newY);
+
                 // Check for collision with obstacles
                 boolean collided = false;
                 for (Component obstacle : Player.obstacles) {
-                    projectile.setLocation((int) newX, (int) newY);
                     if (Player.isCollidingWithObstacle(projectile, obstacle)) {
                         collided = true;
                         break;
                     }
                 }
+
 
                 // Handle collision and projectile removal
                 if (collided || newX < 0 || newX > 750 || newY < 0 || newY > 750) {
