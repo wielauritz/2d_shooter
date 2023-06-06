@@ -14,30 +14,30 @@ Entwickelt von Eric John, Tim Dreyer und Lauritz Wiebusch.
 
 MUSS:
 
-- 1 Spieler, der bewegbar ist und schiessen kann
-- Objekte als Ziel (Singleplayer)
-- Treffererkennung
+- [x] 1 Spieler, der bewegbar ist und schiessen kann
+- [ ] Objekte als Ziel (Singleplayer)
+- [x] Treffererkennung
 
 SOLL:
 
-- Trefferanimation
-- Lebenssystem
-- ~~Unterschiedliche Levels/Maps~~
-- Texturepack
-- Spielmenü
+- [ ] Trefferanimation
+- [ ] Lebenssystem
+- [ ] ~~Unterschiedliche Levels/Maps~~
+- [ ] Texturepack
+- [x] Spielmenü
 
 KANN:
 
-- Munitionsanzeige
-- Verschiedene Waffen 
-- Verschiedene Ziele (Singleplayer)
-- bewegliche Ziele (Singleplayer)
-- Bots als Ziel (Singleplayer)
-- ~~Multiplayer~~
-- Sounds (müssen deaktivierbar sein)
-- Nameneditor
-- Scoreboard
-- Leaderboard
+- [x] Munitionsanzeige
+- [ ] Verschiedene Waffen 
+- [ ] Verschiedene Ziele (Singleplayer)
+- [ ] bewegliche Ziele (Singleplayer)
+- [ ] Bots als Ziel (Singleplayer)
+- [ ] ~~Multiplayer~~
+- [ ] Sounds (müssen deaktivierbar sein)
+- [ ] Nameneditor
+- [ ] Scoreboard
+- [ ] Leaderboard
 
 DARF NICHT:
 
