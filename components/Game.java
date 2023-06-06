@@ -12,8 +12,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
+
+    public static List<Bots> botsList = new ArrayList<>();
 
     public static JPanel create() {
 
@@ -36,8 +39,12 @@ public class Game {
 
         panel.add(Player.generate());
 
+
+
         Bots bot1 = new Bots();
+        botsList.add(bot1);
         Bots bot2 = new Bots();
+        botsList.add(bot2);
 
         panel.add(bot1.generate(1));
         panel.add(bot2.generate(2));

@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static components.Game.botsList;
 import static components.Window.frame;
 import static entities.Bots.bots;
 import static entities.Player.player;
@@ -84,24 +85,26 @@ public class GameLoop implements KeyListener {
         executorService.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
                 //for (Component bots : Bots) {
+                for (Bots bot : botsList) {
 
                     int directionX = 0;
                     int directionY = 0;
                     int speed = 5;
 
-                if (player.getX() < bots.getX()) {
+
+                if (player.getX() < bot.bots.getX()) {
                     directionX -= speed;
-                } else if (player.getY() < bots.getY()) {
+                } else if (player.getY() < bot.bots.getY()) {
                     directionY -= speed;
-                } else if (player.getX() > bots.getX()) {
+                } else if (player.getX() > bot.bots.getX()) {
                     directionX += speed;
-                } else if (player.getY() > bots.getY()) {
+                } else if (player.getY() > bot.bots.getY()) {
                     directionY += speed;
                 }
                 if (directionX != 0 || directionY != 0) {
                     Bots.move(directionX, directionY);
                 }
-
+                }
 
 
             });
