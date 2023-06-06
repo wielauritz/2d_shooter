@@ -62,6 +62,7 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(599, 8));
 
         Player.setObstacles(obstaclesList);
+        Bots.setObstacles(obstaclesList);
 
         for (Component obstacle : obstaclesList) {
             panel.add(obstacle);
