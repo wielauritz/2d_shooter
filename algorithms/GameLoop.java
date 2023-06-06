@@ -89,19 +89,21 @@ public class GameLoop implements KeyListener {
                     int directionY = 0;
                     int speed = 5;
 
-                    if (player.getX() < bots.getX()) {
-                        directionY -= speed;
-                    } else if (player.getY() < bots.getY()) {
-                        directionY += speed;
-                    } else if (player.getX() > bots.getX()) {
-                        directionX -= speed;
-                    } else if (player.getY() > bots.getY()) {
-                        directionX += speed;
-                    }
-                    if (directionX != 0 || directionY != 0) {
-                        Bots.move(directionX, directionY);
-                    }
-                //}
+                if (player.getX() < bots.getX()) {
+                    directionX -= speed;
+                } else if (player.getY() < bots.getY()) {
+                    directionY -= speed;
+                } else if (player.getX() > bots.getX()) {
+                    directionX += speed;
+                } else if (player.getY() > bots.getY()) {
+                    directionY += speed;
+                }
+                if (directionX != 0 || directionY != 0) {
+                    Bots.move(directionX, directionY);
+                }
+
+
+
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
 
