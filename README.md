@@ -15,13 +15,13 @@ Entwickelt von Eric John und Lauritz Wiebusch.
 MUSS:
 
 - [x] 1 Spieler, der bewegbar ist und schiessen kann
-- [ ] Objekte als Ziel (Singleplayer)
+- [x] Objekte als Ziel (Singleplayer)
 - [x] Treffererkennung
 
 SOLL:
 
 - [ ] Trefferanimation
-- [ ] Lebenssystem
+- [x] Lebenssystem
 - [ ] ~~Unterschiedliche Levels/Maps~~
 - [ ] Texturepack
 - [x] Spielmenü
@@ -30,8 +30,8 @@ KANN:
 
 - [x] Munitionsanzeige
 - [ ] Verschiedene Waffen 
-- [ ] Verschiedene Ziele (Singleplayer)
-- [ ] bewegliche Ziele (Singleplayer)
+- [x] Verschiedene Ziele (Singleplayer)
+- [x] bewegliche Ziele (Singleplayer)
 - [ ] Bots als Ziel (Singleplayer)
 - [ ] ~~Multiplayer~~
 - [ ] Sounds (müssen deaktivierbar sein)
