@@ -90,7 +90,7 @@ public class TitleScreen {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("[Menu.java] Spielfeld wird erstellt, bitte warten...");
+                System.out.println("[TitleScreen.java] Spielfeld wird erstellt, bitte warten...");
 
                 //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
 
@@ -110,7 +110,28 @@ public class TitleScreen {
 
                 MouseInput.enabled = true;
 
-                System.out.println("[Menu.java] Spielfeld erfolgreich geladen.");
+                System.out.println("[TitleScreen.java] Spielfeld erfolgreich geladen.");
+
+            }
+        });
+
+        settingsButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("[TitleScreen.java] Einstellungen werden erstellt, bitte warten...");
+
+                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+                if (playerMoveTimer != null) {
+                    playerMoveTimer.stop();
+                }
+                GameLoop.timerRunning = false;
+
+                //Spielfeld dem Fenster übergeben:
+
+                Window.frame.setContentPane(Settings.create());
+                Window.frame.revalidate();
 
             }
         });
@@ -118,7 +139,7 @@ public class TitleScreen {
         closeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("[Menu.java] Spiel wird beendet, bitte warten...");
+                System.out.println("[TitleScreen.java] Spiel wird beendet, bitte warten...");
 
                 //Fenster schließen:
 
@@ -133,7 +154,7 @@ public class TitleScreen {
             }
         });
 
-        System.out.println("[Menu.java] Hauptmenü erfolgreich erstellt.");
+        System.out.println("[TitleScreen.java] Hauptmenü erfolgreich erstellt.");
 
         return panel;
     }
