@@ -37,7 +37,7 @@ public class Player {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
         }
-        // Create a new executor
+        // Neuen Executor erstellen:
         executorService = Executors.newSingleThreadScheduledExecutor();
 
         executorService.scheduleAtFixedRate(() -> {

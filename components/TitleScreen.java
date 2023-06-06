@@ -76,7 +76,7 @@ public class TitleScreen {
 
         //Erstellt die Informationen:
 
-        JLabel info = new JLabel("© Eric John, Tim Dreyer & Lauritz Wiebusch | BETA-Version (!)", SwingConstants.CENTER);
+        JLabel info = new JLabel("© Eric John & Lauritz Wiebusch | BETA-Version (!)", SwingConstants.CENTER);
         info.setBounds(0, 675, 750, 50);
         info.setFont(Program.gameFont.deriveFont(12f));
         info.setForeground(Color.WHITE);
