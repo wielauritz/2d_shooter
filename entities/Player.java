@@ -1,6 +1,7 @@
 package entities;
 
 import components.Overlay;
+import components.Program;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,10 @@ public class Player {
 
     public static String name;
 
+    public static JLabel nameTag;
+
     public static java.util.List<Component> obstacles;
+
     private static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     /*
@@ -36,7 +40,11 @@ public class Player {
 
         player.setBounds(x + 12, y, size, size);
 
-        System.out.println("[Player.java] Spieler erfolgreich erstellt.");
+        nameTag = new JLabel(name, SwingUtilities.CENTER);
+        nameTag.setFont(Program.gameFont.deriveFont(10f));
+        nameTag.setForeground(Color.WHITE);
+
+        nameTag.setBounds(x - 15, y - 20, 104, 20);
 
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
@@ -53,6 +61,8 @@ public class Player {
                 }
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
+
+        System.out.println("[Player.java] Spieler erfolgreich erstellt.");
 
         return player;
     }
@@ -121,6 +131,8 @@ public class Player {
                 break;
             }
         }
+
+        nameTag.setLocation(newX - 25, player.getY() - 20);
     }
 
     public static void shutdownExecutorService() {

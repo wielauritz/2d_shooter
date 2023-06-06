@@ -38,8 +38,8 @@ public class Game {
         panel.setLayout(null);
 
         panel.add(Player.generate());
-
-
+        panel.add(Player.nameTag);
+        System.out.println(Player.nameTag.getWidth());
 
         Bots bot1 = new Bots();
         botsList.add(bot1);

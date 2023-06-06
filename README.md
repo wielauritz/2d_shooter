@@ -35,7 +35,7 @@ KANN:
 - [ ] Bots als Ziel (Singleplayer)
 - [ ] ~~Multiplayer~~
 - [ ] Sounds (müssen deaktivierbar sein)
-- [ ] Nameneditor
+- [x] Nameneditor
 - [ ] Scoreboard
 - [ ] Leaderboard
 
