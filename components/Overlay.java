@@ -1,5 +1,6 @@
 package components;
 
+import algorithms.GameLoop;
 import entities.Player;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
@@ -69,6 +70,7 @@ public class Overlay {
             MouseInput.enabled = true;
 
             Player.shutdownExecutorService();
+            GameLoop.shutdownExecutorService();
 
         } else {
             health.setText(healthPoints + "/100 HP");
@@ -103,6 +105,7 @@ public class Overlay {
             MouseInput.enabled = true;
 
             Player.shutdownExecutorService();
+            GameLoop.shutdownExecutorService();
 
         } else {
             ammo.setText(ammoAmount + "/50 AM");

@@ -3,9 +3,11 @@ package entities;
 import javax.swing.*;
 import java.awt.*;
 
+import static entities.Player.player;
+
 public class Bots {
 
-    public static JLabel Bots;
+    public static JLabel bots;
     public static int BotsSize = 50;
     public static java.util.List<Component> obstacles;
 
@@ -17,18 +19,18 @@ public class Bots {
 
         //Erzeugt den Spieler:
 
-        Bots = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
+        bots = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
 
         //Positioniert den Spieler mittig im Fenster:
 
         int x = (650 - BotsSize - (BotsSize / 2)) / 2;
         int y = (650 - BotsSize - (BotsSize / 2)) / 2;
 
-        Bots.setBounds(x + 12, y, BotsSize, BotsSize);
+        bots.setBounds(x + 12, y, BotsSize, BotsSize);
 
-        System.out.println("[Bots.java] Spieler erfolgreich erstellt.");
+        System.out.println("[bots.java] Spieler erfolgreich erstellt.");
 
-        return Bots;
+        return bots;
     }
 
     /*
@@ -61,24 +63,24 @@ public class Bots {
 
         //Neue Position des Spielers berechnen:
 
-        int newX = Bots.getX() + x;
-        int newY = Bots.getY() + y;
+        int newX = bots.getX() + x;
+        int newY = bots.getY() + y;
 
         //Verhindert, dass sich der Spieler aus dem Feld bewegt:
 
         if (newX >= 0 && newX + BotsSize <= 733) {
-            Bots.setLocation(newX, Bots.getY());
+            bots.setLocation(newX, bots.getY());
         }
 
         if (newY >= 0 && newY + BotsSize <= 731) {
-            Bots.setLocation(Bots.getX(), newY);
+            bots.setLocation(bots.getX(), newY);
         }
 
         //Verhindert, dass sich der Spieler durch Hindernisse bewegt:
 
         for (Component obstacle : obstacles) {
-            if (isCollidingWithObstacle(Bots, obstacle)) {
-                Bots.setLocation(player.getX() - x, Bots.getY() - y);
+            if (isCollidingWithObstacle(bots, obstacle)) {
+                bots.setLocation(player.getX() - x, bots.getY() - y);
                 break;
             }
         }

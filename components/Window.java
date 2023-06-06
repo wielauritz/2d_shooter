@@ -1,5 +1,7 @@
 package components;
 
+import entities.Player;
+
 import javax.swing.*;
 
 public class Window {
@@ -20,6 +22,8 @@ public class Window {
         //Hauptmenü dem Fenster übergeben:
 
         frame.setContentPane(TitleScreen.create());
+
+        Player.name = "Rainer Zufall";
 
         System.out.println("[Window.java] Fenster erfolgreich erstellt.");
     }

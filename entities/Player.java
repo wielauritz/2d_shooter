@@ -11,7 +11,11 @@ import java.util.concurrent.TimeUnit;
 public class Player {
 
     public static JLabel player;
-    public static int playerSize = 50;
+
+    public static int size = 50;
+
+    public static String name;
+
     public static java.util.List<Component> obstacles;
     private static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -27,10 +31,10 @@ public class Player {
 
         //Positioniert den Spieler mittig im Fenster:
 
-        int x = (750 - playerSize - (playerSize / 2)) / 2;
-        int y = (750 - playerSize - (playerSize / 2)) / 2;
+        int x = (750 - size - (size / 2)) / 2;
+        int y = (750 - size - (size / 2)) / 2;
 
-        player.setBounds(x + 12, y, playerSize, playerSize);
+        player.setBounds(x + 12, y, size, size);
 
         System.out.println("[Player.java] Spieler erfolgreich erstellt.");
 
@@ -101,11 +105,11 @@ public class Player {
 
         //Verhindert, dass sich der Spieler aus dem Feld bewegt:
 
-        if (newX >= 0 && newX + playerSize <= 733) {
+        if (newX >= 0 && newX + size <= 733) {
             player.setLocation(newX, player.getY());
         }
 
-        if (newY >= 0 && newY + playerSize <= 731) {
+        if (newY >= 0 && newY + size <= 731) {
             player.setLocation(player.getX(), newY);
         }
 
@@ -123,6 +127,5 @@ public class Player {
         if (executorService != null) {
             executorService.shutdown();
         }
-        System.out.println("stop");
     }
 }

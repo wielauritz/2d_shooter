@@ -2,6 +2,7 @@ package algorithms;
 
 import components.Overlay;
 import components.Window;
+import entities.Bots;
 import entities.Player;
 import entities.Projectile;
 import handlers.KeyboardInput;
@@ -13,8 +14,13 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static components.Window.frame;
+import static entities.Bots.bots;
+import static entities.Player.player;
 
 public class GameLoop implements KeyListener {
     public static Timer playerMoveTimer;
@@ -22,6 +28,9 @@ public class GameLoop implements KeyListener {
     private static Point lastPosition = MouseInfo.getPointerInfo().getLocation();
     private Set<Integer> pressedKeys = new HashSet<>();
     private boolean spacePressed = false;
+
+    private static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
 
     public GameLoop() {
         frame.addKeyListener(this);
@@ -66,34 +75,44 @@ public class GameLoop implements KeyListener {
             }
         });
         playerMoveTimer.start();
+
+        //Timer für Botbewegung:
+
+        executorService = Executors.newSingleThreadScheduledExecutor();
+
+
+        executorService.scheduleAtFixedRate(() -> {
+            SwingUtilities.invokeLater(() -> {
+                //for (Component bots : Bots) {
+
+                    int directionX = 0;
+                    int directionY = 0;
+                    int speed = 5;
+
+                    if (player.getX() < bots.getX()) {
+                        directionY -= speed;
+                    } else if (player.getY() < bots.getY()) {
+                        directionY += speed;
+                    } else if (player.getX() > bots.getX()) {
+                        directionX -= speed;
+                    } else if (player.getY() > bots.getY()) {
+                        directionX += speed;
+                    }
+                    if (directionX != 0 || directionY != 0) {
+                        Bots.move(directionX, directionY);
+                    }
+                //}
+            });
+        }, 0, 100, TimeUnit.MILLISECONDS);
+
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
 
-    //Timer für Botbewegung:
-        
-    executorService.scheduleAtFixedRate(() -> {
-        SwingUtilities.invokeLater(() -> {
-            for (Component obstacle : Bots) {
-
-                int directionX = 0;
-                int directionY = 0;
-                int speed = 5;
-
-                if (player.getX < Bots.getX) {
-                    directionY -= speed;
-                } else if (player.getY < Bots.getY) {
-                    directionY += speed;
-                } else if (player.getX > Bots.getX) {
-                    directionX -= speed;
-                } else if (player.getY > Bots.getY) {
-                    directionX += speed;
-                }
-                if (directionX != 0 || directionY != 0) {
-                    Bots.move(directionX, directionY);
-                }
-            }
-        });
-    }, 0, 100, TimeUnit.MILLISECONDS);
+    public static void shutdownExecutorService() {
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+    }
 
     //Mausbewegungs-Listener:
     
@@ -134,8 +153,8 @@ public class GameLoop implements KeyListener {
                     
                     //Position des Spielers abrufen:
                     
-                    Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
-                            Player.player.getY() + Player.playerSize / 2);
+                    Point playerPosition = new Point(player.getX() + Player.size / 2,
+                            player.getY() + Player.size / 2);
 
                     //Winkel zwischen Spieler und Mausposition berechnen:
                     
@@ -172,8 +191,8 @@ public class GameLoop implements KeyListener {
 
                             //Wenn Kollision oder Projektil außerhalb des Fensters, stoppen und ausblenden:
                             
-                            if (collided || newX < 0 || newX >= frame.getWidth() - Player.playerSize ||
-                                    newY < 0 || newY >= frame.getHeight() - Player.playerSize) {
+                            if (collided || newX < 0 || newX >= frame.getWidth() - Player.size ||
+                                    newY < 0 || newY >= frame.getHeight() - Player.size) {
                                 projectile.setLocation(-100, -100);
                                 Overlay.updateAmmoHUD(1);
                                 ((Timer) e.getSource()).stop();

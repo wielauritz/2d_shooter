@@ -32,8 +32,8 @@ public class Projectile {
 
 
         // Player position
-        Point playerPosition = new Point(Player.player.getX() + Player.playerSize / 2,
-                Player.player.getY() + Player.playerSize / 2);
+        Point playerPosition = new Point(Player.player.getX() + Player.size / 2,
+                Player.player.getY() + Player.size / 2);
 
         // Calculate angle
         double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
