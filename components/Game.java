@@ -4,6 +4,7 @@ import algorithms.GameLoop;
 import entities.Obstacles;
 import entities.Player;
 import handlers.KeyboardInput;
+import entities.Bots;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,6 +35,8 @@ public class Game {
         panel.setLayout(null);
 
         panel.add(Player.generate());
+
+        panel.add(Bots.generate());
 
         //Generiert und speichert die Hindernisse:
 

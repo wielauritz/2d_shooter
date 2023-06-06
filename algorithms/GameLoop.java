@@ -69,6 +69,32 @@ public class GameLoop implements KeyListener {
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
 
+    //Timer für Botbewegung:
+        
+    executorService.scheduleAtFixedRate(() -> {
+        SwingUtilities.invokeLater(() -> {
+            for (Component obstacle : Bots) {
+
+                int directionX = 0;
+                int directionY = 0;
+                int speed = 5;
+
+                if (player.getX < Bots.getX) {
+                    directionY -= speed;
+                } else if (player.getY < Bots.getY) {
+                    directionY += speed;
+                } else if (player.getX > Bots.getX) {
+                    directionX -= speed;
+                } else if (player.getY > Bots.getY) {
+                    directionX += speed;
+                }
+                if (directionX != 0 || directionY != 0) {
+                    Bots.move(directionX, directionY);
+                }
+            }
+        });
+    }, 0, 100, TimeUnit.MILLISECONDS);
+
     //Mausbewegungs-Listener:
     
     public static void MouseMove() {
