@@ -4,7 +4,7 @@
 
 Ein 2D-Topdown-Shooter als Informatik-Kursprojekt 2023.
 
-Entwickelt von Eric John, Tim Dreyer und Lauritz Wiebusch.
+Entwickelt von Eric John und Lauritz Wiebusch.
 
 ## Links
 
