@@ -36,7 +36,11 @@ public class Game {
 
         panel.add(Player.generate());
 
-        panel.add(Bots.generate());
+        Bots bot1 = new Bots();
+        Bots bot2 = new Bots();
+
+        panel.add(bot1.generate(1));
+        panel.add(bot2.generate(2));
 
         //Generiert und speichert die Hindernisse:
 

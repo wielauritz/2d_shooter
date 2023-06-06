@@ -10,12 +10,14 @@ public class Bots {
     public static JLabel bots;
     public static int BotsSize = 50;
     public static java.util.List<Component> obstacles;
+    private int id;
 
     /*
-        Generiert den Spieler
+        Generiert die Bots
      */
 
-    public static JLabel generate() {
+    public JLabel generate(int id) {
+        this.id = id; // Legt die ID des Bots fest
 
         //Erzeugt den Spieler:
 
