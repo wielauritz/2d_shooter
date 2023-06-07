@@ -1,6 +1,7 @@
 package components;
 
 import algorithms.GameLoop;
+import handlers.AudioOutput;
 
 import java.awt.*;
 import java.io.File;
@@ -40,6 +41,10 @@ public class Program {
         //Mausklick erkennen:
 
         GameLoop.MouseClick();
+
+        //Spielmusik starten:
+
+        AudioOutput.playMusic();
 
     }
 }

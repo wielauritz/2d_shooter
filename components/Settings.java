@@ -20,6 +20,7 @@ public class Settings {
 
     public static JTextField nameField;
     public static JLabel soundsButton;
+    public static JLabel musicButton;
     public static JLabel backButton;
 
 
@@ -52,26 +53,35 @@ public class Settings {
         //Erstellt das Namen-Eingabefeld
 
         nameField = new JTextField(Player.name, SwingConstants.CENTER);
-        nameField.setBounds(170, 342, 400, 50);
+        nameField.setBounds(170, 302, 400, 50);
         nameField.setFont(Program.gameFont.deriveFont(24f));
         nameField.setOpaque(true);
         nameField.setFocusable(true);
         nameField.setHorizontalAlignment(JTextField.CENTER);
         panel.add(nameField);
 
-        //Erstellt den Einstellungen-Button:
+        //Erstellt den Geräusche-Button:
 
         soundsButton = new JLabel("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"), SwingConstants.CENTER);
-        soundsButton.setBounds(170, 412, 400, 50);
+        soundsButton.setBounds(170, 372, 400, 50);
         soundsButton.setFont(Program.gameFont.deriveFont(24f));
         soundsButton.setOpaque(true);
         soundsButton.setFocusable(false);
         panel.add(soundsButton);
 
+        //Erstellt den Musik-Button:
+
+        musicButton = new JLabel("Musik - " + (AudioOutput.musicEnabled ? "AN" : "AUS"), SwingConstants.CENTER);
+        musicButton.setBounds(170, 442, 400, 50);
+        musicButton.setFont(Program.gameFont.deriveFont(24f));
+        musicButton.setOpaque(true);
+        musicButton.setFocusable(false);
+        panel.add(musicButton);
+
         //Erstellt den Zurück-Button:
 
         backButton = new JLabel("Hauptmenü", SwingConstants.CENTER);
-        backButton.setBounds(170, 482, 400, 50);
+        backButton.setBounds(170, 512, 400, 50);
         backButton.setFont(Program.gameFont.deriveFont(24f));
         backButton.setOpaque(true);
         backButton.setFocusable(false);
@@ -129,6 +139,30 @@ public class Settings {
                         //Button aktualisieren:
 
                         soundsButton.setText("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"));
+
+                        //Sound abspielen:
+
+                        AudioOutput.playSound("audio/components/Settings/click.wav", 100);
+                    }
+                });
+            }
+        });
+
+        musicButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                        //Sounds (de)aktivieren:
+
+                        AudioOutput.musicEnabled = !AudioOutput.musicEnabled;
+
+                        //Button aktualisieren:
+
+                        musicButton.setText("Musik - " + (AudioOutput.musicEnabled ? "AN" : "AUS"));
+
+                        System.out.println(AudioOutput.musicEnabled + "!");
 
                         //Sound abspielen:
 

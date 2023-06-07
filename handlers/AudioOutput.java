@@ -2,6 +2,7 @@ package handlers;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +12,14 @@ public class AudioOutput {
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     public static boolean soundsEnabled = true;
+    public static boolean musicEnabled = true;
+
+    private static AudioInputStream audioInputStream;
+
+    private static SourceDataLine sourceLine;
+
+    private static Thread soundThread;
+    private static Thread musicThread;
 
     /*
         Audioausgabe zum Abspielen von Geräuschen aus Dateien erstellen:
@@ -65,7 +74,7 @@ public class AudioOutput {
 
                     sourceLine.close();
 
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception ignored) { }
             });
 
             soundThread.start();
@@ -83,10 +92,106 @@ public class AudioOutput {
     }
 
     /*
+        Audioausgabe zum Abspielen von Spielmusik erstellen:
+    */
+
+    public static void playMusic() {
+
+        //Vorherige Wiedergabe stoppen:
+
+        if (musicThread != null && musicThread.isAlive()) {
+            musicThread.interrupt();
+        }
+
+        //Zugirff auf die Musikdatei:
+
+        musicThread = new Thread(() -> {
+            File musicFile = new File("audio/components/Program/music.wav");
+            AudioFormat audioFormat = null;
+            int bufferSize = 4096;
+            byte[] buffer = new byte[bufferSize];
+
+            //Audioformat der Datei auslesen:
+
+            try {
+                audioFormat = AudioSystem.getAudioInputStream(musicFile).getFormat();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            while (!Thread.currentThread().isInterrupted()) {
+                if (musicEnabled) {
+                    try {
+
+                        //Datei laden:
+
+                        audioInputStream = AudioSystem.getAudioInputStream(musicFile);
+
+                        // DataLine zum Abspielen der Datei erzeugen:
+
+                        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+                        sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+
+                        //DataLine öffnen:
+
+                        sourceLine.open(audioFormat);
+
+                        //Die Lautstärke auf 25% (0.25) setzen:
+
+                        FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
+                        gainControl.setValue(20f * (float) Math.log10(0.25));
+
+                        //Musikwiedergabe mithilfe der DataLine starten:
+
+                        sourceLine.start();
+
+                        int bytesRead;
+                        while ((bytesRead = audioInputStream.read(buffer, 0, bufferSize)) != -1 && musicEnabled) {
+                            sourceLine.write(buffer, 0, bytesRead);
+                        }
+
+                        //DataLine schließen:
+
+                        sourceLine.drain();
+                        sourceLine.stop();
+                        sourceLine.close();
+                        audioInputStream.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        });
+
+        musicThread.start();
+    }
+
+    /*
         Deaktivieren der Audioausgabe:
     */
 
     public static void shutdown() {
         executor.shutdown();
+        if (musicThread != null && musicThread.isAlive()) {
+            musicThread.interrupt();
+        }
+        if (sourceLine != null && sourceLine.isOpen()) {
+            sourceLine.stop();
+            sourceLine.close();
+        }
+        try {
+            audioInputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }
