@@ -1,6 +1,5 @@
 package components;
 
-import algorithms.GameLoop;
 import entities.Player;
 import handlers.AudioOutput;
 import handlers.KeyboardInput;
@@ -62,7 +61,7 @@ public class Settings {
 
         //Erstellt den Einstellungen-Button:
 
-        soundsButton = new JLabel("Sounds - AUS", SwingConstants.CENTER);
+        soundsButton = new JLabel("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"), SwingConstants.CENTER);
         soundsButton.setBounds(170, 412, 400, 50);
         soundsButton.setFont(Program.gameFont.deriveFont(24f));
         soundsButton.setOpaque(true);
@@ -91,7 +90,7 @@ public class Settings {
                 try {
                     Player.name = e.getDocument().getText(0, e.getDocument().getLength());
                     AudioOutput.playSound("audio/components/Settings/typewriter.wav", 500);
-                    System.out.println("[Settings.java] Spielername erfolgreich zu \""+ Player.name + "\" aktualisiert.");
+                    System.out.println("[Settings.java] Spielername erfolgreich zu \"" + Player.name + "\" aktualisiert.");
                 } catch (BadLocationException ex) {
                     ex.printStackTrace();
                 }
@@ -116,6 +115,28 @@ public class Settings {
         /*
             Mausklick im Hauptmenü registrieren:
         */
+
+        soundsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                        //Sounds (de)aktivieren:
+
+                        AudioOutput.soundsEnabled = !AudioOutput.soundsEnabled;
+
+                        //Button aktualisieren:
+
+                        soundsButton.setText("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"));
+
+                        //Sound abspielen:
+
+                        AudioOutput.playSound("audio/components/Settings/click.wav", 100);
+                    }
+                });
+            }
+        });
 
         backButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -143,7 +164,7 @@ public class Settings {
 
                         //Sound abspielen:
 
-                        AudioOutput.playSound("audio/components/Settings/typewriter.wav", 500);
+                        AudioOutput.playSound("audio/components/Settings/click.wav", 100);
                     }
                 });
             }

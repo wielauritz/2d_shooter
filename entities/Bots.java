@@ -9,42 +9,33 @@ public class Bots {
 
     public static JLabel bots;
     public static int BotsSize = 50;
+
     public static java.util.List<Component> obstacles;
-    private int id;
+
+    public static int healthPoints = 100;
 
     /*
         Generiert die Bots
-     */
+    */
 
-    public JLabel generate(int id) {
-        this.id = id; // Legt die ID des Bots fest
-
-        //Erzeugt den Spieler:
-
-        bots = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
-
-        //Positioniert den Spieler mittig im Fenster:
-
-        int x = (650 - BotsSize - (BotsSize / 2)) / 2;
-        int y = (650 - BotsSize - (BotsSize / 2)) / 2;
-
-        bots.setBounds(x + 12, y, BotsSize, BotsSize);
-
-        System.out.println("[bots.java] Spieler erfolgreich erstellt.");
-
-        return bots;
-    }
+    public static JLabel Botshealth;
 
     /*
         Speichert die Hindernispositionen
-     */
+    */
+
+    private int id;
+
+    /*
+        Überprüft, ob der Spieler mit einem Hindernis in Berührung kommt
+    */
 
     public static void setObstacles(java.util.List<Component> obstaclesList) {
         obstacles = obstaclesList;
     }
 
     /*
-        Überprüft, ob der Spieler mit einem Hindernis in Berührung kommt
+        Überprüft, ob der Spieler sich am Rand befindet
     */
 
     public static boolean isCollidingWithObstacle(Component Bots, Component obstacle) {
@@ -57,18 +48,14 @@ public class Bots {
         return false;
     }
 
-    /*
-        Überprüft, ob der Spieler sich am Rand befindet
-    */
-
     public static void move(int x, int y) {
 
-        //Neue Position des Spielers berechnen:
+        //Neue Position des Bots berechnen:
 
         int newX = bots.getX() + x;
         int newY = bots.getY() + y;
 
-        //Verhindert, dass sich der Spieler aus dem Feld bewegt:
+        //Verhindert, dass sich der Bot aus dem Feld bewegt:
 
         if (newX >= 0 && newX + BotsSize <= 733) {
             bots.setLocation(newX, bots.getY());
@@ -78,7 +65,7 @@ public class Bots {
             bots.setLocation(bots.getX(), newY);
         }
 
-        //Verhindert, dass sich der Spieler durch Hindernisse bewegt:
+        //Verhindert, dass sich der Bot durch Hindernisse bewegt:
 
         for (Component obstacle : obstacles) {
             if (isCollidingWithObstacle(bots, obstacle)) {
@@ -88,8 +75,23 @@ public class Bots {
         }
     }
 
-    //Lebenssystem 
-    public static int healthPoints = 100;
-    public static JLabel Botshealth;
+    public JLabel generate(int id) {
+        this.id = id; // Legt die ID des Bots fest
+
+        //Erzeugt einen neuen Bot:
+
+        bots = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
+
+        //Positioniert den Bot im Fenster:
+
+        int x = (650 - BotsSize - (BotsSize / 2)) / 2;
+        int y = (650 - BotsSize - (BotsSize / 2)) / 2;
+
+        bots.setBounds(x + 12, y, BotsSize, BotsSize);
+
+        System.out.println("[Bots.java] Bot erfolgreich erstellt.");
+
+        return bots;
+    }
 
 }

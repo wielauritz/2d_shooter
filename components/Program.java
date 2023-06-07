@@ -1,7 +1,6 @@
 package components;
 
 import algorithms.GameLoop;
-import handlers.MouseInput;
 
 import java.awt.*;
 import java.io.File;
@@ -41,10 +40,6 @@ public class Program {
         //Mausklick erkennen:
 
         GameLoop.MouseClick();
-
-        //Mausbewegung erkennen:
-
-        GameLoop.MouseMove();
 
     }
 }

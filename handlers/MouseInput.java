@@ -10,35 +10,44 @@ import java.awt.event.MouseEvent;
 import static entities.Player.player;
 
 public class MouseInput extends MouseAdapter {
-    private GameLoop gameLoop;
 
     public static boolean enabled = false;
+
+    /*
+        Importieren und übergeben von Eingaben an die GameLoop
+    */
+
+    private GameLoop gameLoop;
 
     public MouseInput(GameLoop gameLoop) {
         this.gameLoop = gameLoop;
     }
 
-    public void mouseMoved(MouseEvent e) { }
-
     public void mouseClicked(MouseEvent e) {
         gameLoop.MouseClick();
     }
 
+    public void mouseMoved(MouseEvent e) { }
+
+    /*
+        Mauswinkelberechnung zur Schussrichtungsberechnung und Spielerdrehung
+     */
+
     public static double playerToMouseAngle(Point playerPosition) {
 
-        // Mausposition relativ zum Fenster berechnen:
+        //Mausposition relativ zum Fenster berechnen:
 
         Point mousePositionOnScreen = MouseInfo.getPointerInfo().getLocation();
         SwingUtilities.convertPointFromScreen(mousePositionOnScreen, components.Window.frame.getContentPane());
 
-        // Winkel berechnen:
+        //Winkel berechnen:
 
         double angle = Math.atan2(mousePositionOnScreen.y - playerPosition.y, mousePositionOnScreen.x - playerPosition.x);
 
-        //Spieler in Winkelrichtung schauen lassen:
+        //Spieler in Winkelrichtung drehen:
 
-        int directionX = (int) (mousePositionOnScreen.x - playerPosition.x);
-        int directionY = (int) (mousePositionOnScreen.y - playerPosition.y);
+        int directionX = mousePositionOnScreen.x - playerPosition.x;
+        int directionY = mousePositionOnScreen.y - playerPosition.y;
 
         if ((directionX > 0 && directionY > 0) || (directionX > 0 && directionY == 0) || (directionX == 0 && directionY > 0)) {
             player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
@@ -49,10 +58,7 @@ public class MouseInput extends MouseAdapter {
         } else {
             player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
         }
-
         return angle;
     }
-
-
 }
 

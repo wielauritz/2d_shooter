@@ -23,6 +23,8 @@ public class Window {
 
         frame.setContentPane(TitleScreen.create());
 
+        //Setzt einen Standard-Spielernamen:
+
         Player.name = "Rainer Zufall";
 
         System.out.println("[Window.java] Fenster erfolgreich erstellt.");

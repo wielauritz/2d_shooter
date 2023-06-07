@@ -13,12 +13,10 @@ import java.util.concurrent.TimeUnit;
 public class Player {
 
     public static JLabel player;
-
-    public static int size = 50;
-
+    public static JLabel nameTag;
     public static String name;
 
-    public static JLabel nameTag;
+    public static int size = 50;
 
     public static boolean isInWater = false;
 
@@ -28,7 +26,7 @@ public class Player {
 
     /*
         Generiert den Spieler
-     */
+    */
 
     public static JLabel generate() {
 
@@ -43,23 +41,33 @@ public class Player {
 
         player.setBounds(x + 12, y, size, size);
 
+        //Namen über dem Spieler anzeigen:
+
         nameTag = new JLabel(name, SwingUtilities.CENTER);
         nameTag.setFont(Program.gameFont.deriveFont(10f));
         nameTag.setForeground(Color.WHITE);
 
         nameTag.setBounds(x - 19, y - 20, 111, 20);
 
+        //Neuen Executor erstellen:
+
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
         }
-        // Neuen Executor erstellen:
+
         executorService = Executors.newSingleThreadScheduledExecutor();
 
         executorService.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
                 for (Component obstacle : obstacles) {
+
+                    //Wassergröße berechnen:
+
                     Rectangle obstacleBounds = obstacle.getBounds();
                     Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
+
+                    //Spieler Schaden hinzufügen, solange er sich im Wasser befindet:
+
                     if (obstacle.getBounds().width == 160 && player.getBounds().intersects(optimizedBounds)) {
                         Overlay.updateHealthHUD(1);
                         isInWater = true;
@@ -75,7 +83,7 @@ public class Player {
 
     /*
         Speichert die Hindernispositionen
-     */
+    */
 
     public static void setObstacles(java.util.List<Component> obstaclesList) {
         obstacles = obstaclesList;
@@ -91,7 +99,7 @@ public class Player {
         Rectangle waterBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
         Rectangle treeBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
 
-        //Wenn der Spieler mit Wasser in Berührung kommt Schaden hinzufügen:
+        //Spieler Schaden hinzufügen und Geräusch abspielen, wenn er ins Wasser geht:
 
         if (obstacle.getWidth() == 160 && isPlayer) {
             if (playerBounds.intersects(waterBounds)) {
@@ -105,13 +113,10 @@ public class Player {
                 isInWater = false;
             }
 
-        //Spieler nicht durch Bäume laufen lassen:
+            //Spieler nicht durch Bäume laufen lassen:
 
         } else if (obstacle.getWidth() == 100) {
-            if (playerBounds.intersects(treeBounds)) {
-                //isInWater = false;
-                return true;
-            }
+            return playerBounds.intersects(treeBounds);
         } else {
             isInWater = false;
         }
@@ -165,9 +170,14 @@ public class Player {
             player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
         }
 
+        //Verschiebt die Namensposition, sodass dieser über dem Spieler bleibt:
 
         nameTag.setLocation(newX - 29, player.getY() - 20);
     }
+
+    /*
+        Stoppt den Executor für Schaden im Wasser:
+    */
 
     public static void shutdownExecutorService() {
         if (executorService != null) {

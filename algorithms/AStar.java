@@ -10,6 +10,11 @@ public class AStar {
         String getId();
     }
 
+    /* Kostenberechnung zwischen Nodes */
+    public interface Scorer<T extends GraphNode> {
+        double computeCost(T from, T to);
+    }
+
     /* IDN für Date Nodes */
     public class Graph<T extends GraphNode> {
         private Set<T> nodes;
@@ -19,22 +24,12 @@ public class AStar {
         }
 
         public T getNode(String id) {
-            return nodes.stream()
-                    .filter(node -> node.getId().equals(id))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No node found with ID"));
+            return nodes.stream().filter(node -> node.getId().equals(id)).findFirst().orElseThrow(() -> new IllegalArgumentException("No node found with ID"));
         }
 
         public Set<T> getConnections(T node) {
-            return connections.get(node.getId()).stream()
-                    .map(this::getNode)
-                    .collect(Collectors.toSet());
+            return connections.get(node.getId()).stream().map(this::getNode).collect(Collectors.toSet());
         }
-    }
-
-    /* Kostenberechnung zwischen Nodes */
-    public interface Scorer<T extends GraphNode> {
-        double computeCost(T from, T to);
     }
 
     /* Route Nodes für Effi */
@@ -63,20 +58,20 @@ public class AStar {
             return previous;
         }
 
-        public double getRouteScore() {
-            return routeScore;
-        }
-
-        public double getEstimatedScore() {
-            return estimatedScore;
-        }
-
         public void setPrevious(T previous) {
             this.previous = previous;
         }
 
+        public double getRouteScore() {
+            return routeScore;
+        }
+
         public void setRouteScore(double routeScore) {
             this.routeScore = routeScore;
+        }
+
+        public double getEstimatedScore() {
+            return estimatedScore;
         }
 
         public void setEstimatedScore(double estimatedScore) {
@@ -149,7 +144,7 @@ public class AStar {
 
     /* Beispiel-Implementierung von GraphNode */
     public class Station implements GraphNode {
-        private String id;
+        private final String id;
 
         public Station(String id) {
             this.id = id;

@@ -1,6 +1,5 @@
 package entities;
 
-import algorithms.GameLoop;
 import components.Overlay;
 import handlers.AudioOutput;
 import handlers.MouseInput;
@@ -28,40 +27,55 @@ public class Projectile {
         return projectile;
     }
 
+    /*
+        Schießt ein Projektil im Spiel
+    */
+
     public static void shootProjectile() {
 
-        // Player position
+        //Aktuelle Spielerposition abrufen:
+
         Point playerPosition = new Point(Player.player.getX() + Player.size / 2,
                 Player.player.getY() + Player.size / 2);
 
-        // Calculate angle
+        //Schusswinkel berechnen:
+
         double angle = MouseInput.playerToMouseAngle(playerPosition);
 
-        // Calculate projectile speed
+        //Schussgeschwindigkeit berechnen:
+
         int projectileSpeed = 30;
         double speedX = Math.cos(angle) * projectileSpeed;
         double speedY = Math.sin(angle) * projectileSpeed;
 
-        // Create and display the projectile
+        //Projektil erstellen:
+
         JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
         frame.getContentPane().add(projectile);
         frame.getContentPane().setComponentZOrder(projectile, 0);
 
+        //Schusssound abspielen:
+
         AudioOutput.playSound("audio/entities/Projectile/projectile.wav", 1000);
+
+        //Munitonsanzeige aktualisieren:
 
         Overlay.updateAmmoHUD(1);
 
-        // Create a timer for the projectile movement
+        //Timer für Projektilbewegung erstellen:
+
         Timer projectileTimer = new Timer(1, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Update projectile position
+
+                //Projektilposition verändern:
+
                 double newX = projectile.getX() + speedX;
                 double newY = projectile.getY() + speedY;
 
-                // Update projectile position
                 projectile.setLocation((int) newX, (int) newY);
 
-                // Check for collision with obstacles
+                //Mögliche Kollision mit Hindernissen überprüfen:
+
                 boolean collided = false;
                 for (Component obstacle : Player.obstacles) {
                     if (Player.isCollidingWithObstacle(projectile, obstacle, false)) {
@@ -70,7 +84,8 @@ public class Projectile {
                     }
                 }
 
-                // Handle collision and projectile removal
+                //Projektil bei Kollision entfernen:
+
                 if (collided || newX < 0 || newX > 750 || newY < 0 || newY > 750) {
                     projectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
@@ -81,7 +96,8 @@ public class Projectile {
             }
         });
 
-        // Start the projectile timer
+        //Timer für Projektilbewegung starten:
+
         projectileTimer.start();
     }
 }

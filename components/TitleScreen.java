@@ -113,7 +113,7 @@ public class TitleScreen {
 
                 //Sound abspielen:
 
-                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+                AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
                 System.out.println("[TitleScreen.java] Spielfeld erfolgreich geladen.");
 
@@ -140,7 +140,7 @@ public class TitleScreen {
 
                 //Sound abspielen:
 
-                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+                AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
             }
         });
@@ -163,7 +163,7 @@ public class TitleScreen {
 
                 //Sound abspielen:
 
-                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+                AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
             }

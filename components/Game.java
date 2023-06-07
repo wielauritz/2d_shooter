@@ -1,10 +1,9 @@
 package components;
 
 import algorithms.GameLoop;
+import entities.Bots;
 import entities.Obstacles;
 import entities.Player;
-import handlers.KeyboardInput;
-import entities.Bots;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +19,7 @@ public class Game {
 
     public static JPanel create() {
 
-        //Setzt ein Hintergrundbild und setzt den Spieler obendrauf:
+        //Setzt ein Hintergrundbild:
 
         JPanel panel = new JPanel() {
             @Override
@@ -37,19 +36,23 @@ public class Game {
 
         panel.setLayout(null);
 
+        //Generiert den Spieler:
+
         panel.add(Player.generate());
         panel.add(Player.nameTag);
-        System.out.println(Player.nameTag.getWidth());
+
+        //Generiert die Bots:
 
         Bots bot1 = new Bots();
         botsList.add(bot1);
+
         Bots bot2 = new Bots();
         botsList.add(bot2);
 
         panel.add(bot1.generate(1));
         panel.add(bot2.generate(2));
 
-        //Generiert und speichert die Hindernisse:
+        //Generiert die Hindernisse:
 
         ArrayList<Component> obstaclesList = new ArrayList<>();
 
@@ -72,8 +75,12 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(193, 396));
         obstaclesList.add(Obstacles.generateTree(599, 8));
 
+        //Speichert die Hindernisse:
+
         Player.setObstacles(obstaclesList);
         Bots.setObstacles(obstaclesList);
+
+        //Zeigt die Hindernisse auf dem Spielfeld an:
 
         for (Component obstacle : obstaclesList) {
             panel.add(obstacle);
@@ -89,7 +96,7 @@ public class Game {
         panel.add(c2);
         panel.setComponentZOrder(c2, 0);
 
-        Overlay.updateHealthHUD(0);
+        //Startet die GameLoop:
 
         new GameLoop();
 
@@ -97,5 +104,4 @@ public class Game {
 
         return panel;
     }
-
 }

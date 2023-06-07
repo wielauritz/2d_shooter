@@ -22,7 +22,8 @@ public class DeathScreen {
 
     /*
         Erstellt das Death-Screen-Menü
-     */
+    */
+
     public static JPanel create() {
 
         JPanel panel = new JPanel() {
@@ -76,8 +77,8 @@ public class DeathScreen {
         closeButton.setFocusable(false);
         panel.add(closeButton);
 
-         /*
-            Mausklick im Death-Screen-Menü registrieren:
+        /*
+            Mausklicks im Death-Screen-Menü registrieren:
         */
 
         playButton.addMouseListener(new MouseAdapter() {
@@ -117,7 +118,7 @@ public class DeathScreen {
 
                         //Sound abspielen:
 
-                        AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
+                        AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
                     }
                 });
 
@@ -154,7 +155,7 @@ public class DeathScreen {
 
                         //Sound abspielen:
 
-                        AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
+                        AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
                     }
                 });
             }
@@ -178,13 +179,11 @@ public class DeathScreen {
 
                 //Sound abspielen:
 
-                AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
+                AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
             }
         });
-
-        //AudioOutput.playSound("audio/components/DeathScreen/death.wav", 9000);
 
         AudioOutput.playSound("audio/components/DeathScreen/gameover.wav", 4100);
 

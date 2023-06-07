@@ -6,7 +6,7 @@ import java.awt.*;
 public class Obstacles {
 
     /*
-        Erstellt ein Hindernis im Spiel
+        Erstellt einen Baum als Hindernis im Spiel
     */
 
     public static JLabel generateTree(int x, int y) {
@@ -22,6 +22,10 @@ public class Obstacles {
 
         return tree;
     }
+
+    /*
+        Erstellt Wasser als Hindernis im Spiel
+    */
 
     public static JLabel generateWater(int x, int y) {
         ImageIcon icon = new ImageIcon("textures/entities/Obstacles/water.png");

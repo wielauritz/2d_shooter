@@ -10,59 +10,81 @@ public class AudioOutput {
 
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
+    public static boolean soundsEnabled = true;
+
+    /*
+        Audioausgabe zum Abspielen von Geräuschen aus Dateien erstellen:
+    */
+
     public static void playSound(String filePath, long durationInMilliseconds) {
-        Thread soundThread = new Thread(() -> {
-            try {
-                // Create a file object with the provided file path
-                File soundFile = new File(filePath);
 
-                // Load the sound file
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+        if (soundsEnabled) {
 
-                // Get the audio format of the sound file
-                AudioFormat audioFormat = audioInputStream.getFormat();
+            Thread soundThread = new Thread(() -> {
+                try {
 
-                // Create a data line to play the sound
-                DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-                SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+                    //Zugriff auf die angegebene Datei:
 
-                // Open the data line
-                sourceLine.open(audioFormat);
+                    File soundFile = new File(filePath);
 
-                // Start playing the sound
-                sourceLine.start();
+                    //Datei laden:
 
-                // Read the sound data and play it in chunks
-                int bufferSize = 4096;
-                byte[] buffer = new byte[bufferSize];
-                int bytesRead = 0;
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
 
-                while (bytesRead != -1) {
-                    bytesRead = audioInputStream.read(buffer, 0, bufferSize);
+                    //Audioformat der Datei auslesen:
 
-                    if (bytesRead >= 0) {
-                        sourceLine.write(buffer, 0, bytesRead);
+                    AudioFormat audioFormat = audioInputStream.getFormat();
+
+                    //DataLine zum Abspielen der Datei erzeugen:
+
+                    DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+                    SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+
+                    //DataLine öffnen:
+
+                    sourceLine.open(audioFormat);
+
+                    //Dateiwiedergabe mithilfe der DataLine starten:
+
+                    sourceLine.start();
+
+                    //Eigenschaften aus der Datei auslesen und diese in Stücken abspielen:
+                    int bufferSize = 4096;
+                    byte[] buffer = new byte[bufferSize];
+                    int bytesRead = 0;
+
+                    while (bytesRead != -1) {
+                        bytesRead = audioInputStream.read(buffer, 0, bufferSize);
+
+                        if (bytesRead >= 0) {
+                            sourceLine.write(buffer, 0, bytesRead);
+                        }
                     }
+
+                    //DataLine schließen:
+
+                    sourceLine.close();
+
+                } catch (Exception e) { e.printStackTrace(); }
+            });
+
+            soundThread.start();
+
+            System.out.println("[AudioOutput.java] Sound erfolgreich abgespielt.");
+
+            //Executor erstellen, der die Wiedergabe nach einer festgelegten Zeit stoppt:
+
+            executor.schedule(() -> {
+                if (soundThread.isAlive()) {
+                    soundThread.interrupt();
                 }
-
-                // Close the data line
-                sourceLine.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        soundThread.start();
-
-        System.out.println("[AudioOutput.java] Sound erfolgreich abgespielt.");
-
-        // Schedule a task to stop the sound after the specified duration
-        executor.schedule(() -> {
-            if (soundThread.isAlive()) {
-                soundThread.interrupt();
-            }
-        }, durationInMilliseconds, TimeUnit.MILLISECONDS);
+            }, durationInMilliseconds, TimeUnit.MILLISECONDS);
+        }
     }
+
+    /*
+        Deaktivieren der Audioausgabe:
+    */
 
     public static void shutdown() {
         executor.shutdown();

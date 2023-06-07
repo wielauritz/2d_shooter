@@ -10,11 +10,10 @@ import java.awt.*;
 
 public class Overlay {
 
-    private static int healthPoints = 100;
     public static JLabel health;
-
-    private static int ammoAmount = 50;
     public static JLabel ammo;
+    private static int healthPoints = 100;
+    private static int ammoAmount = 50;
 
     /*
         Generiert die Lebensanzeige
@@ -66,8 +65,9 @@ public class Overlay {
             //Eingaben sperren:
 
             KeyboardInput.enabled = false;
-
             MouseInput.enabled = false;
+
+            //Executor stoppen und zurücksetzen:
 
             Player.shutdownExecutorService();
             GameLoop.shutdownExecutorService();
@@ -101,8 +101,9 @@ public class Overlay {
             //Eingaben sperren:
 
             KeyboardInput.enabled = false;
-
             MouseInput.enabled = false;
+
+            //Executor stoppen und zurücksetzen:
 
             Player.shutdownExecutorService();
             GameLoop.shutdownExecutorService();
@@ -122,9 +123,7 @@ public class Overlay {
     */
 
     public static void resetHealthHUD() {
-
         healthPoints = 100;
-
     }
 
     /*
@@ -132,9 +131,7 @@ public class Overlay {
     */
 
     public static void resetAmmoHUD() {
-
         ammoAmount = 50;
-
     }
 
     /*
@@ -180,6 +177,5 @@ public class Overlay {
 
             g2d.dispose();
         }
-
     }
 }
