@@ -2,6 +2,7 @@ package components;
 
 import algorithms.GameLoop;
 import entities.Player;
+import handlers.AudioOutput;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -89,6 +90,7 @@ public class Settings {
             private void update(DocumentEvent e) {
                 try {
                     Player.name = e.getDocument().getText(0, e.getDocument().getLength());
+                    AudioOutput.playSound("audio/components/Settings/typewriter.wav", 500);
                     System.out.println("[Settings.java] Spielername erfolgreich zu \""+ Player.name + "\" aktualisiert.");
                 } catch (BadLocationException ex) {
                     ex.printStackTrace();
@@ -138,6 +140,10 @@ public class Settings {
                         KeyboardInput.enabled = false;
 
                         MouseInput.enabled = false;
+
+                        //Sound abspielen:
+
+                        AudioOutput.playSound("audio/components/Settings/typewriter.wav", 500);
                     }
                 });
             }

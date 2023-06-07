@@ -1,6 +1,7 @@
 package components;
 
 import algorithms.GameLoop;
+import handlers.AudioOutput;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -110,6 +111,10 @@ public class TitleScreen {
 
                 MouseInput.enabled = true;
 
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+
                 System.out.println("[TitleScreen.java] Spielfeld erfolgreich geladen.");
 
             }
@@ -133,6 +138,10 @@ public class TitleScreen {
                 Window.frame.setContentPane(Settings.create());
                 Window.frame.revalidate();
 
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+
             }
         });
 
@@ -151,6 +160,12 @@ public class TitleScreen {
                     playerMoveTimer.stop();
                 }
                 GameLoop.timerRunning = false;
+
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/TitleScreen/typewriter.wav", 500);
+
+                AudioOutput.shutdown();
             }
         });
 

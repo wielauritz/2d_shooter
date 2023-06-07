@@ -1,6 +1,8 @@
 package components;
 
 import algorithms.GameLoop;
+import entities.Player;
+import handlers.AudioOutput;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -98,6 +100,8 @@ public class DeathScreen {
                         Overlay.resetHealthHUD();
                         Overlay.resetAmmoHUD();
 
+                        Player.isInWater = false;
+
                         //Spielfeld dem Fenster übergeben:
 
                         JPanel gamePanel = Game.create();
@@ -105,11 +109,15 @@ public class DeathScreen {
                         Window.frame.repaint();
                         Window.frame.revalidate();
 
-                        //Eingaben sperren:
+                        //Eingaben entsperren:
 
                         KeyboardInput.enabled = true;
 
                         MouseInput.enabled = true;
+
+                        //Sound abspielen:
+
+                        AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
                     }
                 });
 
@@ -129,6 +137,8 @@ public class DeathScreen {
                         Overlay.resetHealthHUD();
                         Overlay.resetAmmoHUD();
 
+                        Player.isInWater = false;
+
                         //Hauptmenü dem Fenster übergeben:
 
                         JPanel menuPanel = TitleScreen.create();
@@ -141,6 +151,10 @@ public class DeathScreen {
                         KeyboardInput.enabled = false;
 
                         MouseInput.enabled = false;
+
+                        //Sound abspielen:
+
+                        AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
                     }
                 });
             }
@@ -161,8 +175,22 @@ public class DeathScreen {
                     playerMoveTimer.stop();
                 }
                 GameLoop.timerRunning = false;
+
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/DeathScreen/typewriter.wav", 500);
+
+                AudioOutput.shutdown();
             }
         });
+
+        //AudioOutput.playSound("audio/components/DeathScreen/death.wav", 9000);
+
+        AudioOutput.playSound("audio/components/DeathScreen/gameover.wav", 4100);
+
+        KeyboardInput.enabled = false;
+
+        MouseInput.enabled = false;
 
         System.out.println("[DeathScreen.java] Death-Screen erfolgreich erstellt.");
 

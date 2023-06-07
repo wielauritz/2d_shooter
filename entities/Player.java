@@ -2,6 +2,7 @@ package entities;
 
 import components.Overlay;
 import components.Program;
+import handlers.AudioOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class Player {
     public static String name;
 
     public static JLabel nameTag;
+
+    public static boolean isInWater = false;
 
     public static java.util.List<Component> obstacles;
 
@@ -55,8 +58,11 @@ public class Player {
         executorService.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
                 for (Component obstacle : obstacles) {
-                    if (obstacle.getBounds().width == 160 && player.getBounds().intersects(obstacle.getBounds())) {
+                    Rectangle obstacleBounds = obstacle.getBounds();
+                    Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
+                    if (obstacle.getBounds().width == 160 && player.getBounds().intersects(optimizedBounds)) {
                         Overlay.updateHealthHUD(1);
+                        isInWater = true;
                     }
                 }
             });
@@ -82,23 +88,34 @@ public class Player {
     public static boolean isCollidingWithObstacle(Component player, Component obstacle, boolean isPlayer) {
         Rectangle playerBounds = player.getBounds();
         Rectangle obstacleBounds = obstacle.getBounds();
-        Rectangle optimizedBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
+        Rectangle waterBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
+        Rectangle treeBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
 
         //Wenn der Spieler mit Wasser in Berührung kommt Schaden hinzufügen:
 
         if (obstacle.getWidth() == 160 && isPlayer) {
-            if (playerBounds.intersects(optimizedBounds)) {
+            if (playerBounds.intersects(waterBounds)) {
                 Overlay.updateHealthHUD(1);
+                if (!isInWater) {
+                    AudioOutput.playSound("audio/entities/Obstacles/water.wav", 2000);
+                    isInWater = true;
+                }
                 return false;
+            } else {
+                isInWater = false;
             }
 
         //Spieler nicht durch Bäume laufen lassen:
 
         } else if (obstacle.getWidth() == 100) {
-            if (playerBounds.intersects(optimizedBounds)) {
+            if (playerBounds.intersects(treeBounds)) {
+                //isInWater = false;
                 return true;
             }
+        } else {
+            isInWater = false;
         }
+
         return false;
     }
 

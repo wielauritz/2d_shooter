@@ -65,9 +65,9 @@ public class Overlay {
 
             //Eingaben sperren:
 
-            KeyboardInput.enabled = true;
+            KeyboardInput.enabled = false;
 
-            MouseInput.enabled = true;
+            MouseInput.enabled = false;
 
             Player.shutdownExecutorService();
             GameLoop.shutdownExecutorService();
@@ -100,9 +100,9 @@ public class Overlay {
 
             //Eingaben sperren:
 
-            KeyboardInput.enabled = true;
+            KeyboardInput.enabled = false;
 
-            MouseInput.enabled = true;
+            MouseInput.enabled = false;
 
             Player.shutdownExecutorService();
             GameLoop.shutdownExecutorService();

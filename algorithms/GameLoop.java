@@ -41,37 +41,38 @@ public class GameLoop implements KeyListener {
         
         playerMoveTimer = new Timer(16, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!KeyboardInput.enabled) return;
+                if (KeyboardInput.enabled) {
 
-                int directionX = 0;
-                int directionY = 0;
-                int speed = 5;
+                    int directionX = 0;
+                    int directionY = 0;
+                    int speed = 5;
 
-                //Tastenabfragen für Richtung der Spielerbewegung:
-                
-                for (Integer keyCode : pressedKeys) {
-                    if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-                        directionY -= speed;
-                    } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-                        directionY += speed;
-                    } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-                        directionX -= speed;
-                    } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-                        directionX += speed;
+                    //Tastenabfragen für Richtung der Spielerbewegung:
+
+                    for (Integer keyCode : pressedKeys) {
+                        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+                            directionY -= speed;
+                        } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+                            directionY += speed;
+                        } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+                            directionX -= speed;
+                        } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+                            directionX += speed;
+                        }
                     }
-                }
 
-                //Spielerbewegung basierend auf den abgefragten Tasten:
-                
-                if (directionX != 0 || directionY != 0) {
-                    Player.move(directionX, directionY);
-                }
+                    //Spielerbewegung basierend auf den abgefragten Tasten:
 
-                //Schießen des Projektils, wenn Leertaste gedrückt wurde:
-                
-                if (spacePressed) {
-                    spacePressed = false;
-                    Projectile.shootProjectile();
+                    if (directionX != 0 || directionY != 0) {
+                        Player.move(directionX, directionY);
+                    }
+
+                    //Schießen des Projektils, wenn Leertaste gedrückt wurde:
+
+                    if (spacePressed && KeyboardInput.enabled) {
+                        spacePressed = false;
+                        Projectile.shootProjectile();
+                    }
                 }
             }
         });
@@ -109,30 +110,6 @@ public class GameLoop implements KeyListener {
 
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
-
-        /*Thread directionThread = new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(100); // Adjust the delay as needed
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                int directionX = MouseInfo.getPointerInfo().getLocation().x - lastPosition.x;
-                int directionY = MouseInfo.getPointerInfo().getLocation().y - lastPosition.y;
-
-                Point currentPosition = MouseInfo.getPointerInfo().getLocation();
-
-                if (!currentPosition.equals(lastPosition)) {
-
-
-
-                    lastPosition = MouseInfo.getPointerInfo().getLocation();
-
-                }
-            }
-        });
-        directionThread.start();*/
 
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }

@@ -36,6 +36,7 @@ public class MouseInput extends MouseAdapter {
         double angle = Math.atan2(mousePositionOnScreen.y - playerPosition.y, mousePositionOnScreen.x - playerPosition.x);
 
         //Spieler in Winkelrichtung schauen lassen:
+
         int directionX = (int) (mousePositionOnScreen.x - playerPosition.x);
         int directionY = (int) (mousePositionOnScreen.y - playerPosition.y);
 

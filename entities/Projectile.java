@@ -2,6 +2,7 @@ package entities;
 
 import algorithms.GameLoop;
 import components.Overlay;
+import handlers.AudioOutput;
 import handlers.MouseInput;
 
 import javax.swing.*;
@@ -46,9 +47,9 @@ public class Projectile {
         frame.getContentPane().add(projectile);
         frame.getContentPane().setComponentZOrder(projectile, 0);
 
-        Overlay.updateAmmoHUD(1);
+        AudioOutput.playSound("audio/entities/Projectile/projectile.wav", 1000);
 
-        //MouseInput.printDirection(directionX, directionY);
+        Overlay.updateAmmoHUD(1);
 
         // Create a timer for the projectile movement
         Timer projectileTimer = new Timer(1, new ActionListener() {
