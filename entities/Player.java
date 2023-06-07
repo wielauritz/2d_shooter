@@ -5,9 +5,6 @@ import components.Program;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -134,6 +131,23 @@ public class Player {
                 break;
             }
         }
+
+        //Dreht den Spieler in Laufrichtung:
+
+        if (x < 0) {
+            // Nach links:
+            player.setIcon(new ImageIcon("textures/entities/Player/character_flipped.png"));
+        } else if (x > 0) {
+            // Nach rechts:
+            player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
+        } else if (y < 0) {
+            //Nach oben:
+            player.setIcon(new ImageIcon("textures/entities/Player/character_inverted.png"));
+        } else if (y > 0) {
+            //Nach unten:
+            player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
+        }
+
 
         nameTag.setLocation(newX - 29, player.getY() - 20);
     }
