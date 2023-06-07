@@ -44,7 +44,7 @@ public class Player {
         nameTag.setFont(Program.gameFont.deriveFont(10f));
         nameTag.setForeground(Color.WHITE);
 
-        nameTag.setBounds(x - 15, y - 20, 104, 20);
+        nameTag.setBounds(x - 19, y - 20, 111, 20);
 
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
@@ -115,11 +115,11 @@ public class Player {
 
         //Verhindert, dass sich der Spieler aus dem Feld bewegt:
 
-        if (newX >= 0 && newX + size <= 733) {
+        if (newX >= 0 && newX + size <= 745) {
             player.setLocation(newX, player.getY());
         }
 
-        if (newY >= 0 && newY + size <= 731) {
+        if (newY >= 0 && newY + size <= 718) {
             player.setLocation(player.getX(), newY);
         }
 
@@ -132,7 +132,7 @@ public class Player {
             }
         }
 
-        nameTag.setLocation(newX - 25, player.getY() - 20);
+        nameTag.setLocation(newX - 29, player.getY() - 20);
     }
 
     public static void shutdownExecutorService() {
