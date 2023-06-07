@@ -34,7 +34,7 @@ KANN:
 - [x] bewegliche Ziele (Singleplayer)
 - [ ] Bots als Ziel (Singleplayer)
 - [ ] ~~Multiplayer~~
-- [ ] Sounds (müssen deaktivierbar sein)
+- [x] Sounds (müssen deaktivierbar sein)
 - [x] Nameneditor
 - [ ] Scoreboard
 - [ ] Leaderboard
