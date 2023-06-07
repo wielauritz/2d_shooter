@@ -29,14 +29,12 @@ public class Projectile {
 
     public static void shootProjectile() {
 
-
-
         // Player position
         Point playerPosition = new Point(Player.player.getX() + Player.size / 2,
                 Player.player.getY() + Player.size / 2);
 
         // Calculate angle
-        double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
+        double angle = MouseInput.playerToMouseAngle(playerPosition);
 
         // Calculate projectile speed
         int projectileSpeed = 30;
@@ -49,6 +47,8 @@ public class Projectile {
         frame.getContentPane().setComponentZOrder(projectile, 0);
 
         Overlay.updateAmmoHUD(1);
+
+        //MouseInput.printDirection(directionX, directionY);
 
         // Create a timer for the projectile movement
         Timer projectileTimer = new Timer(1, new ActionListener() {
@@ -68,7 +68,6 @@ public class Projectile {
                         break;
                     }
                 }
-
 
                 // Handle collision and projectile removal
                 if (collided || newX < 0 || newX > 750 || newY < 0 || newY > 750) {

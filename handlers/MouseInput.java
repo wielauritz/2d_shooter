@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static entities.Player.player;
+
 public class MouseInput extends MouseAdapter {
     private GameLoop gameLoop;
 
@@ -16,52 +18,36 @@ public class MouseInput extends MouseAdapter {
         this.gameLoop = gameLoop;
     }
 
-    public void mouseMoved(MouseEvent e) {
-        // Not used
-    }
+    public void mouseMoved(MouseEvent e) { }
 
     public void mouseClicked(MouseEvent e) {
         gameLoop.MouseClick();
     }
 
-    public static String getDirection(int directionX, int directionY) {
-        if (directionX > 0 && directionY > 0) {
-            return "rechts & runter";
-        } else if (directionX > 0 && directionY == 0) {
-            return "rechts";
-        } else if (directionX > 0 && directionY < 0) {
-            return "rechts & hoch";
-        } else if (directionX == 0 && directionY > 0) {
-            return "runter";
-        } else if (directionX == 0 && directionY < 0) {
-            return "hoch";
-        } else if (directionX < 0 && directionY > 0) {
-            return "links & runter";
-        } else if (directionX < 0 && directionY == 0) {
-            return "links";
-        } else if (directionX < 0 && directionY < 0) {
-            return "links & hoch";
-        } else {
-            return "unbekannt";
-        }
-    }
-
-    public static void printDirection(int directionX, int directionY) {
-        String direction = MouseInput.getDirection(directionX, directionY);
-        System.out.println("[GameLoop.java] Mouse direction: " + direction);
-    }
-
-    public static double getPlayerToMouseAngle(Point playerPosition) {
+    public static double playerToMouseAngle(Point playerPosition) {
 
         // Mausposition relativ zum Fenster berechnen:
 
         Point mousePositionOnScreen = MouseInfo.getPointerInfo().getLocation();
         SwingUtilities.convertPointFromScreen(mousePositionOnScreen, components.Window.frame.getContentPane());
-        Point mousePosition = mousePositionOnScreen;
 
         // Winkel berechnen:
 
-        double angle = Math.atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x);
+        double angle = Math.atan2(mousePositionOnScreen.y - playerPosition.y, mousePositionOnScreen.x - playerPosition.x);
+
+        //Spieler in Winkelrichtung schauen lassen:
+        int directionX = (int) (mousePositionOnScreen.x - playerPosition.x);
+        int directionY = (int) (mousePositionOnScreen.y - playerPosition.y);
+
+        if ((directionX > 0 && directionY > 0) || (directionX > 0 && directionY == 0) || (directionX == 0 && directionY > 0)) {
+            player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
+        } else if ((directionX < 0 && directionY > 0) || (directionX < 0 && directionY == 0)) {
+            player.setIcon(new ImageIcon("textures/entities/Player/character_flipped.png"));
+        } else if ((directionX < 0 && directionY < 0) || (directionX == 0 && directionY < 0) || (directionX > 0 && directionY < 0)) {
+            player.setIcon(new ImageIcon("textures/entities/Player/character_inverted.png"));
+        } else {
+            player.setIcon(new ImageIcon("textures/entities/Player/character.png"));
+        }
 
         return angle;
     }

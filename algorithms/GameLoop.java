@@ -110,7 +110,7 @@ public class GameLoop implements KeyListener {
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
 
-        Thread directionThread = new Thread(() -> {
+        /*Thread directionThread = new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(100); // Adjust the delay as needed
@@ -125,14 +125,14 @@ public class GameLoop implements KeyListener {
 
                 if (!currentPosition.equals(lastPosition)) {
 
-                    MouseInput.printDirection(directionX, directionY);
+
 
                     lastPosition = MouseInfo.getPointerInfo().getLocation();
 
                 }
             }
         });
-        directionThread.start();
+        directionThread.start();*/
 
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
@@ -187,7 +187,7 @@ public class GameLoop implements KeyListener {
 
                     //Winkel zwischen Spieler und Mausposition berechnen:
                     
-                    double angle = MouseInput.getPlayerToMouseAngle(playerPosition);
+                    double angle = MouseInput.playerToMouseAngle(playerPosition);
 
                     int projectileSpeed = 30;
                     double speedX = Math.cos(angle) * projectileSpeed;
