@@ -24,6 +24,33 @@ public class MouseInput extends MouseAdapter {
         gameLoop.MouseClick();
     }
 
+    public static String getDirection(int directionX, int directionY) {
+        if (directionX > 0 && directionY > 0) {
+            return "rechts & runter";
+        } else if (directionX > 0 && directionY == 0) {
+            return "rechts";
+        } else if (directionX > 0 && directionY < 0) {
+            return "rechts & hoch";
+        } else if (directionX == 0 && directionY > 0) {
+            return "runter";
+        } else if (directionX == 0 && directionY < 0) {
+            return "hoch";
+        } else if (directionX < 0 && directionY > 0) {
+            return "links & runter";
+        } else if (directionX < 0 && directionY == 0) {
+            return "links";
+        } else if (directionX < 0 && directionY < 0) {
+            return "links & hoch";
+        } else {
+            return "unbekannt";
+        }
+    }
+
+    public static void printDirection(int directionX, int directionY) {
+        String direction = MouseInput.getDirection(directionX, directionY);
+        System.out.println("[GameLoop.java] Mouse direction: " + direction);
+    }
+
     public static double getPlayerToMouseAngle(Point playerPosition) {
 
         // Mausposition relativ zum Fenster berechnen:

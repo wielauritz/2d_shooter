@@ -110,6 +110,30 @@ public class GameLoop implements KeyListener {
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
 
+        Thread directionThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(100); // Adjust the delay as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                int directionX = MouseInfo.getPointerInfo().getLocation().x - lastPosition.x;
+                int directionY = MouseInfo.getPointerInfo().getLocation().y - lastPosition.y;
+
+                Point currentPosition = MouseInfo.getPointerInfo().getLocation();
+
+                if (!currentPosition.equals(lastPosition)) {
+
+                    MouseInput.printDirection(directionX, directionY);
+
+                    lastPosition = MouseInfo.getPointerInfo().getLocation();
+
+                }
+            }
+        });
+        directionThread.start();
+
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
 

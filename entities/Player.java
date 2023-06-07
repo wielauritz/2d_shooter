@@ -5,6 +5,9 @@ import components.Program;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +34,7 @@ public class Player {
 
         //Erzeugt den Spieler:
 
-        player = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
+        player = new JLabel(new ImageIcon("textures/entities/Player/character.png"));
 
         //Positioniert den Spieler mittig im Fenster:
 
