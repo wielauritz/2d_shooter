@@ -53,6 +53,11 @@ public class AudioOutput {
 
                     sourceLine.open(audioFormat);
 
+                    // Set the volume to 75% (0.75):
+
+                    FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(20f * (float) Math.log10(0.75));
+
                     //Dateiwiedergabe mithilfe der DataLine starten:
 
                     sourceLine.start();
@@ -97,13 +102,13 @@ public class AudioOutput {
 
     public static void playMusic() {
 
-        //Vorherige Wiedergabe stoppen:
+        // Previous playback stop:
 
         if (musicThread != null && musicThread.isAlive()) {
             musicThread.interrupt();
         }
 
-        //Zugirff auf die Musikdatei:
+        // Access the music file:
 
         musicThread = new Thread(() -> {
             File musicFile = new File("audio/components/Program/music.wav");
@@ -111,7 +116,7 @@ public class AudioOutput {
             int bufferSize = 4096;
             byte[] buffer = new byte[bufferSize];
 
-            //Audioformat der Datei auslesen:
+            // Read the audio format of the file:
 
             try {
                 audioFormat = AudioSystem.getAudioInputStream(musicFile).getFormat();
@@ -124,34 +129,34 @@ public class AudioOutput {
                 if (musicEnabled) {
                     try {
 
-                        //Datei laden:
+                        // Load the file:
 
-                        audioInputStream = AudioSystem.getAudioInputStream(musicFile);
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
 
-                        // DataLine zum Abspielen der Datei erzeugen:
+                        // Create the DataLine for playing the file:
 
                         DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-                        sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+                        SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(info);
 
-                        //DataLine öffnen:
+                        // Open the DataLine:
 
                         sourceLine.open(audioFormat);
 
-                        //Die Lautstärke auf 25% (0.25) setzen:
+                        // Set the volume to 25% (0.25):
 
                         FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
                         gainControl.setValue(20f * (float) Math.log10(0.25));
 
-                        //Musikwiedergabe mithilfe der DataLine starten:
+                        // Start playing the music using the DataLine:
 
                         sourceLine.start();
 
                         int bytesRead;
-                        while ((bytesRead = audioInputStream.read(buffer, 0, bufferSize)) != -1 && musicEnabled) {
+                        while ((audioInputStream != null) && (bytesRead = audioInputStream.read(buffer, 0, bufferSize)) != -1 && musicEnabled) {
                             sourceLine.write(buffer, 0, bytesRead);
                         }
 
-                        //DataLine schließen:
+                        // Close the DataLine:
 
                         sourceLine.drain();
                         sourceLine.stop();
@@ -174,24 +179,28 @@ public class AudioOutput {
         musicThread.start();
     }
 
+
     /*
         Deaktivieren der Audioausgabe:
     */
 
     public static void shutdown() {
-        executor.shutdown();
+        // Stop the music thread if it's running
         if (musicThread != null && musicThread.isAlive()) {
             musicThread.interrupt();
+            musicThread = null; // Set musicThread to null after interruption
         }
-        if (sourceLine != null && sourceLine.isOpen()) {
-            sourceLine.stop();
-            sourceLine.close();
-        }
-        try {
-            audioInputStream.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        // Close the audioInputStream if it's not null
+        if (audioInputStream != null) {
+            try {
+                audioInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            audioInputStream = null; // Set audioInputStream to null after closing
         }
     }
+
 
 }

@@ -162,8 +162,6 @@ public class Settings {
 
                         musicButton.setText("Musik - " + (AudioOutput.musicEnabled ? "AN" : "AUS"));
 
-                        System.out.println(AudioOutput.musicEnabled + "!");
-
                         //Sound abspielen:
 
                         AudioOutput.playSound("audio/components/Settings/click.wav", 100);

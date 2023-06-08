@@ -182,6 +182,12 @@ public class DeathScreen {
                 AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Spiel beenden:
+
+                System.out.println("[DeathScreen.java] Spiel erfolgreich beendet.");
+
+                System.exit(0);
             }
         });
 

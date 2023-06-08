@@ -166,6 +166,12 @@ public class TitleScreen {
                 AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Spiel beenden:
+
+                System.out.println("[TitleScreen.java] Spiel erfolgreich beendet.");
+
+                System.exit(0);
             }
         });
 

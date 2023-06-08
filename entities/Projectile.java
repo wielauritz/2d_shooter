@@ -57,7 +57,7 @@ public class Projectile {
 
         //Schusssound abspielen:
 
-        AudioOutput.playSound("audio/entities/Projectile/projectile.wav", 1000);
+        AudioOutput.playSound("audio/entities/Projectile/projectile.wav", 1250);
 
         //Munitonsanzeige aktualisieren:
 
