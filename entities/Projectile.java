@@ -107,7 +107,7 @@ public class Projectile {
 
                             //Munition aufstocken:
 
-                            Overlay.updateAmmoHUD(Overlay.ammoAmount - 50);
+                            Overlay.updateAmmoHUD(Overlay.ammoAmount - 64);
 
                             //Die Explosionsanimation stoppen:
 

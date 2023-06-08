@@ -12,8 +12,8 @@ public class Overlay {
 
     public static JLabel health;
     public static JLabel ammo;
-    public static int healthPoints = 100;
-    public static int ammoAmount = 50;
+    public static int healthPoints = 128;
+    public static int ammoAmount = 64;
 
     /*
         Generiert die Lebensanzeige
@@ -35,7 +35,7 @@ public class Overlay {
     */
 
     public static JLabel createAmmoHUD() {
-        ammo = new OutlinedLabel(ammoAmount + "/50 AM");
+        ammo = new OutlinedLabel(ammoAmount + "/64 AM");
         ammo.setForeground(Color.WHITE);
         ammo.setFont(Program.gameFont.deriveFont(24f));
         ammo.setBounds(545, 0, 200, 25);
@@ -73,7 +73,7 @@ public class Overlay {
             GameLoop.shutdownExecutorService();
 
         } else {
-            health.setText(healthPoints + "/100 HP");
+            health.setText(healthPoints + "/128 HP");
             health.repaint();
         }
 
