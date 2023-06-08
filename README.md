@@ -20,7 +20,7 @@ MUSS:
 
 SOLL:
 
-- [ ] Trefferanimation
+- [x] Trefferanimation
 - [x] Lebenssystem
 - [ ] ~~Unterschiedliche Levels/Maps~~
 - [ ] Texturepack
