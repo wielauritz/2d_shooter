@@ -83,8 +83,6 @@ public class Projectile {
 
                         //Explosion anzeigen, wenn das Hindernis ein Fass ist:
 
-                        System.out.println(obstacle.getWidth());
-
                         if (obstacle.getWidth() == 64) {
 
                             JLabel explosion = new JLabel();
@@ -96,6 +94,10 @@ public class Projectile {
                             explosion.setBounds(obstacle.getX() - 20, obstacle.getY() - 10, 100, 100);
                             frame.getContentPane().add(explosion);
                             frame.revalidate();
+
+                            //Explosionsgeräusch abspielen:
+
+                            AudioOutput.playSound("audio/entities/Projectile/explosion.wav", 3000);
 
                             //Das Hindernis entfernen, nachdem es explodiert ist:
 
