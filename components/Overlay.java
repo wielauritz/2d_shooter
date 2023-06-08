@@ -20,7 +20,7 @@ public class Overlay {
     */
 
     public static JLabel createHealthHUD() {
-        health = new OutlinedLabel(healthPoints + "/100 HP");
+        health = new OutlinedLabel(healthPoints + "/128 HP");
         health.setForeground(Color.WHITE);
         health.setFont(Program.gameFont.deriveFont(24f));
         health.setBounds(0, 0, 200, 25);
@@ -109,7 +109,7 @@ public class Overlay {
             GameLoop.shutdownExecutorService();
 
         } else {
-            ammo.setText(ammoAmount + "/50 AM");
+            ammo.setText(ammoAmount + "/64 AM");
             ammo.repaint();
         }
 
@@ -123,7 +123,7 @@ public class Overlay {
     */
 
     public static void resetHealthHUD() {
-        healthPoints = 100;
+        healthPoints = 128;
     }
 
     /*
@@ -131,7 +131,7 @@ public class Overlay {
     */
 
     public static void resetAmmoHUD() {
-        ammoAmount = 50;
+        ammoAmount = 64;
     }
 
     /*
