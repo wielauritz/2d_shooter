@@ -39,6 +39,12 @@ KANN:
 - [ ] Scoreboard
 - [ ] Leaderboard
 
+WÜNSCHE:
+
+- [ ] Inventar
+- [ ] Datenbank
+- [ ] In-Game-Menu
+
 DARF NICHT:
 
 - Verschiedene Spielmodi
