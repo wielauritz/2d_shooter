@@ -12,8 +12,8 @@ public class Overlay {
 
     public static JLabel health;
     public static JLabel ammo;
-    private static int healthPoints = 100;
-    private static int ammoAmount = 50;
+    public static int healthPoints = 100;
+    public static int ammoAmount = 50;
 
     /*
         Generiert die Lebensanzeige

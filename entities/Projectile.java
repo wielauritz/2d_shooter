@@ -1,5 +1,6 @@
 package entities;
 
+import components.Game;
 import components.Overlay;
 import handlers.AudioOutput;
 import handlers.MouseInput;
@@ -79,6 +80,47 @@ public class Projectile {
                 boolean collided = false;
                 for (Component obstacle : Player.obstacles) {
                     if (Player.isCollidingWithObstacle(projectile, obstacle, false)) {
+
+                        //Explosion anzeigen, wenn das Hindernis ein Fass ist:
+
+                        System.out.println(obstacle.getWidth());
+
+                        if (obstacle.getWidth() == 64) {
+
+                            JLabel explosion = new JLabel();
+                            ImageIcon gifIcon = new ImageIcon("textures/entities/Obstacles/explosion.gif");
+                            ImageIcon scaledIcon = new ImageIcon(gifIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+
+                            explosion.setIcon(scaledIcon);
+                            explosion.setVisible(true);
+                            explosion.setBounds(obstacle.getX() - 20, obstacle.getY() - 10, 100, 100);
+                            frame.getContentPane().add(explosion);
+                            frame.revalidate();
+
+                            //Das Hindernis entfernen, nachdem es explodiert ist:
+
+                            obstacle.setVisible(false);
+                            Game.obstaclesList.remove(obstacle);
+                            Player.setObstacles(Game.obstaclesList);
+                            Bots.setObstacles(Game.obstaclesList);
+                            frame.getContentPane().remove(obstacle);
+
+                            //Munition aufstocken:
+
+                            Overlay.updateAmmoHUD(Overlay.ammoAmount - 50);
+
+                            //Die Explosionsanimation stoppen:
+
+                            Timer timer = new Timer(1000, ev -> {
+                                frame.getContentPane().remove(explosion);
+                                frame.repaint();
+                                frame.revalidate();
+                            });
+                            timer.setRepeats(false);
+                            timer.start();
+
+                        }
+
                         collided = true;
                         break;
                     }

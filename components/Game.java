@@ -17,6 +17,8 @@ public class Game {
 
     public static List<Bots> botsList = new ArrayList<>();
 
+    public static ArrayList<Component> obstaclesList;
+
     public static JPanel create() {
 
         //Setzt ein Hintergrundbild:
@@ -54,7 +56,7 @@ public class Game {
 
         //Generiert die Hindernisse:
 
-        ArrayList<Component> obstaclesList = new ArrayList<>();
+        obstaclesList = new ArrayList<>();
 
         obstaclesList.add(Obstacles.generateWater(400, 250));
 
@@ -63,7 +65,6 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(217, 570));
         obstaclesList.add(Obstacles.generateTree(212, 24));
         obstaclesList.add(Obstacles.generateTree(71, 625));
-        obstaclesList.add(Obstacles.generateTree(528, 197));
         obstaclesList.add(Obstacles.generateTree(73, 413));
         obstaclesList.add(Obstacles.generateTree(447, 149));
         obstaclesList.add(Obstacles.generateTree(381, 150));
@@ -71,9 +72,11 @@ public class Game {
         obstaclesList.add(Obstacles.generateTree(6, 567));
         obstaclesList.add(Obstacles.generateTree(547, 387));
         obstaclesList.add(Obstacles.generateTree(21, 81));
-        obstaclesList.add(Obstacles.generateTree(70, 222));
-        obstaclesList.add(Obstacles.generateTree(193, 396));
         obstaclesList.add(Obstacles.generateTree(599, 8));
+
+        obstaclesList.add(Obstacles.generateBarrel(70, 222));
+        obstaclesList.add(Obstacles.generateBarrel(193, 396));
+        obstaclesList.add(Obstacles.generateBarrel(528, 197));
 
         //Speichert die Hindernisse:
 

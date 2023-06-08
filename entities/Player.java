@@ -96,8 +96,9 @@ public class Player {
     public static boolean isCollidingWithObstacle(Component player, Component obstacle, boolean isPlayer) {
         Rectangle playerBounds = player.getBounds();
         Rectangle obstacleBounds = obstacle.getBounds();
-        Rectangle waterBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
+        Rectangle barrelBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 10, obstacleBounds.width - 60, obstacleBounds.height - 30);
         Rectangle treeBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 30, obstacleBounds.width - 40, obstacleBounds.height - 40);
+        Rectangle waterBounds = new Rectangle(obstacleBounds.x + 30, obstacleBounds.y + 20, obstacleBounds.width - 60, obstacleBounds.height - 60);
 
         //Spieler Schaden hinzufügen und Geräusch abspielen, wenn er ins Wasser geht:
 
@@ -117,6 +118,8 @@ public class Player {
 
         } else if (obstacle.getWidth() == 100) {
             return playerBounds.intersects(treeBounds);
+        } else if (obstacle.getWidth() == 64) {
+            return playerBounds.intersects(barrelBounds);
         } else {
             isInWater = false;
         }
