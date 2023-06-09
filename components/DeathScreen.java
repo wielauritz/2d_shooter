@@ -3,6 +3,7 @@ package components;
 import algorithms.GameLoop;
 import entities.Player;
 import handlers.AudioOutput;
+import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -182,6 +183,10 @@ public class DeathScreen {
                 AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Datenbankverbindung beenden:
+
+                Database.close();
 
                 //Spiel beenden:
 

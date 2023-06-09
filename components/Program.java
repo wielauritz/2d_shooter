@@ -2,6 +2,7 @@ package components;
 
 import algorithms.GameLoop;
 import handlers.AudioOutput;
+import handlers.Database;
 
 import java.awt.*;
 import java.io.File;
@@ -32,6 +33,10 @@ public class Program {
             e.printStackTrace();
             System.out.println("[Program.java] Spielschrift konnte nicht geladen werden.");
         }
+
+        //Datenbank laden:
+
+        Database.open();
 
         //Fenster erstellen:
 

@@ -11,8 +11,8 @@ public class AudioOutput {
 
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    public static boolean soundsEnabled = true;
-    public static boolean musicEnabled = true;
+    public static boolean soundsEnabled = Database.areSoundsEnabled();
+    public static boolean musicEnabled = Database.isMusicEnabled();
 
     private static AudioInputStream audioInputStream;
 

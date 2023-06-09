@@ -1,6 +1,7 @@
 package components;
 
 import entities.Player;
+import handlers.Database;
 
 import javax.swing.*;
 
@@ -25,7 +26,7 @@ public class Window {
 
         //Setzt einen Standard-Spielernamen:
 
-        Player.name = "Rainer Zufall";
+        Player.name = Database.getLastSeenPlayerName();
 
         System.out.println("[Window.java] Fenster erfolgreich erstellt.");
     }

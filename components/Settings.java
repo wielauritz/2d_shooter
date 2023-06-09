@@ -2,6 +2,7 @@ package components;
 
 import entities.Player;
 import handlers.AudioOutput;
+import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -175,6 +176,11 @@ public class Settings {
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
+
+                        //Eingaben speichern:
+
+                        Database.updatePlayer(Player.name, (int) (System.currentTimeMillis()/1000L), 0);
+                        Database.updateSettings(AudioOutput.musicEnabled, AudioOutput.soundsEnabled);
 
                         //Anzeigen zurücksetzen:
 

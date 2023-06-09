@@ -2,6 +2,7 @@ package components;
 
 import algorithms.GameLoop;
 import handlers.AudioOutput;
+import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -166,6 +167,10 @@ public class TitleScreen {
                 AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Datenbankverbindung beenden:
+
+                Database.close();
 
                 //Spiel beenden:
 
