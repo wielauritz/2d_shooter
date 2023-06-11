@@ -73,34 +73,7 @@ public class GameLoop implements KeyListener {
         });
         playerMoveTimer.start();
 
-        //Timer für Botbewegung:
 
-        executorService = Executors.newSingleThreadScheduledExecutor();
-
-        executorService.scheduleAtFixedRate(() -> {
-            SwingUtilities.invokeLater(() -> {
-                for (Bots bot : botsList) {
-
-                    int directionX = 0;
-                    int directionY = 0;
-                    int speed = 5;
-
-                    if (player.getX() < Bots.bots.getX()) {
-                        directionX -= speed;
-                    } else if (player.getY() < Bots.bots.getY()) {
-                        directionY -= speed;
-                    } else if (player.getX() > Bots.bots.getX()) {
-                        directionX += speed;
-                    } else if (player.getY() > Bots.bots.getY()) {
-                        directionY += speed;
-                    }
-                    if (directionX != 0 || directionY != 0) {
-                        Bots.move(directionX, directionY);
-                    }
-                }
-
-            });
-        }, 0, 100, TimeUnit.MILLISECONDS);
 
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
     }
