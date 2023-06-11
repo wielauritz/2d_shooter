@@ -3,6 +3,7 @@ package algorithms;
 import entities.Bots;
 import entities.Player;
 import entities.Projectile;
+import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 

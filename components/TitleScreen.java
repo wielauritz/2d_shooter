@@ -1,6 +1,7 @@
 package components;
 
 import algorithms.GameLoop;
+import entities.Player;
 import handlers.AudioOutput;
 import handlers.Database;
 import handlers.KeyboardInput;
@@ -19,6 +20,8 @@ import static algorithms.GameLoop.playerMoveTimer;
 public class TitleScreen {
 
     public static JLabel playButton;
+
+    public static JLabel statisticsButton;
     public static JLabel settingsButton;
     public static JLabel closeButton;
 
@@ -52,16 +55,25 @@ public class TitleScreen {
         //Erstellt den Spielen-Button:
 
         playButton = new JLabel("Spielen", SwingConstants.CENTER);
-        playButton.setBounds(170, 342, 400, 50);
+        playButton.setBounds(170, 302, 400, 50);
         playButton.setFont(Program.gameFont.deriveFont(24f));
         playButton.setOpaque(true);
         playButton.setFocusable(false);
         panel.add(playButton);
 
+        //Erstellt den Statistiken-Button:
+
+        statisticsButton = new JLabel("Statistiken", SwingConstants.CENTER);
+        statisticsButton.setBounds(170, 372, 400, 50);
+        statisticsButton.setFont(Program.gameFont.deriveFont(24f));
+        statisticsButton.setOpaque(true);
+        statisticsButton.setFocusable(false);
+        panel.add(statisticsButton);
+
         //Erstellt den Einstellungen-Button:
 
         settingsButton = new JLabel("Einstellungen", SwingConstants.CENTER);
-        settingsButton.setBounds(170, 412, 400, 50);
+        settingsButton.setBounds(170, 442, 400, 50);
         settingsButton.setFont(Program.gameFont.deriveFont(24f));
         settingsButton.setOpaque(true);
         settingsButton.setFocusable(false);
@@ -70,7 +82,7 @@ public class TitleScreen {
         //Erstellt den Beenden-Button:
 
         closeButton = new JLabel("Beenden", SwingConstants.CENTER);
-        closeButton.setBounds(170, 482, 400, 50);
+        closeButton.setBounds(170, 512, 400, 50);
         closeButton.setFont(Program.gameFont.deriveFont(24f));
         closeButton.setOpaque(true);
         closeButton.setFocusable(false);
@@ -116,7 +128,37 @@ public class TitleScreen {
 
                 AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
+                //Aktuell eingeloggten Spieler speichern:
+
+                Database.updatePlayerLastSeen(Player.name, System.currentTimeMillis());
+                Database.updatePlayerLastScore(Player.name, 0);
+
                 System.out.println("[TitleScreen.java] Spielfeld erfolgreich geladen.");
+
+            }
+        });
+
+        statisticsButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("[TitleScreen.java] Statistiken werden erstellt, bitte warten...");
+
+                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+                if (playerMoveTimer != null) {
+                    playerMoveTimer.stop();
+                }
+                GameLoop.timerRunning = false;
+
+                //Spielfeld dem Fenster übergeben:
+
+                Window.frame.setContentPane(Statistics.createMenu());
+                Window.frame.revalidate();
+
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
             }
         });
@@ -167,6 +209,10 @@ public class TitleScreen {
                 AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Letzten eingeloggten Spieler speichern:
+
+                Database.updatePlayerLastSeen(Player.name, System.currentTimeMillis());
 
                 //Datenbankverbindung beenden:
 

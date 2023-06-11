@@ -101,6 +101,7 @@ public class DeathScreen {
 
                         Overlay.resetHealthHUD();
                         Overlay.resetAmmoHUD();
+                        Overlay.resetScoreHUD();
 
                         Player.isInWater = false;
 
@@ -120,6 +121,11 @@ public class DeathScreen {
                         //Sound abspielen:
 
                         AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
+
+                        //Aktuell eingeloggten Spieler speichern:
+
+                        Database.updatePlayerLastSeen(Player.name, System.currentTimeMillis());
+                        Database.updatePlayerLastScore(Player.name, 0);
                     }
                 });
 
@@ -138,6 +144,7 @@ public class DeathScreen {
 
                         Overlay.resetHealthHUD();
                         Overlay.resetAmmoHUD();
+                        Overlay.resetScoreHUD();
 
                         Player.isInWater = false;
 
@@ -183,6 +190,10 @@ public class DeathScreen {
                 AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
 
                 AudioOutput.shutdown();
+
+                //Letzten eingeloggten Spieler speichern:
+
+                Database.updatePlayerLastSeen(Player.name, System.currentTimeMillis());
 
                 //Datenbankverbindung beenden:
 

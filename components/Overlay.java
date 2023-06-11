@@ -2,6 +2,7 @@ package components;
 
 import algorithms.GameLoop;
 import entities.Player;
+import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -10,10 +11,28 @@ import java.awt.*;
 
 public class Overlay {
 
+    public static JLabel score;
     public static JLabel health;
     public static JLabel ammo;
+
+    public static int scorePoints = 0;
     public static int healthPoints = 128;
     public static int ammoAmount = 64;
+
+    /*
+        Generiert die Lebensanzeige
+    */
+
+    public static JLabel createScoreHUD() {
+        score = new OutlinedLabel("SCORE: " + scorePoints + "/" + Database.getPlayerHighscore(Player.name));
+        score.setForeground(Color.WHITE);
+        score.setFont(Program.gameFont.deriveFont(24f));
+        score.setBounds(0, 0, 300, 25);
+
+        System.out.println("[Overlay.java] Score-Overlay erfolgreich erstellt.");
+
+        return score;
+    }
 
     /*
         Generiert die Lebensanzeige
@@ -23,7 +42,7 @@ public class Overlay {
         health = new OutlinedLabel(healthPoints + "/128 HP");
         health.setForeground(Color.WHITE);
         health.setFont(Program.gameFont.deriveFont(24f));
-        health.setBounds(0, 0, 200, 25);
+        health.setBounds(0, 696, 200, 25);
 
         System.out.println("[Overlay.java] Health-Overlay erfolgreich erstellt.");
 
@@ -38,7 +57,7 @@ public class Overlay {
         ammo = new OutlinedLabel(ammoAmount + "/64 AM");
         ammo.setForeground(Color.WHITE);
         ammo.setFont(Program.gameFont.deriveFont(24f));
-        ammo.setBounds(545, 0, 200, 25);
+        ammo.setBounds(545, 696, 200, 25);
         ammo.setHorizontalAlignment(SwingConstants.RIGHT);
 
         System.out.println("[Overlay.java] Ammo-Overlay erfolgreich erstellt.");
@@ -47,10 +66,32 @@ public class Overlay {
     }
 
     /*
+        Aktualisiert die Score-Anzeige
+     */
+
+    public static void updateScoreHUD(int difference) {
+
+        scorePoints = scorePoints + difference;
+
+        //Überprüfen des Highscores:
+
+        if (scorePoints > Database.getPlayerHighscore(Player.name)) {
+            Database.updatePlayerHighscore(Player.name, scorePoints);
+        }
+
+
+        score.setText("SCORE: " + scorePoints + "/" + Database.getPlayerHighscore(Player.name));
+        score.repaint();
+
+        System.out.println("[Overlay.java] Score-Overlay erfolgreich aktualisiert.");
+
+    }
+
+    /*
         Aktualisiert die Lebensanzeige
      */
 
-    public static JLabel updateHealthHUD(int difference) {
+    public static void updateHealthHUD(int difference) {
 
         healthPoints = healthPoints - difference;
 
@@ -79,14 +120,13 @@ public class Overlay {
 
         System.out.println("[Overlay.java] Health-Overlay erfolgreich aktualisiert.");
 
-        return health;
     }
 
     /*
         Aktualisiert die Lebensanzeige
      */
 
-    public static JLabel updateAmmoHUD(int difference) {
+    public static void updateAmmoHUD(int difference) {
 
         ammoAmount = ammoAmount - difference;
 
@@ -115,7 +155,6 @@ public class Overlay {
 
         System.out.println("[Overlay.java] Ammo-Overlay erfolgreich aktualisiert.");
 
-        return ammo;
     }
 
     /*
@@ -132,6 +171,14 @@ public class Overlay {
 
     public static void resetAmmoHUD() {
         ammoAmount = 64;
+    }
+
+    /*
+        Setzt die Score-Anzeige zurück
+    */
+
+    public static void resetScoreHUD() {
+        scorePoints = 0;
     }
 
     /*

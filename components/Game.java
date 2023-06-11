@@ -91,13 +91,17 @@ public class Game {
 
         //Bindet das Overlay ein:
 
-        Container c = Overlay.createHealthHUD();
-        panel.add(c);
-        panel.setComponentZOrder(c, 0);
+        Container c1 = Overlay.createScoreHUD();
+        panel.add(c1);
+        panel.setComponentZOrder(c1, 0);
 
-        Container c2 = Overlay.createAmmoHUD();
+        Container c2 = Overlay.createHealthHUD();
         panel.add(c2);
         panel.setComponentZOrder(c2, 0);
+
+        Container c3 = Overlay.createAmmoHUD();
+        panel.add(c3);
+        panel.setComponentZOrder(c3, 0);
 
         //Startet die GameLoop:
 
