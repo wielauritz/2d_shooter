@@ -95,6 +95,21 @@ public class Statistics {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
 
+                        // Create the scoreboard scroll pane
+                        JScrollPane scoreboardScrollPane = new JScrollPane();
+                        scoreboardScrollPane.setBounds(170, 302, 400, 260);
+                        panel.add(scoreboardScrollPane);
+
+                        // Create the scoreboard list
+                        JList<String> scoreboardList = new JList<>(Database.createScoreboard().toArray(new String[0]));
+                        scoreboardList.setFont(Program.gameFont.deriveFont(16f));
+                        scoreboardScrollPane.setViewportView(scoreboardList);
+                        panel.remove(scoreboardButton);
+                        panel.remove(leaderboardButton);
+
+                        Window.frame.repaint();
+                        Window.frame.revalidate();
+
                         //Sound abspielen:
 
                         AudioOutput.playSound("audio/components/Settings/click.wav", 100);

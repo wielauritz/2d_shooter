@@ -3,6 +3,8 @@ package handlers;
 import entities.Player;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
     private static Connection connection;
@@ -224,6 +226,26 @@ public class Database {
 
         System.out.println("[Database.java] Letzten Spieler erfolgreich ausgelesen.");
         return playerName;
+    }
+
+    public static List<String> createScoreboard() {
+        List<String> scoreboard = new ArrayList<>();
+
+        try {
+            String query = "SELECT name, lastScore FROM users ORDER BY lastScore DESC;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int score = resultSet.getInt("lastScore");
+                scoreboard.add(name + ": " + score);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return scoreboard;
     }
 
     public static boolean isMusicEnabled() {
