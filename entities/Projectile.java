@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import static components.Game.botsList;
 import static components.Window.frame;
 
 public class Projectile {
@@ -51,7 +53,7 @@ public class Projectile {
 
         //Projektil erstellen:
 
-        JLabel projectile = Projectile.createProjectile(playerPosition.x, playerPosition.y);
+        JLabel projectile = createProjectile(playerPosition.x, playerPosition.y);
         frame.getContentPane().add(projectile);
         frame.getContentPane().setComponentZOrder(projectile, 0);
 
@@ -66,6 +68,16 @@ public class Projectile {
         //Timer für Projektilbewegung erstellen:
 
         Timer projectileTimer = new Timer(1, new ActionListener() {
+
+            private boolean isCollidingWithBot(JLabel projectile, Bots bot) {
+
+                Rectangle projectileBox = projectile.getBounds();
+                Rectangle botBox = bot.getBounds();
+
+                // Check for collision using bounding boxes
+                return projectileBox.intersects(botBox);
+            }
+
             public void actionPerformed(ActionEvent e) {
 
                 //Projektilposition verändern:
@@ -78,6 +90,9 @@ public class Projectile {
                 //Mögliche Kollision mit Hindernissen überprüfen:
 
                 boolean collided = false;
+                boolean collidedWithBot = false;
+
+
                 for (Component obstacle : Player.obstacles) {
                     if (Player.isCollidingWithObstacle(projectile, obstacle, false)) {
 
@@ -122,8 +137,14 @@ public class Projectile {
                             timer.start();
 
                         }
-
                         collided = true;
+                        break;
+                    }
+                }
+                for (Bots bot : botsList) {
+                    if (isCollidingWithBot(projectile, bot)) {
+                        collided = true;
+                        bot.deductHealth(20); // Deduct 20 from bot's health
                         break;
                     }
                 }

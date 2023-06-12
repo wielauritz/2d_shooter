@@ -1,19 +1,23 @@
 package entities;
 
+import components.Game;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static components.Game.botsList;
+import static components.Window.frame;
 import static entities.Player.player;
 
 public class Bots {
 
     private JLabel bots;
-    private int BotsSize = 50;
+    private static int BotsSize = 50;
     private static List<Component> obstacles;
     private int healthPoints = 100;
     private int id;
@@ -105,4 +109,23 @@ public class Bots {
             });
         }, 0, 100, TimeUnit.MILLISECONDS);
     }
+
+    public void deductHealth(int amount) {
+        healthPoints -= amount;
+        if (healthPoints <= 0) {
+            // Bot is destroyed, perform any necessary actions
+            destroyBot();
+        }
+    }
+
+    private void destroyBot() {
+        // Perform actions when the bot is destroyed (e.g., remove from game, update score, etc.)
+        frame.getContentPane().remove(bots);
+        botsList.remove(this);
+    }
+
+    public Rectangle getBounds() {
+        return bots.getBounds();
+    }
+
 }
