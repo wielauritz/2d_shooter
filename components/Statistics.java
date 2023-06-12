@@ -17,18 +17,17 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class Settings {
+public class Statistics {
 
-    public static JTextField nameField;
-    public static JLabel soundsButton;
-    public static JLabel musicButton;
+    public static JLabel scoreboardButton;
+    public static JLabel leaderboardButton;
     public static JLabel backButton;
 
 
     /*
         Erstellt das Hauptmenü
      */
-    public static JPanel create() {
+    public static JPanel createMenu() {
 
         JPanel panel = new JPanel() {
 
@@ -51,38 +50,28 @@ public class Settings {
 
         panel.setLayout(null);
 
-        //Erstellt das Namen-Eingabefeld
+        //Erstellt den Scoreboard-Button:
 
-        nameField = new JTextField(Player.name, SwingConstants.CENTER);
-        nameField.setBounds(170, 302, 400, 50);
-        nameField.setFont(Program.gameFont.deriveFont(24f));
-        nameField.setOpaque(true);
-        nameField.setFocusable(true);
-        nameField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(nameField);
+        scoreboardButton = new JLabel("Scoreboard", SwingConstants.CENTER);
+        scoreboardButton.setBounds(170, 342, 400, 50);
+        scoreboardButton.setFont(Program.gameFont.deriveFont(24f));
+        scoreboardButton.setOpaque(true);
+        scoreboardButton.setFocusable(false);
+        panel.add(scoreboardButton);
 
-        //Erstellt den Geräusche-Button:
+        //Erstellt den Leaderboard-Button:
 
-        soundsButton = new JLabel("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"), SwingConstants.CENTER);
-        soundsButton.setBounds(170, 372, 400, 50);
-        soundsButton.setFont(Program.gameFont.deriveFont(24f));
-        soundsButton.setOpaque(true);
-        soundsButton.setFocusable(false);
-        panel.add(soundsButton);
-
-        //Erstellt den Musik-Button:
-
-        musicButton = new JLabel("Musik - " + (AudioOutput.musicEnabled ? "AN" : "AUS"), SwingConstants.CENTER);
-        musicButton.setBounds(170, 442, 400, 50);
-        musicButton.setFont(Program.gameFont.deriveFont(24f));
-        musicButton.setOpaque(true);
-        musicButton.setFocusable(false);
-        panel.add(musicButton);
+        leaderboardButton = new JLabel("Leaderboard", SwingConstants.CENTER);
+        leaderboardButton.setBounds(170, 412, 400, 50);
+        leaderboardButton.setFont(Program.gameFont.deriveFont(24f));
+        leaderboardButton.setOpaque(true);
+        leaderboardButton.setFocusable(false);
+        panel.add(leaderboardButton);
 
         //Erstellt den Zurück-Button:
 
         backButton = new JLabel("Hauptmenü", SwingConstants.CENTER);
-        backButton.setBounds(170, 512, 400, 50);
+        backButton.setBounds(170, 482, 400, 50);
         backButton.setFont(Program.gameFont.deriveFont(24f));
         backButton.setOpaque(true);
         backButton.setFocusable(false);
@@ -96,50 +85,15 @@ public class Settings {
         info.setForeground(Color.WHITE);
         panel.add(info);
 
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
-            private void update(DocumentEvent e) {
-                try {
-                    Player.name = e.getDocument().getText(0, e.getDocument().getLength());
-                    AudioOutput.playSound("audio/components/Settings/typewriter.wav", 500);
-                    System.out.println("[Settings.java] Spielername erfolgreich zu \"" + Player.name + "\" aktualisiert.");
-                } catch (BadLocationException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                update(e);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                update(e);
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                update(e);
-            }
-        });
-
         /*
             Mausklick im Hauptmenü registrieren:
         */
 
-        soundsButton.addMouseListener(new MouseAdapter() {
+        scoreboardButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Sounds (de)aktivieren:
-
-                        AudioOutput.soundsEnabled = !AudioOutput.soundsEnabled;
-
-                        //Button aktualisieren:
-
-                        soundsButton.setText("Sounds - " + (AudioOutput.soundsEnabled ? "AN" : "AUS"));
 
                         //Sound abspielen:
 
@@ -149,19 +103,11 @@ public class Settings {
             }
         });
 
-        musicButton.addMouseListener(new MouseAdapter() {
+        leaderboardButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Sounds (de)aktivieren:
-
-                        AudioOutput.musicEnabled = !AudioOutput.musicEnabled;
-
-                        //Button aktualisieren:
-
-                        musicButton.setText("Musik - " + (AudioOutput.musicEnabled ? "AN" : "AUS"));
 
                         //Sound abspielen:
 
@@ -176,12 +122,6 @@ public class Settings {
             public void mouseClicked(MouseEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Eingaben speichern:
-
-                        Database.updatePlayerName(Player.name);
-                        Database.updatePlayerLastSeen(Player.name, System.currentTimeMillis());
-                        Database.updateSettings(AudioOutput.musicEnabled, AudioOutput.soundsEnabled);
 
                         //Anzeigen zurücksetzen:
 
@@ -209,7 +149,7 @@ public class Settings {
             }
         });
 
-        System.out.println("[Settings.java] Einstellungen erfolgreich erstellt.");
+        System.out.println("[Statistics.java] Statistiken erfolgreich erstellt.");
 
         return panel;
     }

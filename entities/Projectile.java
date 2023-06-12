@@ -3,6 +3,7 @@ package entities;
 import components.Game;
 import components.Overlay;
 import handlers.AudioOutput;
+import handlers.Database;
 import handlers.MouseInput;
 
 import javax.swing.*;
@@ -125,6 +126,11 @@ public class Projectile {
                             //Munition aufstocken:
 
                             Overlay.updateAmmoHUD(Overlay.ammoAmount - 64);
+
+                            //Score erhöhen:
+
+                            Overlay.updateScoreHUD(15);
+                            Database.updatePlayerLastScore(Player.name,Database.getPlayerLastScore(Player.name)+15);
 
                             //Die Explosionsanimation stoppen:
 

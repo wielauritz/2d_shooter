@@ -1,5 +1,7 @@
 package handlers;
 
+import entities.Player;
+
 import java.sql.*;
 
 public class Database {
@@ -18,14 +20,15 @@ public class Database {
     private static void createTablesIfNotExists() {
         String createSettingsTable = "CREATE TABLE IF NOT EXISTS settings (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "musicEnabled BOOLEAN, " +
-                "soundsEnabled BOOLEAN" +
+                "musicEnabled BOOLEAN UNIQUE, " +
+                "soundsEnabled BOOLEAN UNIQUE" +
                 ");";
 
         String createUsersTable = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR UNIQUE, " + // Add UNIQUE constraint
+                "name VARCHAR UNIQUE, " +
                 "lastSeen INTEGER, " +
+                "lastScore INTEGER, " +
                 "highscore INTEGER" +
                 ");";
 
@@ -34,38 +37,45 @@ public class Database {
             statement.execute(createSettingsTable);
             statement.execute(createUsersTable);
 
-            String insertQuery = "INSERT INTO settings (musicEnabled, soundsEnabled) VALUES (?, ?);";
-            PreparedStatement statement2 = connection.prepareStatement(insertQuery);
-            statement2.setBoolean(1, true);
-            statement2.setBoolean(2, true);
-            statement2.executeUpdate();
+            String settingsCheckQuery = "SELECT COUNT(*) FROM settings;";
+            PreparedStatement settingsCheckStatement = connection.prepareStatement(settingsCheckQuery);
+            ResultSet settingsResultSet = settingsCheckStatement.executeQuery();
+            settingsResultSet.next();
+
+            if (settingsResultSet.getInt(1) == 0) {
+                String settingsInsertQuery = "INSERT INTO settings (musicEnabled, soundsEnabled) VALUES (?, ?);";
+                PreparedStatement settingsInsertStatement = connection.prepareStatement(settingsInsertQuery);
+                settingsInsertStatement.setBoolean(1, true);
+                settingsInsertStatement.setBoolean(2, true);
+                settingsInsertStatement.executeUpdate();
+            }
+
+            String usersCheckQuery = "SELECT COUNT(*) FROM users;";
+            PreparedStatement usersCheckStatement = connection.prepareStatement(usersCheckQuery);
+            ResultSet usersResultSet = usersCheckStatement.executeQuery();
+            usersResultSet.next();
+
+            if (usersResultSet.getInt(1) == 0) {
+                String usersInsertQuery = "INSERT INTO users (name, lastSeen, lastScore, highscore) VALUES (?, ?, ?, ?);";
+                PreparedStatement usersInsertStatement = connection.prepareStatement(usersInsertQuery);
+                usersInsertStatement.setString(1, "Klara Zufall");
+                usersInsertStatement.setLong(2, System.currentTimeMillis());
+                usersInsertStatement.setInt(3, 0);
+                usersInsertStatement.setInt(4, 0);
+                usersInsertStatement.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public static void close() {
         try {
             connection.close();
             System.out.println("[Database.java] Verbindung erfolgreich beendet.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void updatePlayer(String name, int lastSeen, int highscore) {
-        try {
-            String insertOrUpdateQuery = "INSERT INTO users (name, lastSeen, highscore) " +
-                    "VALUES (?, ?, ?) " +
-                    "ON CONFLICT (name) DO UPDATE SET lastSeen = ?, highscore = ?;";
-            PreparedStatement statement = connection.prepareStatement(insertOrUpdateQuery);
-            statement.setString(1, name);
-            statement.setInt(2, lastSeen);
-            statement.setInt(3, highscore);
-            statement.setInt(4, lastSeen);
-            statement.setInt(5, highscore);
-            statement.executeUpdate();
-            System.out.println("[Database.java] Spieler " + name + " erfolgreich eingetragen.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,6 +92,119 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void updatePlayerName(String name) {
+        try {
+            String updateQuery = "INSERT INTO users (name, lastSeen, lastScore, highscore) VALUES (?, ?, ?, ?) ON CONFLICT (name) DO UPDATE SET lastSeen = ?, lastScore = ?;";
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            statement.setString(1, name);
+            statement.setLong(2, System.currentTimeMillis());
+            statement.setInt(3, 0);
+            statement.setInt(4, 0);
+            statement.setLong(5, System.currentTimeMillis());
+            statement.setInt(6, 0);
+            statement.executeUpdate();
+            System.out.println("[Database.java] Spieler \"" + name + "\" erfolgreich aktualisiert.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePlayerLastSeen(String name, long lastSeen) {
+        try {
+            String updateQuery = "UPDATE users SET lastSeen = ? WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            statement.setLong(1, lastSeen);
+            statement.setString(2, name);
+            statement.executeUpdate();
+            System.out.println("[Database.java] Spieler \"" + name + "\" erfolgreich gespeichert.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePlayerLastScore(String name, int lastScore) {
+        try {
+            String updateQuery = "UPDATE users SET lastScore = ? WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            statement.setInt(1, lastScore);
+            statement.setString(2, name);
+            statement.executeUpdate();
+            System.out.println("[Database.java] Score von Spieler \"" + name + "\" erfolgreich aktualisiert.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePlayerHighscore(String name, int highscore) {
+        try {
+            String updateQuery = "UPDATE users SET highscore = ? WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            statement.setInt(1, highscore);
+            statement.setString(2, name);
+            statement.executeUpdate();
+            System.out.println("[Database.java] Highscore von Spieler \"" + name + "\" erfolgreich aktualisiert.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static long getPlayerLastSeen(String name) {
+        long lastSeen = 0;
+
+        try {
+            String query = "SELECT lastSeen FROM users WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                lastSeen = resultSet.getLong("lastSeen");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lastSeen;
+    }
+
+    public static int getPlayerLastScore(String name) {
+        int lastScore = 0;
+
+        try {
+            String query = "SELECT lastScore FROM users WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                lastScore = resultSet.getInt("lastScore");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lastScore;
+    }
+
+    public static int getPlayerHighscore(String name) {
+        int highscore = 0;
+
+        try {
+            String query = "SELECT highscore FROM users WHERE name = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                highscore = resultSet.getInt("highscore");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return highscore;
     }
 
     public static String getLastSeenPlayerName() {
