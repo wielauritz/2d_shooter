@@ -122,10 +122,15 @@ public class Bots {
                 int deltaX = player.getX() - bots.getX();
                 int deltaY = player.getY() - bots.getY();
 
-                int directionX = Integer.compare(deltaX, 0) * speed;
-                int directionY = Integer.compare(deltaY, 0) * speed;
+                int distance = (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                if (directionX != 0 || directionY != 0) {
+                if (distance < 50) {
+                    int directionX = Integer.compare(-deltaX, 0) * speed;
+                    int directionY = Integer.compare(-deltaY, 0) * speed;
+                    move(directionX, directionY);
+                } else {
+                    int directionX = Integer.compare(deltaX, 0) * speed;
+                    int directionY = Integer.compare(deltaY, 0) * speed;
                     move(directionX, directionY);
                 }
             });
