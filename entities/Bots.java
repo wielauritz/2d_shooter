@@ -1,6 +1,7 @@
 package entities;
 
 import components.Game;
+import components.Overlay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ public class Bots {
         this.id = id; // Set the ID of the bot
 
         // Erzeugt einen neuen Bot:
-        bots = new JLabel(new ImageIcon("textures/entities/Player/player.png"));
+        bots = new JLabel(new ImageIcon("textures/entities/Player/Ghost.png"));
 
         // Positioniert den Bot im Fenster:
         int x = (650 - BotsSize - (BotsSize / 2)) / 2;
@@ -49,7 +50,7 @@ public class Bots {
     }
 
     /*
-        Überprüft, ob der Spieler mit einem Hindernis in Berührung kommt
+        Überprüft, ob der Bot mit einem Hindernis in Berührung kommt
     */
     public boolean isCollidingWithObstacle(Component bot, Component obstacle) {
         if (obstacle.getWidth() < 159) {
@@ -89,19 +90,12 @@ public class Bots {
 
         executorService.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
-                int directionX = 0;
-                int directionY = 0;
-                int speed = 5;
+                int speed = 1;
+                int deltaX = player.getX() - bots.getX();
+                int deltaY = player.getY() - bots.getY();
 
-                if (player.getX() < bots.getX()) {
-                    directionX -= speed;
-                } else if (player.getY() < bots.getY()) {
-                    directionY -= speed;
-                } else if (player.getX() > bots.getX()) {
-                    directionX += speed;
-                } else if (player.getY() > bots.getY()) {
-                    directionY += speed;
-                }
+                int directionX = Integer.compare(deltaX, 0) * speed;
+                int directionY = Integer.compare(deltaY, 0) * speed;
 
                 if (directionX != 0 || directionY != 0) {
                     move(directionX, directionY);
@@ -122,6 +116,7 @@ public class Bots {
         // Perform actions when the bot is destroyed (e.g., remove from game, update score, etc.)
         frame.getContentPane().remove(bots);
         botsList.remove(this);
+        Overlay.updateScoreHUD(50);
     }
 
     public Rectangle getBounds() {
