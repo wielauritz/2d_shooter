@@ -20,10 +20,10 @@ MUSS:
 
 SOLL:
 
-- [x] Trefferanimation
+- [ ] Trefferanimation
 - [x] Lebenssystem
 - [ ] ~~Unterschiedliche Levels/Maps~~
-- [ ] Texturepack
+- [x] Texturepack
 - [x] Spielmenü
 
 KANN:
@@ -42,7 +42,7 @@ KANN:
 WÜNSCHE:
 
 - [ ] Inventar
-- [ ] Datenbank
+- [x] Datenbank
 - [ ] In-Game-Menu
 
 DARF NICHT:
