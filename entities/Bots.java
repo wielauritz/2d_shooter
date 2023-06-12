@@ -94,14 +94,9 @@ public class Bots {
         bots.setLocation(newX, newY);
 
         // Verhindert, dass sich der Bot durch Hindernisse bewegt:
-        for (Component obstacle : obstacles) {
-            if (isCollidingWithObstacle(bots, obstacle)) {
-                bots.setLocation(player.getX() - x, bots.getY() - y);
-                break;
-            }
-        }
 
-        //Dreht den Spieler in Laufrichtung:
+
+        //Dreht den Bot in Laufrichtung:
 
         if (x < 0) {
             // Nach links:
