@@ -21,6 +21,8 @@ public class Bots {
     private int healthPoints = 100;
     private int id;
     private ScheduledExecutorService executorService; // Added executorService
+    private static int StartX = 0;
+    private static int StartY = 0;
 
     public JLabel generate(int id) {
         this.id = id; // Set the ID of the bot
@@ -32,9 +34,30 @@ public class Bots {
         bots.setIcon(scaledIcon);
 
         // Positioniert den Bot im Fenster:
-        int x = (650 - BotsSize - (BotsSize / 2)) / 2;
-        int y = (650 - BotsSize - (BotsSize / 2)) / 2;
+
+        System.out.println("StartX: " + StartX);
+        System.out.println("StartY: " + StartY);
+
+        int x = (StartX - BotsSize - (BotsSize / 2)) / 2;
+        int y = (StartY - BotsSize - (BotsSize / 2)) / 2;
         bots.setBounds(x + 12, y, BotsSize, BotsSize);
+
+        if (StartX == 0 && StartY == 0) {
+            StartX = 1500;
+            StartY = 1500;
+        } else if (StartX == 1500 && StartY == 1500) {
+            StartX = 0;
+            StartY = 750;
+        } else if (StartX == 0 && StartY == 750) {
+            StartX = 1500;
+            StartY = 550;
+        } else if (StartX == 1500 && StartY == 550) {
+            StartX = 0;
+            StartY = 0;
+        }
+
+        System.out.println("StartX: " + StartX);
+        System.out.println("StartY: " + StartY);
 
         System.out.println("[Bots.java] Bot " + id + " erfolgreich erstellt.");
 
@@ -68,14 +91,7 @@ public class Bots {
         int newX = bots.getX() + x;
         int newY = bots.getY() + y;
 
-        // Verhindert, dass sich der Bot aus dem Feld bewegt:
-        if (newX >= 0 && newX + BotsSize <= 733) {
-            bots.setLocation(newX, bots.getY());
-        }
-
-        if (newY >= 0 && newY + BotsSize <= 731) {
-            bots.setLocation(bots.getX(), newY);
-        }
+        bots.setLocation(newX, newY);
 
         // Verhindert, dass sich der Bot durch Hindernisse bewegt:
         for (Component obstacle : obstacles) {

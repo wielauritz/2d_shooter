@@ -13,11 +13,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static components.Window.panel;
+
 public class Game {
 
     public static List<Bots> botsList = new ArrayList<>();
 
+
     public static ArrayList<Component> obstaclesList;
+
+    public static void createBots(int count) {
+        for (int i = 0; i < count; i++) {
+            Bots bot = new Bots();
+            botsList.add(bot);
+            panel.add(bot.generate(i + 1));
+        }
+    }
 
     public static JPanel create() {
 
@@ -42,17 +53,6 @@ public class Game {
 
         panel.add(Player.generate());
         panel.add(Player.nameTag);
-
-        //Generiert die Bots:
-
-        Bots bot1 = new Bots();
-        botsList.add(bot1);
-
-        Bots bot2 = new Bots();
-        botsList.add(bot2);
-
-        panel.add(bot1.generate(1));
-        panel.add(bot2.generate(2));
 
         //Generiert die Hindernisse:
 
@@ -89,6 +89,7 @@ public class Game {
             panel.add(obstacle);
         }
 
+
         //Bindet das Overlay ein:
 
         Container c1 = Overlay.createScoreHUD();
@@ -108,7 +109,18 @@ public class Game {
         new GameLoop();
 
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
-
+        createBots(panel, 5); // Create 5 bots
         return panel;
+
     }
-}
+
+    public static void createBots(JPanel panel, int count) {
+        for (int i = 0; i < count; i++) {
+            Bots bot = new Bots();
+            botsList.add(bot);
+            panel.add(bot.generate(i + 1));
+        }
+    }
+
+
+    }
