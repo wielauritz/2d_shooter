@@ -8,6 +8,8 @@ import handlers.MouseInput;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Overlay {
 
@@ -73,6 +75,14 @@ public class Overlay {
 
         scorePoints = scorePoints + difference;
 
+        score.setForeground(Color.GREEN);
+
+        Timer timer = new Timer(300, e -> {
+            score.setForeground(Color.WHITE);
+            ((Timer) e.getSource()).stop();
+        });
+        timer.start();
+
         //Überprüfen des Highscores:
 
         if (scorePoints > Database.getPlayerHighscore(Player.name)) {
@@ -94,6 +104,14 @@ public class Overlay {
     public static void updateHealthHUD(int difference) {
 
         healthPoints = healthPoints - difference;
+
+        health.setForeground(Color.RED);
+
+        Timer timer = new Timer(300, e -> {
+            health.setForeground(Color.WHITE);
+            ((Timer) e.getSource()).stop();
+        });
+        timer.start();
 
         if (healthPoints <= 0) {
 
@@ -129,6 +147,17 @@ public class Overlay {
     public static void updateAmmoHUD(int difference) {
 
         ammoAmount = ammoAmount - difference;
+
+        ammo.setForeground(Color.RED);
+
+        Timer timer = new Timer(300, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ammo.setForeground(Color.WHITE);
+                ((Timer) e.getSource()).stop();
+            }
+        });
+        timer.start();
 
         if (ammoAmount <= 0) {
 
