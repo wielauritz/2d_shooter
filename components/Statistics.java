@@ -1,6 +1,5 @@
 package components;
 
-import entities.Player;
 import handlers.AudioOutput;
 import handlers.Database;
 import handlers.KeyboardInput;
@@ -8,9 +7,6 @@ import handlers.MouseInput;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

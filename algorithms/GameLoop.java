@@ -1,9 +1,7 @@
 package algorithms;
 
-import entities.Bots;
 import entities.Player;
 import entities.Projectile;
-import handlers.Database;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -14,18 +12,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import static components.Game.botsList;
 import static components.Window.frame;
-import static entities.Player.player;
 
 public class GameLoop implements KeyListener {
 
     public static Timer playerMoveTimer;
     public static boolean timerRunning = true;
     private static final Point lastPosition = MouseInfo.getPointerInfo().getLocation();
-    private static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Set<Integer> pressedKeys = new HashSet<>();
     private boolean spacePressed = false;
 
@@ -126,6 +121,5 @@ public class GameLoop implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) { }
 }

@@ -17,14 +17,8 @@ public class MouseInput extends MouseAdapter {
         Importieren und übergeben von Eingaben an die GameLoop
     */
 
-    private GameLoop gameLoop;
-
-    public MouseInput(GameLoop gameLoop) {
-        this.gameLoop = gameLoop;
-    }
-
     public void mouseClicked(MouseEvent e) {
-        gameLoop.MouseClick();
+        GameLoop.MouseClick();
     }
 
     public void mouseMoved(MouseEvent e) { }
