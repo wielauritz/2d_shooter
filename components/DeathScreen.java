@@ -17,6 +17,7 @@ import static algorithms.GameLoop.playerMoveTimer;
 public class DeathScreen {
 
     public static JLabel playButton;
+    public static JLabel leaderboardButton;
     public static JLabel backButton;
     public static JLabel closeButton;
 
@@ -51,6 +52,12 @@ public class DeathScreen {
         info.setForeground(Color.WHITE);
         panel.add(info);
 
+        JLabel score = new JLabel("SCORE: " + Database.getPlayerLastScore(Player.name), SwingConstants.CENTER);
+        score.setBounds(0, 175, 750, 50);
+        score.setFont(Program.gameFont.deriveFont(32f));
+        score.setForeground(Color.WHITE);
+        panel.add(score);
+
         //Erstellt den Spielen-Button:
 
         playButton = new JLabel("Neu starten", SwingConstants.CENTER);
@@ -60,10 +67,19 @@ public class DeathScreen {
         playButton.setFocusable(false);
         panel.add(playButton);
 
-        //Erstellt den Einstellungen-Button:
+        //Erstellt den Statistiken-Button:
+
+        leaderboardButton = new JLabel("Leaderboard", SwingConstants.CENTER);
+        leaderboardButton.setBounds(170, 340, 400, 50);
+        leaderboardButton.setFont(Program.gameFont.deriveFont(24f));
+        leaderboardButton.setOpaque(true);
+        leaderboardButton.setFocusable(false);
+        panel.add(leaderboardButton);
+
+        //Erstellt den Hauptmenü-Button:
 
         backButton = new JLabel("Hauptmenü", SwingConstants.CENTER);
-        backButton.setBounds(170, 340, 400, 50);
+        backButton.setBounds(170, 410, 400, 50);
         backButton.setFont(Program.gameFont.deriveFont(24f));
         backButton.setOpaque(true);
         backButton.setFocusable(false);
@@ -72,7 +88,7 @@ public class DeathScreen {
         //Erstellt den Beenden-Button:
 
         closeButton = new JLabel("Beenden", SwingConstants.CENTER);
-        closeButton.setBounds(170, 410, 400, 50);
+        closeButton.setBounds(170, 480, 400, 50);
         closeButton.setFont(Program.gameFont.deriveFont(24f));
         closeButton.setOpaque(true);
         closeButton.setFocusable(false);
@@ -130,6 +146,31 @@ public class DeathScreen {
                 });
 
                 System.out.println("[DeathScreen.java] Spielfeld erfolgreich geladen.");
+            }
+        });
+
+        leaderboardButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("[DeathScreen.java] Statistiken werden erstellt, bitte warten...");
+
+                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+                if (playerMoveTimer != null) {
+                    playerMoveTimer.stop();
+                }
+                GameLoop.timerRunning = false;
+
+                //Statistik dem Fenster übergeben:
+
+                Window.frame.setContentPane(Leaderboard.create(false));
+                Window.frame.revalidate();
+
+                //Sound abspielen:
+
+                AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
+
             }
         });
 

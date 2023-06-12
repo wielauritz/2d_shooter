@@ -21,7 +21,7 @@ public class TitleScreen {
 
     public static JLabel playButton;
 
-    public static JLabel statisticsButton;
+    public static JLabel leaderboardButton;
     public static JLabel settingsButton;
     public static JLabel closeButton;
 
@@ -63,12 +63,12 @@ public class TitleScreen {
 
         //Erstellt den Statistiken-Button:
 
-        statisticsButton = new JLabel("Statistiken", SwingConstants.CENTER);
-        statisticsButton.setBounds(170, 372, 400, 50);
-        statisticsButton.setFont(Program.gameFont.deriveFont(24f));
-        statisticsButton.setOpaque(true);
-        statisticsButton.setFocusable(false);
-        panel.add(statisticsButton);
+        leaderboardButton = new JLabel("Leaderboard", SwingConstants.CENTER);
+        leaderboardButton.setBounds(170, 372, 400, 50);
+        leaderboardButton.setFont(Program.gameFont.deriveFont(24f));
+        leaderboardButton.setOpaque(true);
+        leaderboardButton.setFocusable(false);
+        panel.add(leaderboardButton);
 
         //Erstellt den Einstellungen-Button:
 
@@ -138,7 +138,7 @@ public class TitleScreen {
             }
         });
 
-        statisticsButton.addMouseListener(new MouseAdapter() {
+        leaderboardButton.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -151,9 +151,9 @@ public class TitleScreen {
                 }
                 GameLoop.timerRunning = false;
 
-                //Spielfeld dem Fenster übergeben:
+                //Statistik dem Fenster übergeben:
 
-                Window.frame.setContentPane(Statistics.createMenu());
+                Window.frame.setContentPane(Leaderboard.create(true));
                 Window.frame.revalidate();
 
                 //Sound abspielen:
