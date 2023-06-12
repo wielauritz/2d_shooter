@@ -1,11 +1,9 @@
 package entities;
 
-import components.Game;
 import components.Overlay;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -28,7 +26,10 @@ public class Bots {
         this.id = id; // Set the ID of the bot
 
         // Erzeugt einen neuen Bot:
-        bots = new JLabel(new ImageIcon("textures/entities/Player/Ghost.png"));
+        bots = new JLabel();
+        ImageIcon icon = new ImageIcon("textures/entities/Bots/character.png");
+        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(50, -1, Image.SCALE_SMOOTH));
+        bots.setIcon(scaledIcon);
 
         // Positioniert den Bot im Fenster:
         int x = (650 - BotsSize - (BotsSize / 2)) / 2;
@@ -82,6 +83,22 @@ public class Bots {
                 bots.setLocation(player.getX() - x, bots.getY() - y);
                 break;
             }
+        }
+
+        //Dreht den Spieler in Laufrichtung:
+
+        if (x < 0) {
+            // Nach links:
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_inverted.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+        } else if (x > 0) {
+            // Nach rechts:
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+        } else if (y < 0) {
+            //Nach oben:
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+        } else if (y > 0) {
+            //Nach unten:
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
         }
     }
 
