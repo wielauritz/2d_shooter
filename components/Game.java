@@ -17,18 +17,11 @@ import static components.Window.panel;
 
 public class Game {
 
+    public static int botCount = 0;
     public static List<Bots> botsList = new ArrayList<>();
 
 
     public static ArrayList<Component> obstaclesList;
-
-    public static void createBots(int count) {
-        for (int i = 0; i < count; i++) {
-            Bots bot = new Bots();
-            botsList.add(bot);
-            panel.add(bot.generate(i + 1));
-        }
-    }
 
     public static JPanel create() {
 
@@ -111,18 +104,20 @@ public class Game {
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
         Timer timer = new Timer(5000, e -> {
 
-            createBots(panel, 1); // Create 5 bots
+            createBots(panel); // Create 5 bots
         });
         timer.start();
         return panel;
 
     }
 
-    public static void createBots(JPanel panel, int count) {
-        for (int i = 0; i < count; i++) {
-            Bots bot = new Bots();
-            botsList.add(bot);
-            panel.add(bot.generate(i + 1));
+    public static void createBots(JPanel panel) {
+        if (botCount < 5) {
+                Bots bot = new Bots();
+                botsList.add(bot);
+                botCount++;
+                panel.add(bot.generate(botCount + 1));
+                panel.setComponentZOrder(bot.bots, 2);
         }
     }
 

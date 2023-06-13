@@ -1,5 +1,9 @@
 package algorithms;
 
+import components.DeathScreen;
+import components.Game;
+import components.WinScreen;
+import components.Window;
 import entities.Player;
 import entities.PlayerProjectile;
 import handlers.KeyboardInput;
@@ -64,6 +68,12 @@ public class GameLoop implements KeyListener {
                         spacePressed = false;
                         PlayerProjectile.shootProjectile();
                     }
+
+                    if (Game.botsList.size() == 0 && Game.botCount == 5) {
+                        components.Window.frame.setContentPane(WinScreen.create());
+                        components.Window.frame.revalidate();
+                        Window.frame.repaint();
+                    }
                 }
             }
         });
@@ -75,9 +85,7 @@ public class GameLoop implements KeyListener {
     }
 
     public static void shutdownExecutorService() {
-        if (executorService != null) {
-            executorService.shutdown();
-        }
+        executorService.shutdown();
     }
 
     //Mausklick-Listener:

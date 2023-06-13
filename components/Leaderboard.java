@@ -127,7 +127,7 @@ public class Leaderboard {
 
                         //Sound abspielen:
 
-                        AudioOutput.playSound("audio/components/Settings/click.wav", 100);
+                        AudioOutput.playSound("audio/components/Leaderboard/click.wav", 100);
                     }
                 });
             }

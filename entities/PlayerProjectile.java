@@ -146,14 +146,20 @@ public class PlayerProjectile {
                             ((JLabel) obstacle).setIcon(scaledIcon);
                         }
 
-
-
                         collided = true;
                         break;
                     }
                 }
                 for (Bots bot : botsList) {
                     if (isCollidingWithBot(projectile, bot)) {
+                        if (bot.getDirection() == 0) {
+                            bot.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped_shot.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                        } else if (bot.getDirection() == 3) {
+                            bot.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_inverted_shot.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                        } else {
+                            bot.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped_shot.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                        }
+                        frame.revalidate();
                         collided = true;
                         bot.deductHealth(20);
                         break;

@@ -15,7 +15,7 @@ import static components.Window.frame;
 import static entities.Player.player;
 
 public class Bots {
-    private JLabel bots;
+    public JLabel bots;
     private static int BotsSize = 50;
     private static List<Component> obstacles;
     private int healthPoints = 100;
@@ -24,6 +24,8 @@ public class Bots {
     private static int StartX = 0;
     private static int StartY = 0;
     private ScheduledExecutorService projectileExecutorService; // Added projectileExecutorService
+
+    public int direction = 2;
 
     public JLabel generate(int id) {
         this.id = id; // Set the ID of the bot
@@ -55,6 +57,7 @@ public class Bots {
 
         startBotMovement(); // Start the bot movement
         startShooting(); // Start shooting projectiles
+
 
         return bots;
     }
@@ -92,15 +95,19 @@ public class Bots {
         if (x < 0) {
             // To the left
             bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_inverted.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            direction = 3;
         } else if (x > 0) {
             // To the right
             bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            direction = 1;
         } else if (y < 0) {
             // Upwards
             bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            direction = 0;
         } else if (y > 0) {
             // Downwards
             bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            direction = 2;
         }
     }
 
@@ -163,6 +170,8 @@ public class Bots {
         Overlay.updateScoreHUD(50);
     }
 
+    public void setIcon(ImageIcon icon) {bots.setIcon(icon);}
+
     public Rectangle getBounds() {
         return bots.getBounds();
     }
@@ -174,4 +183,6 @@ public class Bots {
     public int getY() {
         return getY();
     }
+
+    public int getDirection() { return direction; }
 }
