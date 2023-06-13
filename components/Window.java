@@ -5,6 +5,12 @@ import handlers.Database;
 
 import javax.swing.*;
 
+/*
+    Window.java
+    Erstellen und initialisieren des Fensters mit ersten Inhalten nach dem Start
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Window {
 
     public static JFrame frame;

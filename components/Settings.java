@@ -17,6 +17,12 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+/*
+    Settings.java
+    Anpassen des Spielerlebnisses durch (de)aktivieren von Musik und Sounds sowie anpassen des Spielernamens
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Settings {
 
     public static JTextField nameField;

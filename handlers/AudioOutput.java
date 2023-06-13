@@ -7,6 +7,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/*
+    AudioOutput.java
+    Aktivieren der Tonausgabe sowie Verarbeitung und abspielen von Tondateien
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class AudioOutput {
 
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
@@ -79,7 +85,8 @@ public class AudioOutput {
 
                     sourceLine.close();
 
-                } catch (Exception ignored) { }
+                } catch (Exception ignored) {
+                }
             });
 
             soundThread.start();

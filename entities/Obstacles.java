@@ -3,6 +3,12 @@ package entities;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+    Obstacles.java
+    Generieren von Hindernissen im Spiel
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Obstacles {
 
     /*

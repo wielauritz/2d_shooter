@@ -14,13 +14,17 @@ import java.awt.event.ActionListener;
 import static components.Game.botsList;
 import static components.Window.frame;
 
+/*
+    BotsProjectile.java
+    Schießen von Bots ermöglichen und animieren
+    Geschrieben von Eric John und Lauritz Wiebusch
+ */
+
 public class BotsProjectile {
 
     /*
         Erstellt ein Projektil im Spiel
     */
-
-
 
     public static int projectileSize = 20;
 
@@ -39,7 +43,6 @@ public class BotsProjectile {
     public static void shootProjectile(JLabel bot) {
 
         //Aktuelle Spielerposition abrufen:
-
 
 
         Point playerPosition = new Point(Player.player.getX() + Player.size / 2,
@@ -76,7 +79,8 @@ public class BotsProjectile {
                 Rectangle projectileBox = projectile.getBounds();
                 Rectangle playerBox = Player.player.getBounds();
 
-                // Check for collision using bounding boxes
+                //Kollision überprüfen:
+
                 return projectileBox.intersects(playerBox);
             }
 
@@ -92,9 +96,10 @@ public class BotsProjectile {
                 //Kollision mit Spieler überprüfen:
 
                 if (isCollidingWithPlayer(botsprojectile)) {
-                    Overlay.updateHealthHUD(3); // Deduct 20 from player's health
+                    Overlay.updateHealthHUD(3);
 
                     //Projektil bei Kollision entfernen:
+
                     botsprojectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
                     frame.getContentPane().remove(botsprojectile);
@@ -107,7 +112,6 @@ public class BotsProjectile {
 
                 for (Component obstacle : Player.obstacles) {
                     if (Player.isCollidingWithObstacle(botsprojectile, obstacle, false)) {
-
 
 
                         collided = true;

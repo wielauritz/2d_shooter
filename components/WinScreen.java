@@ -16,6 +16,12 @@ import java.util.ArrayList;
 
 import static algorithms.GameLoop.playerMoveTimer;
 
+/*
+    WinScreen.java
+    Gewonnen-Bildschirm erstellen und Menü einbinden
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class WinScreen {
 
     public static JLabel playButton;
@@ -124,7 +130,7 @@ public class WinScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                         ;
+                        ;
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {
@@ -200,7 +206,7 @@ public class WinScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                         ;
+                        ;
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {

@@ -9,6 +9,12 @@ import java.awt.event.MouseEvent;
 
 import static entities.Player.player;
 
+/*
+    MouseInput.java
+    Aktivieren der Mauseingabeerkennung und weitergeben von Ereignissen an die GameLoop und dazugehörige Methoden zur Veränderung des Spiels sowie Berechung des Schusswinkels
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class MouseInput extends MouseAdapter {
 
     public static boolean enabled = false;
@@ -21,7 +27,8 @@ public class MouseInput extends MouseAdapter {
         GameLoop.MouseClick();
     }
 
-    public void mouseMoved(MouseEvent e) { }
+    public void mouseMoved(MouseEvent e) {
+    }
 
     /*
         Mauswinkelberechnung zur Schussrichtungsberechnung und Spielerdrehung

@@ -15,6 +15,12 @@ import java.util.List;
 
 import static components.Window.panel;
 
+/*
+    Game.java
+    Generieren des Spielbereichs inklusive Map, Spieler, Bots und Hindernissen
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Game {
 
     public static int botCount = 0;
@@ -113,13 +119,13 @@ public class Game {
 
     public static void createBots(JPanel panel) {
         if (botCount < 5) {
-                Bots bot = new Bots();
-                botsList.add(bot);
-                botCount++;
-                panel.add(bot.generate(botCount + 1));
-                panel.setComponentZOrder(bot.bots, 2);
+            Bots bot = new Bots();
+            botsList.add(bot);
+            botCount++;
+            panel.add(bot.generate(botCount + 1));
+            panel.setComponentZOrder(bot.bots, 2);
         }
     }
 
 
-    }
+}

@@ -16,13 +16,18 @@ import java.util.ArrayList;
 
 import static algorithms.GameLoop.playerMoveTimer;
 
+/*
+    DeathScreen.java
+    Todesbildschirm erstellen und Menü einbinden
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class DeathScreen {
 
     public static JLabel playButton;
     public static JLabel leaderboardButton;
     public static JLabel backButton;
     public static JLabel closeButton;
-
 
     /*
         Erstellt das Death-Screen-Menü
@@ -53,6 +58,8 @@ public class DeathScreen {
         info.setFont(Program.gameFont.deriveFont(48f));
         info.setForeground(Color.WHITE);
         panel.add(info);
+
+        //Erstellt die Punktestand-Anzeige:
 
         JLabel score = new JLabel("SCORE: " + Database.getPlayerLastScore(Player.name), SwingConstants.CENTER);
         score.setBounds(0, 175, 750, 50);
@@ -124,7 +131,7 @@ public class DeathScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                         ;
+
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {
@@ -200,7 +207,7 @@ public class DeathScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                         ;
+                        ;
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {

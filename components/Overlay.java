@@ -11,6 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/*
+    Overlay.java
+    Generieren und aktualisieren der Anzeigen für Leben, Munition und Punkte
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Overlay {
 
     public static JLabel score;
@@ -22,7 +28,7 @@ public class Overlay {
     public static int ammoAmount = 64;
 
     /*
-        Generiert die Lebensanzeige
+        Generiert die Punkte-Anzeige
     */
 
     public static JLabel createScoreHUD() {
@@ -68,7 +74,7 @@ public class Overlay {
     }
 
     /*
-        Aktualisiert die Score-Anzeige
+        Aktualisiert die Punkte-Anzeige
      */
 
     public static void updateScoreHUD(int difference) {

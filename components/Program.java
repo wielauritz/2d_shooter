@@ -8,6 +8,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/*
+    Program.java
+    Hauptdatei, die das Programm startet und alles relevante vorbereitet
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Program {
 
     /*

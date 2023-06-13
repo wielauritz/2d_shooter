@@ -10,6 +10,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/*
+    Player.java
+    Erstellen und aktualisieren der Spieler hinsichtlich Texturen und Bewegung
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Player {
 
     public static JLabel player;

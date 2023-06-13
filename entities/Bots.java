@@ -14,6 +14,12 @@ import static components.Game.botsList;
 import static components.Window.frame;
 import static entities.Player.player;
 
+/*
+    Bots.java
+    Erstellen und aktualisieren der Bots hinsichtlich Texturen und Bewegung
+    Geschrieben von Eric John und Lauritz Wiebusch
+ */
+
 public class Bots {
     public JLabel bots;
     private static int BotsSize = 50;
@@ -170,7 +176,9 @@ public class Bots {
         Overlay.updateScoreHUD(50);
     }
 
-    public void setIcon(ImageIcon icon) {bots.setIcon(icon);}
+    public void setIcon(ImageIcon icon) {
+        bots.setIcon(icon);
+    }
 
     public Rectangle getBounds() {
         return bots.getBounds();
@@ -184,5 +192,7 @@ public class Bots {
         return getY();
     }
 
-    public int getDirection() { return direction; }
+    public int getDirection() {
+        return direction;
+    }
 }

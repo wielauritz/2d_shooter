@@ -4,6 +4,12 @@ import entities.Obstacles;
 
 import javax.swing.*;
 
+/*
+    Grid.java
+    Rastern des Spielbereichs zur Bewegung der Bots
+    Geschrieben von Eric John
+ */
+
 public class Grid extends JFrame {
     private static final int GRID_SIZE = 750;
     private static final int CELL_SIZE = 50;

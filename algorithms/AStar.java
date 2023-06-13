@@ -3,19 +3,28 @@ package algorithms;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/*
+    AStar.java
+    Pathfinding-Algorhythmus für die Bots
+    Geschrieben von Eric John
+ */
+
 public class AStar {
 
-    /* Nodes repräsentieren die einzelnen Kästchen */
+    //Nodes repräsentieren die einzelnen Kästchen:
+
     public interface GraphNode {
         String getId();
     }
 
-    /* Kostenberechnung zwischen Nodes */
+    //Kostenberechnung zwischen Nodes:
+
     public interface Scorer<T extends GraphNode> {
         double computeCost(T from, T to);
     }
 
-    /* IDN für Date Nodes */
+    //IDN für Date Nodes:
+
     public class Graph<T extends GraphNode> {
         private Set<T> nodes;
         private Map<String, Set<String>> connections;
@@ -32,7 +41,8 @@ public class AStar {
         }
     }
 
-    /* Route Nodes für Effi */
+    //Route Nodes für Effizienz:
+
     class RouteNode<T extends GraphNode> implements Comparable<RouteNode<T>> {
         private final T current;
         private T previous;
@@ -90,7 +100,8 @@ public class AStar {
         }
     }
 
-    /* Routenberechner */
+    //Routenberechnung:
+
     public class RouteFinder<T extends GraphNode> {
         private final Graph<T> graph;
         private final Scorer<T> nextNodeScorer;
@@ -110,7 +121,8 @@ public class AStar {
             openSet.add(start);
             allNodes.put(from, start);
 
-            /* nächster schritt-Node aussuchen */
+            //Nächster Schritt - Node aussuchen:
+
             while (!openSet.isEmpty()) {
                 RouteNode<T> next = openSet.poll();
                 if (next.getCurrent().equals(to)) {
@@ -123,7 +135,8 @@ public class AStar {
                     return route;
                 }
 
-                /* Falls nicht angekommen (weitermachen/break) */
+                //Falls nicht angekommen (weitermachen/unterbrechen):
+
                 graph.getConnections(next.getCurrent()).forEach(connection -> {
                     RouteNode<T> nextNode = allNodes.getOrDefault(connection, new RouteNode<>(connection));
                     allNodes.put(connection, nextNode);
@@ -142,7 +155,8 @@ public class AStar {
         }
     }
 
-    /* Beispiel-Implementierung von GraphNode */
+    //Beispiel-Implementierung von GraphNode:
+
     public class Station implements GraphNode {
         private final String id;
 

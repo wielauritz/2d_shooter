@@ -4,6 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Database.java
+    Einrichten einer Datenbank(verbindung) zum Speichern von Einstellungen und Spielern mit deren Punkten und Namen
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class Database {
     private static Connection connection;
 
@@ -69,7 +75,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
 
 
     public static void close() {

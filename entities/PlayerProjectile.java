@@ -14,6 +14,12 @@ import java.awt.event.ActionListener;
 import static components.Game.botsList;
 import static components.Window.frame;
 
+/*
+    PlayerProjectile.java
+    Schießen von Spielern ermöglichen und animieren
+    Geschrieben von Eric John und Lauritz Wiebusch
+ */
+
 public class PlayerProjectile {
 
     /*
@@ -125,10 +131,10 @@ public class PlayerProjectile {
 
                             Overlay.updateAmmoHUD(Overlay.ammoAmount - 64);
 
-                            //Score erhöhen:
+                            //Punktestand erhöhen:
 
                             Overlay.updateScoreHUD(15);
-                            Database.updatePlayerLastScore(Player.name,Database.getPlayerLastScore(Player.name)+15);
+                            Database.updatePlayerLastScore(Player.name, Database.getPlayerLastScore(Player.name) + 15);
 
                             //Die Explosionsanimation stoppen:
 

@@ -17,6 +17,12 @@ import java.io.IOException;
 
 import static algorithms.GameLoop.playerMoveTimer;
 
+/*
+    TitleScreen.java
+    Startbildschirm erstellen und Menü einbinden
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class TitleScreen {
 
     public static JLabel playButton;

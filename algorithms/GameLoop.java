@@ -19,6 +19,12 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static components.Window.frame;
 
+/*
+    GameLoop.java
+    Benutzereingaben erkennen und dazugehörige Funktionen ausführen
+    Geschrieben von Lauritz Wiebusch
+ */
+
 public class GameLoop implements KeyListener {
 
     public static Timer playerMoveTimer;
@@ -32,7 +38,7 @@ public class GameLoop implements KeyListener {
         frame.addKeyListener(this);
         frame.requestFocusInWindow();
 
-        //Timer für Spieler bewegung:
+        //Timer für Spielerbewegung:
 
         playerMoveTimer = new Timer(16, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -42,7 +48,7 @@ public class GameLoop implements KeyListener {
                     int directionY = 0;
                     int speed = 5;
 
-                    //Tastenabfragen für Richtung der Spieler bewegung:
+                    //Tastenabfragen für Richtung der Spielerbewegung:
 
                     for (Integer keyCode : pressedKeys) {
                         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
@@ -78,7 +84,6 @@ public class GameLoop implements KeyListener {
             }
         });
         playerMoveTimer.start();
-
 
 
         System.out.println("[GameLoop.java] Loop erfolgreich gestartet.");
@@ -129,5 +134,6 @@ public class GameLoop implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e) {
+    }
 }

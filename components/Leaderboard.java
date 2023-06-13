@@ -13,43 +13,47 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+/*
+    Leaderboard.java
+    Generieren des Leaderboards für alle registrierten Spieler mit Platzierung sowie Punktzahlen
+    Geschrieben von Lauritz Wiebusch
+ */
+
+
 public class Leaderboard {
 
-    public static JLabel scoreboardButton;
-    public static JLabel leaderboardButton;
     public static JLabel backButton;
 
     /*
-        Erstellt das Hauptmenü
+        Erstellt das Leaderboard
      */
+
     public static JPanel create(boolean isMenu) {
 
+        JPanel panel = new JPanel() {
 
+            //Setzt das Hintergrundbild und den Titel für das Hauptmenü:
 
-            JPanel panel = new JPanel() {
-
-                //Setzt das Hintergrundbild und den Titel für das Hauptmenü:
-
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    try {
-                        if (isMenu) {
-                            ImageIcon gifIcon = new ImageIcon("textures/components/TitleScreen/titlescreen.gif");
-                            Image gifImage = gifIcon.getImage();
-                            Image title = ImageIO.read(new File("textures/components/TitleScreen/title.png"));
-                            g.drawImage(gifImage, -200, 0, getWidth() + 400, getHeight(), this);
-                            g.drawImage(title, 100, 63, 544, 75, this);
-                        } else {
-                            ImageIcon gifIcon = new ImageIcon("textures/components/DeathScreen/deathscreen.gif");
-                            Image gifImage = gifIcon.getImage();
-                            g.drawImage(gifImage, 0, 0, getWidth(), getHeight(), this);
-                        }
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    if (isMenu) {
+                        ImageIcon gifIcon = new ImageIcon("textures/components/TitleScreen/titlescreen.gif");
+                        Image gifImage = gifIcon.getImage();
+                        Image title = ImageIO.read(new File("textures/components/TitleScreen/title.png"));
+                        g.drawImage(gifImage, -200, 0, getWidth() + 400, getHeight(), this);
+                        g.drawImage(title, 100, 63, 544, 75, this);
+                    } else {
+                        ImageIcon gifIcon = new ImageIcon("textures/components/DeathScreen/deathscreen.gif");
+                        Image gifImage = gifIcon.getImage();
+                        g.drawImage(gifImage, 0, 0, getWidth(), getHeight(), this);
                     }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-            };
+            }
+        };
 
         panel.setLayout(null);
 
@@ -93,7 +97,8 @@ public class Leaderboard {
         panel.add(backButton);
         panel.add(leaderboardScrollPane);
 
-        //Erstellt die Liste für das Leaderboard
+        //Erstellt die Liste für das Leaderboard:
+
         JList<String> leaderboardList = new JList<>(Database.getAllScoresList().toArray(new String[0]));
         leaderboardList.setFont(Program.gameFont.deriveFont(16f));
         leaderboardScrollPane.setViewportView(leaderboardList);
