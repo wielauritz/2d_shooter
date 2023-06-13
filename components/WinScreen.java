@@ -248,7 +248,7 @@ public class WinScreen {
             }
         });
 
-        AudioOutput.playSound("audio/components/DeathScreen/gameover.wav", 4100);
+        AudioOutput.playSound("audio/components/WinScreen/youwon.wav", 4100);
 
         KeyboardInput.enabled = false;
 
