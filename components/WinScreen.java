@@ -124,7 +124,7 @@ public class WinScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                        Game.botsList.clear();
+                         ;
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {
@@ -200,7 +200,7 @@ public class WinScreen {
                         Player.isInWater = false;
 
                         //Bots entferenen:
-                        Game.botsList.clear();
+                         ;
                         Game.botCount = 0;
 
                         for (Bots bot : new ArrayList<>(Game.botsList)) {
