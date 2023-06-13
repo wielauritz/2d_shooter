@@ -92,7 +92,7 @@ public class BotsProjectile {
                 //Kollision mit Spieler überprüfen:
 
                 if (isCollidingWithPlayer(botsprojectile)) {
-                    Overlay.updateHealthHUD(20); // Deduct 20 from player's health
+                    Overlay.updateHealthHUD(3); // Deduct 20 from player's health
 
                     //Projektil bei Kollision entfernen:
                     botsprojectile.setVisible(false);
