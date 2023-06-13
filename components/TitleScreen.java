@@ -204,34 +204,6 @@ public class TitleScreen {
             }
         });
 
-        //Anzeigen zurücksetzen:
-
-        Overlay.resetHealthHUD();
-        Overlay.resetAmmoHUD();
-        Overlay.resetScoreHUD();
-
-        Player.isInWater = false;
-
-        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-        if (playerMoveTimer != null) {
-            playerMoveTimer.stop();
-        }
-        GameLoop.timerRunning = false;
-
-        //Bots entferenen:
-
-        Game.botCount = 0;
-
-        for (Bots bot : new ArrayList<>(Game.botsList)) {
-            bot.destroyBot();
-        }
-
-        //Eingaben deaktivieren:
-
-        KeyboardInput.enabled = false;
-        MouseInput.enabled = false;
-
         System.out.println("[TitleScreen.java] Hauptmenü erfolgreich erstellt.");
 
         return panel;

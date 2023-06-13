@@ -23,6 +23,7 @@ import static components.Window.panel;
 
 public class Game {
 
+    public static Timer timer;
     public static int botCount = 0;
     public static List<Bots> botsList = new ArrayList<>();
 
@@ -108,7 +109,7 @@ public class Game {
         new GameLoop();
 
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
-        Timer timer = new Timer(5000, e -> {
+        timer = new Timer(5000, e -> {
 
             createBots(panel); // Create 5 bots
         });

@@ -225,6 +225,7 @@ public class WinScreen {
 
         //Bots entferenen:
 
+        Game.timer.stop();
         Game.botCount = 0;
 
         for (Bots bot : new ArrayList<>(Game.botsList)) {
