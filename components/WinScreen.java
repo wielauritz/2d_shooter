@@ -53,7 +53,7 @@ public class WinScreen {
 
         //Erstellt den Gewonnen-Text:
 
-        JLabel info = new JLabel("YOU WON!", SwingConstants.CENTER);
+        JLabel info = new JLabel("DU HAST GEWONNEN!", SwingConstants.CENTER);
         info.setBounds(0, 100, 750, 50);
         info.setFont(Program.gameFont.deriveFont(48f));
         info.setForeground(Color.WHITE);
@@ -112,30 +112,6 @@ public class WinScreen {
 
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                        if (playerMoveTimer != null) {
-                            playerMoveTimer.stop();
-                        }
-                        GameLoop.timerRunning = false;
-
-                        //Anzeigen zurücksetzen:
-
-                        Overlay.resetHealthHUD();
-                        Overlay.resetAmmoHUD();
-                        Overlay.resetScoreHUD();
-
-                        Player.isInWater = false;
-
-                        //Bots entferenen:
-                        ;
-                        Game.botCount = 0;
-
-                        for (Bots bot : new ArrayList<>(Game.botsList)) {
-                            bot.destroyBot();
-                        }
-
                         //Spielfeld dem Fenster übergeben:
 
                         JPanel gamePanel = Game.create();
@@ -146,7 +122,6 @@ public class WinScreen {
                         //Eingaben entsperren:
 
                         KeyboardInput.enabled = true;
-
                         MouseInput.enabled = true;
 
                         //Sound abspielen:
@@ -170,13 +145,6 @@ public class WinScreen {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("[WinScreen.java] Statistiken werden erstellt, bitte warten...");
 
-                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
-
                 //Statistik dem Fenster übergeben:
 
                 Window.frame.setContentPane(Leaderboard.create(false));
@@ -192,38 +160,14 @@ public class WinScreen {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Anzeigen zurücksetzen:
-
-                        Overlay.resetHealthHUD();
-                        Overlay.resetAmmoHUD();
-                        Overlay.resetScoreHUD();
-
-                        Player.isInWater = false;
-
-                        //Bots entferenen:
-                        ;
-                        Game.botCount = 0;
-
-                        for (Bots bot : new ArrayList<>(Game.botsList)) {
-                            bot.destroyBot();
-                        }
-
                         //Hauptmenü dem Fenster übergeben:
 
                         JPanel menuPanel = TitleScreen.create();
                         Window.frame.setContentPane(menuPanel);
                         Window.frame.repaint();
                         Window.frame.revalidate();
-
-                        //Eingaben sperren:
-
-                        KeyboardInput.enabled = false;
-
-                        MouseInput.enabled = false;
 
                         //Sound abspielen:
 
@@ -241,13 +185,6 @@ public class WinScreen {
                 //Fenster schließen:
 
                 Window.frame.dispose();
-
-                //Timer stoppen, damit das Spiel beendet werden kann:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
 
                 //Sound abspielen:
 
@@ -271,10 +208,38 @@ public class WinScreen {
             }
         });
 
+        //Anzeigen zurücksetzen:
+
+        Overlay.resetHealthHUD();
+        Overlay.resetAmmoHUD();
+        Overlay.resetScoreHUD();
+
+        Player.isInWater = false;
+
+        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+        if (playerMoveTimer != null) {
+            playerMoveTimer.stop();
+        }
+        GameLoop.timerRunning = false;
+
+        //Bots entferenen:
+
+        Game.botCount = 0;
+
+        for (Bots bot : new ArrayList<>(Game.botsList)) {
+            bot.destroyBot();
+        }
+
+        Bots.projectileExecutorService.shutdown();
+
+        //Sound abspielen:
+
         AudioOutput.playSound("audio/components/WinScreen/youwon.wav", 4100);
 
-        KeyboardInput.enabled = false;
+        //Eingaben deaktivieren:
 
+        KeyboardInput.enabled = false;
         MouseInput.enabled = false;
 
         System.out.println("[WinScreen.java] Win-Screen erfolgreich erstellt.");

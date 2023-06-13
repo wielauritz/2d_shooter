@@ -235,14 +235,14 @@ public class Database {
         List<String> scoreboard = new ArrayList<>();
 
         try {
-            String query = "SELECT name, lastScore, RANK() OVER (ORDER BY lastScore DESC) as rank FROM users ORDER BY lastScore DESC;";
+            String query = "SELECT name, highscore, RANK() OVER (ORDER BY highscore DESC) as rank FROM users ORDER BY highscore DESC;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int rank = resultSet.getInt("rank");
                 String name = resultSet.getString("name");
-                int score = resultSet.getInt("lastScore");
+                int score = resultSet.getInt("highscore");
                 scoreboard.add(rank + ". " + name + ": " + score);
             }
         } catch (SQLException e) {

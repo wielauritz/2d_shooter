@@ -1,6 +1,7 @@
 package components;
 
 import algorithms.GameLoop;
+import entities.Bots;
 import entities.Player;
 import handlers.AudioOutput;
 import handlers.Database;
@@ -14,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static algorithms.GameLoop.playerMoveTimer;
 
@@ -26,7 +28,6 @@ import static algorithms.GameLoop.playerMoveTimer;
 public class TitleScreen {
 
     public static JLabel playButton;
-
     public static JLabel leaderboardButton;
     public static JLabel settingsButton;
     public static JLabel closeButton;
@@ -112,13 +113,6 @@ public class TitleScreen {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("[TitleScreen.java] Spielfeld wird erstellt, bitte warten...");
 
-                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
-
                 //Spielfeld dem Fenster übergeben:
 
                 Window.frame.setContentPane(Game.create());
@@ -127,7 +121,6 @@ public class TitleScreen {
                 //Eingaben aktivieren:
 
                 KeyboardInput.enabled = true;
-
                 MouseInput.enabled = true;
 
                 //Sound abspielen:
@@ -150,13 +143,6 @@ public class TitleScreen {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("[TitleScreen.java] Statistiken werden erstellt, bitte warten...");
 
-                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
-
                 //Statistik dem Fenster übergeben:
 
                 Window.frame.setContentPane(Leaderboard.create(true));
@@ -174,13 +160,6 @@ public class TitleScreen {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("[TitleScreen.java] Einstellungen werden erstellt, bitte warten...");
-
-                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
 
                 //Spielfeld dem Fenster übergeben:
 
@@ -203,13 +182,6 @@ public class TitleScreen {
 
                 Window.frame.dispose();
 
-                //Timer stoppen, damit das Spiel beendet werden kann:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
-
                 //Sound abspielen:
 
                 AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
@@ -231,6 +203,34 @@ public class TitleScreen {
                 System.exit(0);
             }
         });
+
+        //Anzeigen zurücksetzen:
+
+        Overlay.resetHealthHUD();
+        Overlay.resetAmmoHUD();
+        Overlay.resetScoreHUD();
+
+        Player.isInWater = false;
+
+        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+        if (playerMoveTimer != null) {
+            playerMoveTimer.stop();
+        }
+        GameLoop.timerRunning = false;
+
+        //Bots entferenen:
+
+        Game.botCount = 0;
+
+        for (Bots bot : new ArrayList<>(Game.botsList)) {
+            bot.destroyBot();
+        }
+
+        //Eingaben deaktivieren:
+
+        KeyboardInput.enabled = false;
+        MouseInput.enabled = false;
 
         System.out.println("[TitleScreen.java] Hauptmenü erfolgreich erstellt.");
 

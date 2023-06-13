@@ -29,7 +29,7 @@ public class Bots {
     private ScheduledExecutorService executorService;
     private static int StartX = 0;
     private static int StartY = 0;
-    public ScheduledExecutorService projectileExecutorService;
+    public static ScheduledExecutorService projectileExecutorService;
 
     public int direction = 2;
 

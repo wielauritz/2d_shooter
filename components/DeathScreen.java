@@ -114,30 +114,6 @@ public class DeathScreen {
 
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                        if (playerMoveTimer != null) {
-                            playerMoveTimer.stop();
-                        }
-                        GameLoop.timerRunning = false;
-
-                        //Anzeigen zurücksetzen:
-
-                        Overlay.resetHealthHUD();
-                        Overlay.resetAmmoHUD();
-                        Overlay.resetScoreHUD();
-
-                        Player.isInWater = false;
-
-                        //Bots entferenen:
-
-                        Game.botCount = 0;
-
-                        for (Bots bot : new ArrayList<>(Game.botsList)) {
-                            bot.destroyBot();
-                        }
-
                         //Spielfeld dem Fenster übergeben:
 
                         JPanel gamePanel = Game.create();
@@ -148,7 +124,6 @@ public class DeathScreen {
                         //Eingaben entsperren:
 
                         KeyboardInput.enabled = true;
-
                         MouseInput.enabled = true;
 
                         //Sound abspielen:
@@ -172,13 +147,6 @@ public class DeathScreen {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("[DeathScreen.java] Statistiken werden erstellt, bitte warten...");
 
-                //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
-
                 //Statistik dem Fenster übergeben:
 
                 Window.frame.setContentPane(Leaderboard.create(false));
@@ -194,38 +162,14 @@ public class DeathScreen {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
-                        //Anzeigen zurücksetzen:
-
-                        Overlay.resetHealthHUD();
-                        Overlay.resetAmmoHUD();
-                        Overlay.resetScoreHUD();
-
-                        Player.isInWater = false;
-
-                        //Bots entferenen:
-                        ;
-                        Game.botCount = 0;
-
-                        for (Bots bot : new ArrayList<>(Game.botsList)) {
-                            bot.destroyBot();
-                        }
-
                         //Hauptmenü dem Fenster übergeben:
 
                         JPanel menuPanel = TitleScreen.create();
                         Window.frame.setContentPane(menuPanel);
                         Window.frame.repaint();
                         Window.frame.revalidate();
-
-                        //Eingaben sperren:
-
-                        KeyboardInput.enabled = false;
-
-                        MouseInput.enabled = false;
 
                         //Sound abspielen:
 
@@ -243,13 +187,6 @@ public class DeathScreen {
                 //Fenster schließen:
 
                 Window.frame.dispose();
-
-                //Timer stoppen, damit das Spiel beendet werden kann:
-
-                if (playerMoveTimer != null) {
-                    playerMoveTimer.stop();
-                }
-                GameLoop.timerRunning = false;
 
                 //Sound abspielen:
 
@@ -273,10 +210,38 @@ public class DeathScreen {
             }
         });
 
+        //Anzeigen zurücksetzen:
+
+        Overlay.resetHealthHUD();
+        Overlay.resetAmmoHUD();
+        Overlay.resetScoreHUD();
+
+        Player.isInWater = false;
+
+        //Timer stoppen, damit sich das Spielertempo nicht verdoppelt:
+
+        if (playerMoveTimer != null) {
+            playerMoveTimer.stop();
+        }
+        GameLoop.timerRunning = false;
+
+        //Bots entferenen:
+
+        Game.botCount = 0;
+
+        for (Bots bot : new ArrayList<>(Game.botsList)) {
+            bot.destroyBot();
+        }
+
+        Bots.projectileExecutorService.shutdown();
+
+        //Sound abspielen:
+
         AudioOutput.playSound("audio/components/DeathScreen/gameover.wav", 4100);
 
-        KeyboardInput.enabled = false;
+        //Eingaben deaktivieren:
 
+        KeyboardInput.enabled = false;
         MouseInput.enabled = false;
 
         System.out.println("[DeathScreen.java] Death-Screen erfolgreich erstellt.");
