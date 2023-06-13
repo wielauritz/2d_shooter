@@ -146,7 +146,7 @@ public class Bots {
                 int distance = (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
                 if (distance <= 200) {
-                    BotsProjectile projectile = new BotsProjectile();
+                    BotsProjectile.shootProjectile(bots);
                     System.out.println("schuss");
                     // Use the projectile object as needed (e.g., add it to the game, perform collision checks, etc.)
                 }

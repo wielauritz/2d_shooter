@@ -20,9 +20,11 @@ public class BotsProjectile {
         Erstellt ein Projektil im Spiel
     */
 
+
+
     public static int projectileSize = 20;
 
-    public static JLabel createProjectile(int x, int y) {
+    public static JLabel botscreateProjectile(int x, int y) {
         JLabel botsprojectile = new JLabel(new ImageIcon("textures/entities/Projectile/projectile.png"));
 
         botsprojectile.setBounds(x, y, projectileSize, projectileSize);
@@ -34,9 +36,11 @@ public class BotsProjectile {
         Schießt ein Projektil im Spiel
     */
 
-    public static void shootProjectile(Bots bot) {
+    public static void shootProjectile(JLabel bot) {
 
         //Aktuelle Spielerposition abrufen:
+
+
 
         Point playerPosition = new Point(Player.player.getX() + Player.size / 2,
                 Player.player.getY() + Player.size / 2);
@@ -53,7 +57,7 @@ public class BotsProjectile {
 
         //Projektil erstellen:
 
-        JLabel botsprojectile = createProjectile(bot.getX(), bot.getY());
+        JLabel botsprojectile = botscreateProjectile(bot.getX(), bot.getY());
         frame.getContentPane().add(botsprojectile);
         frame.getContentPane().setComponentZOrder(botsprojectile, 0);
 
