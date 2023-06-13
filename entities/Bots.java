@@ -1,6 +1,7 @@
 package entities;
 
 import components.Overlay;
+import handlers.AudioOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,6 @@ import static components.Window.frame;
 import static entities.Player.player;
 
 public class Bots {
-
     private JLabel bots;
     private static int BotsSize = 50;
     private static List<Component> obstacles;
@@ -23,21 +23,18 @@ public class Bots {
     private ScheduledExecutorService executorService; // Added executorService
     private static int StartX = 0;
     private static int StartY = 0;
+    private ScheduledExecutorService projectileExecutorService; // Added projectileExecutorService
 
     public JLabel generate(int id) {
         this.id = id; // Set the ID of the bot
 
-        // Erzeugt einen neuen Bot:
+        // Create a new Bot
         bots = new JLabel();
         ImageIcon icon = new ImageIcon("textures/entities/Bots/character.png");
         ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(50, -1, Image.SCALE_SMOOTH));
         bots.setIcon(scaledIcon);
 
-        // Positioniert den Bot im Fenster:
-
-        System.out.println("StartX: " + StartX);
-        System.out.println("StartY: " + StartY);
-
+        // Position the Bot in the window
         int x = (StartX - BotsSize - (BotsSize / 2)) / 2;
         int y = (StartY - BotsSize - (BotsSize / 2)) / 2;
         bots.setBounds(x + 12, y, BotsSize, BotsSize);
@@ -56,25 +53,21 @@ public class Bots {
             StartY = 0;
         }
 
-        System.out.println("StartX: " + StartX);
-        System.out.println("StartY: " + StartY);
-
-        System.out.println("[Bots.java] Bot " + id + " erfolgreich erstellt.");
-
         startBotMovement(); // Start the bot movement
+        startShooting(); // Start shooting projectiles
 
         return bots;
     }
 
     /*
-        Speichert die Hindernispositionen
+        Set the obstacle positions
     */
     public static void setObstacles(List<Component> obstaclesList) {
         obstacles = obstaclesList;
     }
 
     /*
-        Überprüft, ob der Bot mit einem Hindernis in Berührung kommt
+        Check if the Bot collides with an obstacle
     */
     public boolean isCollidingWithObstacle(Component bot, Component obstacle) {
         if (obstacle.getWidth() < 159) {
@@ -87,29 +80,27 @@ public class Bots {
     }
 
     public void move(int x, int y) {
-        // Neue Position des Bots berechnen:
+        // Calculate the new position of the Bot
         int newX = bots.getX() + x;
         int newY = bots.getY() + y;
 
         bots.setLocation(newX, newY);
 
-        // Verhindert, dass sich der Bot durch Hindernisse bewegt:
+        // Prevent the Bot from moving through obstacles
 
-
-        //Dreht den Bot in Laufrichtung:
-
+        // Rotate the Bot in the direction of movement
         if (x < 0) {
-            // Nach links:
-            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_inverted.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+            // To the left
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_inverted.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         } else if (x > 0) {
-            // Nach rechts:
-            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+            // To the right
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         } else if (y < 0) {
-            //Nach oben:
-            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+            // Upwards
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character_flipped.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         } else if (y > 0) {
-            //Nach unten:
-            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+            // Downwards
+            bots.setIcon(new ImageIcon(new ImageIcon("textures/entities/Bots/character.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         }
     }
 
@@ -124,7 +115,7 @@ public class Bots {
 
                 int distance = (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                if (distance < 50) {
+                if (distance < 100) {
                     int directionX = Integer.compare(-deltaX, 0) * speed;
                     int directionY = Integer.compare(-deltaY, 0) * speed;
                     move(directionX, directionY);
@@ -137,8 +128,28 @@ public class Bots {
         }, 0, 100, TimeUnit.MILLISECONDS);
     }
 
+    private void startShooting() {
+        projectileExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        projectileExecutorService.scheduleAtFixedRate(() -> {
+            SwingUtilities.invokeLater(() -> {
+                int deltaX = player.getX() - bots.getX();
+                int deltaY = player.getY() - bots.getY();
+
+                int distance = (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                if (distance <= 200) {
+                    BotsProjectile projectile = new BotsProjectile();
+                    System.out.println("schuss");
+                    // Use the projectile object as needed (e.g., add it to the game, perform collision checks, etc.)
+                }
+            });
+        }, 0, 2, TimeUnit.SECONDS);
+    }
+
     public void deductHealth(int amount) {
         healthPoints -= amount;
+
         if (healthPoints <= 0) {
             // Bot is destroyed, perform any necessary actions
             destroyBot();
@@ -146,7 +157,7 @@ public class Bots {
     }
 
     private void destroyBot() {
-        // Perform actions when the bot is destroyed (e.g., remove from game, update score, etc.)
+        // Perform actions when the bot is destroyed (e.g., remove from the game, update score, etc.)
         frame.getContentPane().remove(bots);
         botsList.remove(this);
         Overlay.updateScoreHUD(50);
@@ -156,4 +167,11 @@ public class Bots {
         return bots.getBounds();
     }
 
+    public int getX() {
+        return getX();
+    }
+
+    public int getY() {
+        return getY();
+    }
 }

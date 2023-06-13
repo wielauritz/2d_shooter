@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import static components.Game.botsList;
 import static components.Window.frame;
@@ -91,7 +90,6 @@ public class Projectile {
                 //Mögliche Kollision mit Hindernissen überprüfen:
 
                 boolean collided = false;
-                boolean collidedWithBot = false;
 
 
                 for (Component obstacle : Player.obstacles) {
@@ -143,6 +141,9 @@ public class Projectile {
                             timer.start();
 
                         }
+
+
+
                         collided = true;
                         break;
                     }
@@ -161,6 +162,7 @@ public class Projectile {
                     projectile.setVisible(false);
                     ((Timer) e.getSource()).stop();
                     frame.getContentPane().remove(projectile);
+
                 } else {
                     projectile.setLocation((int) newX, (int) newY);
                 }

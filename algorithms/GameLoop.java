@@ -28,7 +28,7 @@ public class GameLoop implements KeyListener {
         frame.addKeyListener(this);
         frame.requestFocusInWindow();
 
-        //Timer für Spielerbewegung:
+        //Timer für Spieler bewegung:
 
         playerMoveTimer = new Timer(16, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -38,7 +38,7 @@ public class GameLoop implements KeyListener {
                     int directionY = 0;
                     int speed = 5;
 
-                    //Tastenabfragen für Richtung der Spielerbewegung:
+                    //Tastenabfragen für Richtung der Spieler bewegung:
 
                     for (Integer keyCode : pressedKeys) {
                         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
