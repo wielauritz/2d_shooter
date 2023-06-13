@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import static components.Game.botsList;
 import static components.Window.frame;
 
-public class Projectile {
+public class PlayerProjectile {
 
     /*
         Erstellt ein Projektil im Spiel
@@ -140,6 +140,10 @@ public class Projectile {
                             timer.setRepeats(false);
                             timer.start();
 
+                        } else if (obstacle.getWidth() == 100) {
+                            ImageIcon icon = new ImageIcon("textures/entities/Obstacles/tree_burned.png");
+                            ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(100, -1, Image.SCALE_SMOOTH));
+                            ((JLabel) obstacle).setIcon(scaledIcon);
                         }
 
 
@@ -151,7 +155,7 @@ public class Projectile {
                 for (Bots bot : botsList) {
                     if (isCollidingWithBot(projectile, bot)) {
                         collided = true;
-                        bot.deductHealth(20); // Deduct 20 from bot's health
+                        bot.deductHealth(20);
                         break;
                     }
                 }

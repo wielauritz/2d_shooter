@@ -1,7 +1,7 @@
 package algorithms;
 
 import entities.Player;
-import entities.Projectile;
+import entities.PlayerProjectile;
 import handlers.KeyboardInput;
 import handlers.MouseInput;
 
@@ -62,7 +62,7 @@ public class GameLoop implements KeyListener {
 
                     if (spacePressed && KeyboardInput.enabled) {
                         spacePressed = false;
-                        Projectile.shootProjectile();
+                        PlayerProjectile.shootProjectile();
                     }
                 }
             }
@@ -88,7 +88,7 @@ public class GameLoop implements KeyListener {
         frame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (MouseInput.enabled && e.getButton() == MouseEvent.BUTTON1) {
-                    Projectile.shootProjectile();
+                    PlayerProjectile.shootProjectile();
                 }
             }
         });
