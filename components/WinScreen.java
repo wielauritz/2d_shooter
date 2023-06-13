@@ -29,7 +29,6 @@ public class WinScreen {
     public static JLabel backButton;
     public static JLabel closeButton;
 
-
     /*
         Erstellt das Win-Screen-Menü
     */

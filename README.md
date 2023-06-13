@@ -20,7 +20,7 @@ MUSS:
 
 SOLL:
 
-- [ ] Trefferanimation
+- [x] Trefferanimation
 - [x] Lebenssystem
 - [ ] ~~Unterschiedliche Levels/Maps~~
 - [x] Texturepack
@@ -32,12 +32,12 @@ KANN:
 - [ ] Verschiedene Waffen 
 - [x] Verschiedene Ziele (Singleplayer)
 - [x] bewegliche Ziele (Singleplayer)
-- [ ] Bots als Ziel (Singleplayer)
+- [x] Bots als Ziel (Singleplayer)
 - [ ] ~~Multiplayer~~
 - [x] Sounds (müssen deaktivierbar sein)
 - [x] Nameneditor
-- [ ] Scoreboard
-- [ ] Leaderboard
+- [x] Scoreboard
+- [x] Leaderboard
 
 WÜNSCHE:
 
