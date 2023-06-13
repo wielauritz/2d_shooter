@@ -36,7 +36,7 @@ public class BotsProjectile {
         Schießt ein Projektil im Spiel
     */
 
-    public static void shootProjectile(Bots bot) {
+    public static void shootProjectile(JLabel bot) {
 
         //Aktuelle Spielerposition abrufen:
 
