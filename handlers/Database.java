@@ -1,7 +1,5 @@
 package handlers;
 
-import entities.Player;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -228,18 +226,19 @@ public class Database {
         return playerName;
     }
 
-    public static List<String> createScoreboard() {
+    public static List<String> getAllScoresList() {
         List<String> scoreboard = new ArrayList<>();
 
         try {
-            String query = "SELECT name, lastScore FROM users ORDER BY lastScore DESC;";
+            String query = "SELECT name, lastScore, RANK() OVER (ORDER BY lastScore DESC) as rank FROM users ORDER BY lastScore DESC;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                int rank = resultSet.getInt("rank");
                 String name = resultSet.getString("name");
                 int score = resultSet.getInt("lastScore");
-                scoreboard.add(name + ": " + score);
+                scoreboard.add(rank + ". " + name + ": " + score);
             }
         } catch (SQLException e) {
             e.printStackTrace();

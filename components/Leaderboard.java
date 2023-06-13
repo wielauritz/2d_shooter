@@ -1,6 +1,5 @@
 package components;
 
-import entities.Player;
 import handlers.AudioOutput;
 import handlers.Database;
 import handlers.KeyboardInput;
@@ -19,7 +18,6 @@ public class Leaderboard {
     public static JLabel scoreboardButton;
     public static JLabel leaderboardButton;
     public static JLabel backButton;
-
 
     /*
         Erstellt das Hauptmenü
@@ -55,22 +53,21 @@ public class Leaderboard {
 
         panel.setLayout(null);
 
-        JLabel title = new JLabel("Leaderboard", SwingConstants.CENTER);
-        title.setBounds(0, 200, 750, 50);
-        title.setFont(Program.gameFont.deriveFont(32f));
-        title.setForeground(Color.WHITE);
-        panel.add(title);
-
         //Erstellt den Zurück-Button:
 
         backButton = new JLabel("Hauptmenü", SwingConstants.CENTER);
-        backButton.setBounds(170, 512, 400, 50);
         backButton.setFont(Program.gameFont.deriveFont(24f));
         backButton.setOpaque(true);
         backButton.setFocusable(false);
-        panel.add(backButton);
+
+        //Erstellt das Leaderboard-Panel:
+
+        JScrollPane leaderboardScrollPane = new JScrollPane();
 
         if (isMenu) {
+            backButton.setBounds(170, 512, 400, 50);
+
+            leaderboardScrollPane.setBounds(170, 302, 400, 190);
 
             //Erstellt die Informationen:
 
@@ -79,25 +76,30 @@ public class Leaderboard {
             info.setFont(Program.gameFont.deriveFont(12f));
             info.setForeground(Color.WHITE);
             panel.add(info);
+
+            //Sound abspielen:
+
+            AudioOutput.playSound("audio/components/TitleScreen/click.wav", 100);
+        } else {
+            backButton.setBounds(170, 480, 400, 50);
+
+            leaderboardScrollPane.setBounds(170, 270, 400, 190);
+
+            //Sound abspielen:
+
+            AudioOutput.playSound("audio/components/DeathScreen/click.wav", 100);
         }
 
-                        // Create the scoreboard scroll pane
-                        JScrollPane scoreboardScrollPane = new JScrollPane();
-                        scoreboardScrollPane.setBounds(170, 302, 400, 190);
-                        panel.add(scoreboardScrollPane);
+        panel.add(backButton);
+        panel.add(leaderboardScrollPane);
 
-                        // Create the scoreboard list
-                        JList<String> scoreboardList = new JList<>(Database.createScoreboard().toArray(new String[0]));
-                        scoreboardList.setFont(Program.gameFont.deriveFont(16f));
-                        scoreboardScrollPane.setViewportView(scoreboardList);
+        //Erstellt die Liste für das Leaderboard
+        JList<String> leaderboardList = new JList<>(Database.getAllScoresList().toArray(new String[0]));
+        leaderboardList.setFont(Program.gameFont.deriveFont(16f));
+        leaderboardScrollPane.setViewportView(leaderboardList);
 
-                        Window.frame.repaint();
-                        Window.frame.revalidate();
-
-                        //Sound abspielen:
-
-                        AudioOutput.playSound("audio/components/Settings/click.wav", 100);
-
+        Window.frame.repaint();
+        Window.frame.revalidate();
 
         backButton.addMouseListener(new MouseAdapter() {
             @Override
