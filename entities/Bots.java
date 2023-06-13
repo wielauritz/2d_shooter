@@ -116,7 +116,7 @@ public class Bots {
 
         executorService.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
-                int speed = 1;
+                int speed = 2;
                 int deltaX = player.getX() - bots.getX();
                 int deltaY = player.getY() - bots.getY();
 
