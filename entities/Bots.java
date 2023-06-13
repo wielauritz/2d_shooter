@@ -163,7 +163,7 @@ public class Bots {
         }
     }
 
-    private void destroyBot() {
+    public void destroyBot() {
         // Perform actions when the bot is destroyed (e.g., remove from the game, update score, etc.)
         frame.getContentPane().remove(bots);
         botsList.remove(this);

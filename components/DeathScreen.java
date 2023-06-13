@@ -1,6 +1,7 @@
 package components;
 
 import algorithms.GameLoop;
+import entities.Bots;
 import entities.Player;
 import handlers.AudioOutput;
 import handlers.Database;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import static algorithms.GameLoop.playerMoveTimer;
 
@@ -121,6 +123,14 @@ public class DeathScreen {
 
                         Player.isInWater = false;
 
+                        //Bots entferenen:
+                        Game.botsList.clear();
+                        Game.botCount = 0;
+
+                        for (Bots bot : new ArrayList<>(Game.botsList)) {
+                            bot.destroyBot();
+                        }
+
                         //Spielfeld dem Fenster übergeben:
 
                         JPanel gamePanel = Game.create();
@@ -188,6 +198,14 @@ public class DeathScreen {
                         Overlay.resetScoreHUD();
 
                         Player.isInWater = false;
+
+                        //Bots entferenen:
+                        Game.botsList.clear();
+                        Game.botCount = 0;
+
+                        for (Bots bot : new ArrayList<>(Game.botsList)) {
+                            bot.destroyBot();
+                        }
 
                         //Hauptmenü dem Fenster übergeben:
 
