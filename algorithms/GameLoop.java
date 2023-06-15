@@ -29,7 +29,6 @@ public class GameLoop implements KeyListener {
 
     public static Timer playerMoveTimer;
     public static boolean timerRunning = true;
-    private static final Point lastPosition = MouseInfo.getPointerInfo().getLocation();
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Set<Integer> pressedKeys = new HashSet<>();
     private boolean spacePressed = false;

@@ -232,8 +232,6 @@ public class WinScreen {
             bot.destroyBot();
         }
 
-        Bots.projectileExecutorService.shutdown();
-
         //Sound abspielen:
 
         AudioOutput.playSound("audio/components/WinScreen/youwon.wav", 4100);

@@ -234,8 +234,6 @@ public class DeathScreen {
             bot.destroyBot();
         }
 
-        Bots.projectileExecutorService.shutdown();
-
         //Sound abspielen:
 
         AudioOutput.playSound("audio/components/DeathScreen/gameover.wav", 4100);

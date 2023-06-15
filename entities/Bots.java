@@ -29,7 +29,7 @@ public class Bots {
     private ScheduledExecutorService executorService;
     private static int StartX = 0;
     private static int StartY = 0;
-    public static ScheduledExecutorService projectileExecutorService;
+    public ScheduledExecutorService projectileExecutorService;
 
     public int direction = 2;
 
@@ -173,6 +173,7 @@ public class Bots {
         frame.getContentPane().remove(bots);
         botsList.remove(this);
         Overlay.updateScoreHUD(50);
+        projectileExecutorService.shutdown();
     }
 
     public void setIcon(ImageIcon icon) {

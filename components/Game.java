@@ -111,7 +111,7 @@ public class Game {
         System.out.println("[Game.java] Spielfeld erfolgreich erstellt.");
         timer = new Timer(5000, e -> {
 
-            createBots(panel); // Create 5 bots
+            createBots(panel);
         });
         timer.start();
         return panel;
